@@ -1,6 +1,6 @@
 package dados;
 
-public class Usuario {
+public abstract class Usuario {
 
 	private String nomeUsuario;
 	private String senha;

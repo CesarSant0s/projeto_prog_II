@@ -1,11 +1,12 @@
 package dados;
 
-public class Pedidos {
+public class Pedido {
+	private int codigo;
 	private Cliente cliente;
 	private Loja loja;
 	private Entregador entregador;
 
-	public Pedidos(Cliente cliente, Loja loja, Entregador entregador) {
+	public Pedido(Cliente cliente, Loja loja, Entregador entregador) {
 		super();
 		this.cliente = cliente;
 		this.loja = loja;
@@ -37,5 +38,14 @@ public class Pedidos {
 	public void setEntregador(Entregador entregador) {
 		if (!(entregador == null))
 			this.entregador = entregador;
+	}
+
+	public int getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(int codigo) {
+		if (codigo > 0)
+			this.codigo = codigo;
 	}
 }

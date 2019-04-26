@@ -13,7 +13,7 @@ public class RepositorioPratos {
 	}
 
 	public void inserirPrato(Prato prato) {
-		if (!(prato == null)) {
+		if (!(prato == null) && !(prato.equals(buscarPrato(prato.getNome())))) {
 			cardapio[quantidadePratos] = prato;
 			quantidadePratos++;
 		}
@@ -21,16 +21,13 @@ public class RepositorioPratos {
 
 	public void removerPrato(String nomePrato) {
 		for (int i = 0, j = quantidadePratos; i < j; i++) {
-
 			if (nomePrato.equals(cardapio[i].getNome())) {
 				cardapio[i] = null;
-
 				for (int k = i; k < j; k++) {
 					cardapio[k] = cardapio[++k];
 				}
 				quantidadePratos--;
 			}
-
 		}
 	}
 
