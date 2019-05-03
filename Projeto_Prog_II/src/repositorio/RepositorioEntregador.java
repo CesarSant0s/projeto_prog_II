@@ -2,6 +2,7 @@ package repositorio;
 
 import dados.Entregador;
 import dados.Entregador;
+import dados.Entregador;
 
 public class RepositorioEntregador {
 	private Entregador[] entregador;
@@ -13,10 +14,19 @@ public class RepositorioEntregador {
 	}
 
 	public void inserirEntregador(Entregador novoEntregador) {
-		if (!(novoEntregador == null)
-				&& !(novoEntregador.getCpf().equals((buscarEntregador(novoEntregador.getCpf())).getCpf()))) {
-			entregador[quantidadeEntregador] = novoEntregador;
-			quantidadeEntregador++;
+
+		if (quantidadeEntregador > 0) {
+			if (!(novoEntregador == null)
+					&& !(novoEntregador.getCpf().equals((buscarEntregador(novoEntregador.getCpf())).getCpf()))) {
+				entregador[quantidadeEntregador] = novoEntregador;
+				quantidadeEntregador++;
+			}
+		} else {
+			if (!(novoEntregador == null)) {
+				entregador[quantidadeEntregador] = novoEntregador;
+				quantidadeEntregador++;
+			}
+
 		}
 	}
 
@@ -40,5 +50,18 @@ public class RepositorioEntregador {
 			}
 		}
 		return null;
+	}
+
+	public void alterarEntregador(Entregador novoEntregador) {
+		for (int i = 0, j = quantidadeEntregador; i < j; i++) {
+			if (novoEntregador.getCpf().equals(entregador[i].getCpf())) {
+				entregador[i] = novoEntregador;
+			}
+		}
+
+	}
+
+	public Entregador[] listarEntregador() {
+		return entregador;
 	}
 }

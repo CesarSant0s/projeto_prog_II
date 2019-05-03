@@ -12,11 +12,18 @@ public class RepositorioCliente {
 	}
 
 	public void inserirCliente(Cliente novoCliente) {
-		if (!(novoCliente == null) && !(novoCliente.getCpf().equals((buscarCliente(novoCliente.getCpf())).getCpf()))) {
-			cliente[quantidadeCliente] = novoCliente;
-			quantidadeCliente++;
+		if (quantidadeCliente > 0) {
+			if (!(novoCliente == null)
+					&& !(novoCliente.getCpf().equals((buscarCliente(novoCliente.getCpf())).getCpf()))) {
+				cliente[quantidadeCliente] = novoCliente;
+				quantidadeCliente++;
+			}
+		} else {
+			if (!(novoCliente == null)) {
+				cliente[quantidadeCliente] = novoCliente;
+				quantidadeCliente++;
+			}
 		}
-
 	}
 
 	public void removerCliente(String cpf) {
@@ -39,6 +46,19 @@ public class RepositorioCliente {
 			}
 		}
 		return null;
+	}
+
+	public void alterarCliente(Cliente novoCliente) {
+		for (int i = 0, j = quantidadeCliente; i < j; i++) {
+			if (novoCliente.getCpf().equals(cliente[i].getCpf())) {
+				cliente[i] = novoCliente;
+			}
+		}
+
+	}
+
+	public Cliente[] listarCliente() {
+		return cliente;
 	}
 
 }

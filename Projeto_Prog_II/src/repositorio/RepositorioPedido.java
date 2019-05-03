@@ -1,6 +1,7 @@
 package repositorio;
 
 import dados.Pedido;
+import dados.Pedido;
 
 public class RepositorioPedido {
 	private Pedido[] pedido;
@@ -11,9 +12,17 @@ public class RepositorioPedido {
 	}
 
 	public void inserirPedido(Pedido pedido) {
-		if (!(pedido == null) && !(pedido.equals(buscarPedido(pedido.getCodigo())))) {
-			this.pedido[quantidadePedido] = pedido;
-			quantidadePedido++;
+
+		if (quantidadePedido > 0) {
+			if (!(pedido == null) && !(pedido.equals(buscarPedido(pedido.getCodigo())))) {
+				this.pedido[quantidadePedido] = pedido;
+				quantidadePedido++;
+			}
+		} else {
+			if (!(pedido == null)) {
+				this.pedido[quantidadePedido] = pedido;
+				quantidadePedido++;
+			}
 		}
 	}
 
@@ -37,4 +46,18 @@ public class RepositorioPedido {
 		}
 		return null;
 	}
+
+	public void alterarPedido(Pedido novoPedido) {
+		for (int i = 0, j = quantidadePedido; i < j; i++) {
+			if (novoPedido.getCodigo() == pedido[i].getCodigo()) {
+				pedido[i] = novoPedido;
+			}
+		}
+
+	}
+
+	public Pedido[] listarPedido() {
+		return pedido;
+	}
+
 }

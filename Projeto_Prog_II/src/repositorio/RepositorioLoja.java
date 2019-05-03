@@ -11,10 +11,20 @@ public class RepositorioLoja {
 	}
 
 	public void inserirLoja(Loja novaLoja) {
-		if (!(novaLoja == null) && !(novaLoja.getCnpj().equals((buscarLoja(novaLoja.getCnpj())).getCnpj()))) {
-			loja[quantidadeLoja] = novaLoja;
-			quantidadeLoja++;
+		if (quantidadeLoja > 0) {
+			if (!(novaLoja == null) && !(novaLoja.getCnpj().equals((buscarLoja(novaLoja.getCnpj())).getCnpj()))) {
+				loja[quantidadeLoja] = novaLoja;
+				quantidadeLoja++;
+			}
+
+		} else {
+			if (!(novaLoja == null)) {
+				loja[quantidadeLoja] = novaLoja;
+				quantidadeLoja++;
+			}
+
 		}
+
 	}
 
 	public void removerLoja(String cnpj) {
@@ -37,6 +47,19 @@ public class RepositorioLoja {
 			}
 		}
 		return null;
+	}
+
+	public void alterarLoja(Loja novoLoja) {
+		for (int i = 0, j = quantidadeLoja; i < j; i++) {
+			if (novoLoja.getCnpj().equals(loja[i].getCnpj())) {
+				loja[i] = novoLoja;
+			}
+		}
+
+	}
+
+	public Loja[] listarLoja() {
+		return loja;
 	}
 
 }

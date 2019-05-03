@@ -1,5 +1,6 @@
 package repositorio;
 
+import dados.Pedido;
 import dados.Prato;
 
 public class RepositorioPratos {
@@ -13,9 +14,16 @@ public class RepositorioPratos {
 	}
 
 	public void inserirPrato(Prato prato) {
-		if (!(prato == null) && !(prato.equals(buscarPrato(prato.getNome())))) {
-			cardapio[quantidadePratos] = prato;
-			quantidadePratos++;
+		if (quantidadePratos > 0) {
+			if (!(prato == null) && !(prato.equals(buscarPrato(prato.getNome())))) {
+				cardapio[quantidadePratos] = prato;
+				quantidadePratos++;
+			}
+		} else {
+			if (!(prato == null)) {
+				cardapio[quantidadePratos] = prato;
+				quantidadePratos++;
+			}
 		}
 	}
 
@@ -38,5 +46,18 @@ public class RepositorioPratos {
 			}
 		}
 		return null;
+	}
+
+	public void alterarPrato(Prato novoPrato) {
+		for (int i = 0, j = quantidadePratos; i < j; i++) {
+			if (novoPrato.getNome().equals(cardapio[i].getNome())) {
+				cardapio[i] = novoPrato;
+			}
+		}
+
+	}
+
+	public Prato[] listarPedido() {
+		return cardapio;
 	}
 }
