@@ -1,8 +1,8 @@
-package teste;
+package fachada;
 
-import dados.Cliente;
-import dados.Loja;
-import dados.Usuario;
+import negocio.Cliente;
+import negocio.Loja;
+import negocio.Usuario;
 
 public class Programa {
 

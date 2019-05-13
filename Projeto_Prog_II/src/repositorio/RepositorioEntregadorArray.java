@@ -1,14 +1,12 @@
 package repositorio;
 
-import dados.Entregador;
-import dados.Entregador;
-import dados.Entregador;
+import negocio.Entregador;
 
-public class RepositorioEntregador {
+public class RepositorioEntregadorArray {
 	private Entregador[] entregador;
 	private int quantidadeEntregador;
 
-	public RepositorioEntregador() {
+	public RepositorioEntregadorArray() {
 		// TODO Auto-generated constructor stub
 		entregador = new Entregador[100];
 	}

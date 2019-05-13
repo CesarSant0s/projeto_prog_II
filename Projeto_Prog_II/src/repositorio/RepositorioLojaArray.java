@@ -1,65 +1,66 @@
 package repositorio;
 
-import dados.Loja;
+import negocio.Loja;
 
-public class RepositorioLoja {
-	private Loja[] loja;
-	private int quantidadeLoja;
+public class RepositorioLojaArray implements RepositorioLoja {
+	private Loja[] array;
+	private int indice;
+	private static final int TAMANHO = 100;
 
-	public RepositorioLoja() {
-		loja = new Loja[100];
+	public RepositorioLojaArray() {
+		array = new Loja[TAMANHO];
 	}
 
-	public void inserirLoja(Loja novaLoja) {
-		if (quantidadeLoja > 0) {
-			if (!(novaLoja == null) && !(novaLoja.getCnpj().equals((buscarLoja(novaLoja.getCnpj())).getCnpj()))) {
-				loja[quantidadeLoja] = novaLoja;
-				quantidadeLoja++;
+	public void inserir(Loja loja) {
+		if (indice > 0) {
+			if (!(loja == null) && !(loja.getCnpj().equals((buscar(loja.getCnpj())).getCnpj()))) {
+				array[indice] = loja;
+				indice++;
 			}
 
 		} else {
-			if (!(novaLoja == null)) {
-				loja[quantidadeLoja] = novaLoja;
-				quantidadeLoja++;
+			if (!(loja == null)) {
+				array[indice] = loja;
+				indice++;
 			}
 
 		}
 
 	}
 
-	public void removerLoja(String cnpj) {
-		for (int i = 0, j = quantidadeLoja; i < j; i++) {
-			if (cnpj.equals(loja[i].getCnpj())) {
-				loja[i] = null;
+	public void remover(String cnpj) {
+		for (int i = 0, j = indice; i < j; i++) {
+			if (cnpj.equals(array[i].getCnpj())) {
+				array[i] = null;
 				for (int k = i; k < j; k++) {
-					loja[k] = loja[++k];
+					array[k] = array[++k];
 				}
-				quantidadeLoja--;
+				indice--;
 			}
 		}
 
 	}
 
-	public Loja buscarLoja(String cnpj) {
-		for (int i = 0, j = quantidadeLoja; i < j; i++) {
-			if (cnpj.equals(loja[i].getCnpj())) {
-				return loja[i];
+	public Loja buscar(String cnpj) {
+		for (int i = 0, j = indice; i < j; i++) {
+			if (cnpj.equals(array[i].getCnpj())) {
+				return array[i];
 			}
 		}
 		return null;
 	}
 
-	public void alterarLoja(Loja novoLoja) {
-		for (int i = 0, j = quantidadeLoja; i < j; i++) {
-			if (novoLoja.getCnpj().equals(loja[i].getCnpj())) {
-				loja[i] = novoLoja;
+	public void alterar(Loja novoLoja) {
+		for (int i = 0, j = indice; i < j; i++) {
+			if (novoLoja.getCnpj().equals(array[i].getCnpj())) {
+				array[i] = novoLoja;
 			}
 		}
 
 	}
 
 	public Loja[] listarLoja() {
-		return loja;
+		return array;
 	}
 
 }

@@ -1,4 +1,4 @@
-package dados;
+package negocio;
 
 public abstract class Usuario {
 
@@ -6,12 +6,14 @@ public abstract class Usuario {
 	private String senha;
 	private String nome;
 	private String telefone;
+	private String cpf;
 
-	public Usuario(String nomeUsuario, String senha, String nome, String telefone) {
+	public Usuario(String nomeUsuario, String senha, String nome, String telefone, String cpf) {
 		setNomeUsuario(nomeUsuario);
 		setSenha(senha);
 		setNome(nome);
 		setTelefone(telefone);
+		setCpf(cpf);
 	}
 
 	public String getNomeUsuario() {
@@ -48,6 +50,15 @@ public abstract class Usuario {
 	public void setTelefone(String telefone) {
 		if (!(telefone == null) && !(telefone.equals("")))
 			this.telefone = telefone;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		if (!(cpf == null) && !(cpf.equals("")))
+			this.cpf = cpf;
 	}
 
 }

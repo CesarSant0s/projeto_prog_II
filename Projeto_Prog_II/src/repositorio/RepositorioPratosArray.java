@@ -1,21 +1,20 @@
 package repositorio;
 
-import dados.Pedido;
-import dados.Prato;
+import negocio.Prato;
 
-public class RepositorioPratos {
+public class RepositorioPratosArray implements RepositorioPratos {
 
 	private Prato[] cardapio;
 	private int quantidadePratos;
 
-	public RepositorioPratos() {
+	public RepositorioPratosArray() {
 		cardapio = new Prato[100];
 		quantidadePratos = 0;
 	}
 
-	public void inserirPrato(Prato prato) {
+	public void inserir(Prato prato) {
 		if (quantidadePratos > 0) {
-			if (!(prato == null) && !(prato.equals(buscarPrato(prato.getNome())))) {
+			if (!(prato == null) && !(prato.equals(buscar(prato.getNome())))) {
 				cardapio[quantidadePratos] = prato;
 				quantidadePratos++;
 			}
@@ -27,7 +26,7 @@ public class RepositorioPratos {
 		}
 	}
 
-	public void removerPrato(String nomePrato) {
+	public void remover(String nomePrato) {
 		for (int i = 0, j = quantidadePratos; i < j; i++) {
 			if (nomePrato.equals(cardapio[i].getNome())) {
 				cardapio[i] = null;
@@ -39,7 +38,7 @@ public class RepositorioPratos {
 		}
 	}
 
-	public Prato buscarPrato(String nomePrato) {
+	public Prato buscar(String nomePrato) {
 		for (int i = 0, j = quantidadePratos; i < j; i++) {
 			if (nomePrato.equals(cardapio[i].getNome())) {
 				return cardapio[i];
@@ -48,7 +47,7 @@ public class RepositorioPratos {
 		return null;
 	}
 
-	public void alterarPrato(Prato novoPrato) {
+	public void alterar(Prato novoPrato) {
 		for (int i = 0, j = quantidadePratos; i < j; i++) {
 			if (novoPrato.getNome().equals(cardapio[i].getNome())) {
 				cardapio[i] = novoPrato;
@@ -57,7 +56,7 @@ public class RepositorioPratos {
 
 	}
 
-	public Prato[] listarPedido() {
+	public Prato[] listar() {
 		return cardapio;
 	}
 }

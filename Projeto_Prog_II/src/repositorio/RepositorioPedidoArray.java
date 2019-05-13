@@ -1,63 +1,64 @@
 package repositorio;
 
-import dados.Pedido;
-import dados.Pedido;
+import negocio.Pedido;
 
-public class RepositorioPedido {
-	private Pedido[] pedido;
-	private int quantidadePedido;
+public class RepositorioPedidoArray implements RepositorioPedido {
 
-	public RepositorioPedido() {
-		pedido = new Pedido[100];
+	private Pedido[] array;
+	private int indice;
+	private static final int TAMANHO = 100;
+
+	public RepositorioPedidoArray() {
+		array = new Pedido[TAMANHO];
 	}
 
-	public void inserirPedido(Pedido pedido) {
+	public void inserir(Pedido pedido) {
 
-		if (quantidadePedido > 0) {
-			if (!(pedido == null) && !(pedido.equals(buscarPedido(pedido.getCodigo())))) {
-				this.pedido[quantidadePedido] = pedido;
-				quantidadePedido++;
+		if (indice > 0) {
+			if (!(pedido == null) && !(array.equals(buscar(pedido.getCodigo())))) {
+				this.array[indice] = pedido;
+				indice++;
 			}
 		} else {
-			if (!(pedido == null)) {
-				this.pedido[quantidadePedido] = pedido;
-				quantidadePedido++;
+			if (!(array == null)) {
+				this.array[indice] = pedido;
+				indice++;
 			}
 		}
 	}
 
-	public void removerPedido(int codigo) {
-		for (int i = 0, j = quantidadePedido; i < j; i++) {
-			if (codigo == pedido[i].getCodigo()) {
-				pedido[i] = null;
+	public void remover(int codigo) {
+		for (int i = 0, j = indice; i < j; i++) {
+			if (codigo == array[i].getCodigo()) {
+				array[i] = null;
 				for (int k = i; k < j; k++) {
-					pedido[k] = pedido[++k];
+					array[k] = array[++k];
 				}
-				quantidadePedido--;
+				indice--;
 			}
 		}
 	}
 
-	public Pedido buscarPedido(int codigo) {
-		for (int i = 0, j = quantidadePedido; i < j; i++) {
-			if (codigo == pedido[i].getCodigo()) {
-				return pedido[i];
+	public Pedido buscar(int codigo) {
+		for (int i = 0, j = indice; i < j; i++) {
+			if (codigo == array[i].getCodigo()) {
+				return array[i];
 			}
 		}
 		return null;
 	}
 
-	public void alterarPedido(Pedido novoPedido) {
-		for (int i = 0, j = quantidadePedido; i < j; i++) {
-			if (novoPedido.getCodigo() == pedido[i].getCodigo()) {
-				pedido[i] = novoPedido;
+	public void alterar(Pedido pedido) {
+		for (int i = 0, j = indice; i < j; i++) {
+			if (pedido.getCodigo() == array[i].getCodigo()) {
+				array[i] = pedido;
 			}
 		}
 
 	}
 
-	public Pedido[] listarPedido() {
-		return pedido;
+	public Pedido[] listar() {
+		return array;
 	}
 
 }

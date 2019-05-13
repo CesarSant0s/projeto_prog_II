@@ -1,4 +1,4 @@
-package dados;
+package negocio;
 
 public class Pedido {
 	private int codigo;

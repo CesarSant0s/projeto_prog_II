@@ -1,13 +1,13 @@
 package repositorio;
 
-import dados.Cliente;
+import negocio.Cliente;
 
-public class RepositorioCliente {
+public class RepositorioClienteArray {
 
 	private Cliente[] cliente;
 	private int quantidadeCliente;
 
-	public RepositorioCliente() {
+	public RepositorioClienteArray() {
 		cliente = new Cliente[100];
 	}
 
