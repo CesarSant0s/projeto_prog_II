@@ -13,19 +13,9 @@ public class RepositorioLojaArray implements RepositorioLoja {
 
 	@Override
 	public void inserir(Loja loja) {
-		if (indice > 0) {
-			if (!(loja == null) && !(loja.getCnpj().equals((buscar(loja.getCnpj())).getCnpj()))) {
-				array[indice] = loja;
-				indice++;
-			}
 
-		} else {
-			if (!(loja == null)) {
-				array[indice] = loja;
-				indice++;
-			}
-
-		}
+		this.array[indice] = loja;
+		indice++;
 
 	}
 
@@ -33,21 +23,25 @@ public class RepositorioLojaArray implements RepositorioLoja {
 	public void remover(String cnpj) {
 		for (int i = 0, j = indice; i < j; i++) {
 			if (cnpj.equals(array[i].getCnpj())) {
-				array[i] = null;
-				for (int k = i; k < j; k++) {
-					array[k] = array[++k];
-				}
+				array[i] = array[indice];
+				array[indice] = null;
 				indice--;
 			}
 		}
-
 	}
 
 	@Override
 	public Loja buscar(String cnpj) {
-		for (int i = 0, j = indice; i < j; i++) {
-			if (cnpj.equals(array[i].getCnpj())) {
-				return array[i];
+		if (indice > 0) {
+			for (int i = 0, j = indice; i < j; i++) {
+				if (cnpj.equals(array[i].getCnpj())) {
+					return array[i];
+				}
+			}
+
+		} else {
+			if (cnpj.equals(array[0].getCnpj())) {
+				return array[0];
 			}
 		}
 		return null;

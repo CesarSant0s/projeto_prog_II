@@ -8,27 +8,43 @@ public class ControlePratos {
 	RepositorioPratos pratos = new RepositorioPratosArray();
 
 	public void inserir(Prato prato) {
-		// Incluir validacoes e regras de negocio
-		pratos.inserir(prato);
+
+		if (prato != null && pratos.buscar(prato.getNome()) == null) {
+			pratos.inserir(prato);
+		} else {
+
+		}
+
 	}
 
 	public void remover(String nome) {
-		// Incluir validacoes e regras de negocio
+
 		pratos.remover(nome);
+
 	}
 
 	public Prato buscar(String nome) {
-		// Incluir validacoes e regras de negocio
-		return pratos.buscar(nome);
+		Prato resultadoBusca = pratos.buscar(nome);
+
+		if (resultadoBusca != null) {
+			return resultadoBusca;
+		} else {
+			return resultadoBusca;
+		}
+
 	}
 
 	public void alterar(Prato prato) {
-		// Incluir validacoes e regras de negocio
-		pratos.alterar(prato);
+
+		if (prato != null && pratos.buscar(prato.getNome()) != null) {
+			pratos.alterar(prato);
+		} else {
+
+		}
+
 	}
 
 	public Prato[] listar() {
-		// Incluir validacoes e regras de negocio
 		return pratos.listar();
 	}
 }

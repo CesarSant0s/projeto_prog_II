@@ -6,35 +6,46 @@ import repositorio.RepositorioPedidoArray;
 public class ControlePedidos {
 	RepositorioPedido pedidos = new RepositorioPedidoArray();
 
-	public void FazerPedido(Cliente cliente, Loja loja, Entregador entregador) {
-		
-		Pedido novoPedido= new Pedido(cliente, loja, entregador);
-		
-	}
-	
-	public void inserir(Pedido pedido) {
+	public void FazerPedido(Pedido pedido) {
 		// Incluir validacoes e regras de negocio
-		pedidos.inserir(pedido);
+		if (pedido != null && (pedidos.buscar(pedido.getCodigo()) == null)) {
+			pedidos.inserir(pedido);
+		} else {
+
+		}
+
 	}
 
 	public void remover(int codigo) {
 		// Incluir validacoes e regras de negocio
+
 		pedidos.remover(codigo);
+
 	}
 
 	public Pedido buscar(int codigo) {
-		// Incluir validacoes e regras de negocio
-		return pedidos.buscar(codigo);
+
+		Pedido resultadoBuscar = pedidos.buscar(codigo);
+
+		if (resultadoBuscar != null) {
+			return resultadoBuscar;
+		} else {
+			return resultadoBuscar;
+		}
+
 	}
 
 	public void alterar(Pedido pedido) {
-		// Incluir validacoes e regras de negocio
-		pedidos.alterar(pedido);
+
+		if (pedido != null && (pedidos.buscar(pedido.getCodigo()) != null)) {
+			pedidos.alterar(pedido);
+		}
 	}
 
 	public Pedido[] listar() {
-		// Incluir validacoes e regras de negocio
+
 		return pedidos.listar();
+
 	}
 
 }

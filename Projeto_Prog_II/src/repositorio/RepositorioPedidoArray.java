@@ -14,17 +14,8 @@ public class RepositorioPedidoArray implements RepositorioPedido {
 
 	public void inserir(Pedido pedido) {
 
-		if (indice > 0) {
-			if (!(pedido == null) && !(array.equals(buscar(pedido.getCodigo())))) {
-				this.array[indice] = pedido;
-				indice++;
-			}
-		} else {
-			if (!(array == null)) {
-				this.array[indice] = pedido;
-				indice++;
-			}
-		}
+		this.array[indice] = pedido;
+		indice++;
 	}
 
 	public void remover(int codigo) {
@@ -40,11 +31,17 @@ public class RepositorioPedidoArray implements RepositorioPedido {
 	}
 
 	public Pedido buscar(int codigo) {
-		for (int i = 0, j = indice; i < j; i++) {
-			if (codigo == array[i].getCodigo()) {
-				return array[i];
+		if (indice > 0) {
+			for (int i = 0, j = indice; i < j; i++) {
+				if (codigo == array[i].getCodigo()) {
+					return array[i];
+				}
 			}
+		} else {
+			if (codigo == array[0].getCodigo())
+				return array[0];
 		}
+
 		return null;
 	}
 

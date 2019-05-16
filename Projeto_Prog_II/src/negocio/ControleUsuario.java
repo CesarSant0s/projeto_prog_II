@@ -8,27 +8,39 @@ public class ControleUsuario {
 	RepositorioUsuario usuarios = new RepositorioUsuarioArray();
 
 	public void inserir(Usuario usuario) {
-		// Incluir validacoes e regras de negocio
-		usuarios.inserir(usuario);
+
+		if (usuario != null && usuarios.buscar(usuario.getCpf()) == null) {
+			usuarios.inserir(usuario);
+		} else {
+
+		}
+
 	}
 
 	public void remover(String cpf) {
-		// Incluir validacoes e regras de negocio
+
 		usuarios.remover(cpf);
 	}
 
 	public Usuario buscar(String cpf) {
-		// Incluir validacoes e regras de negocio
-		return usuarios.buscar(cpf);
+
+		Usuario resultadoBusca = usuarios.buscar(cpf);
+
+		if (resultadoBusca != null) {
+			return resultadoBusca;
+		} else {
+			return resultadoBusca;
+		}
 	}
 
 	public void atualizar(Usuario usuario) {
-		// Incluir validacoes e regras de negocio
-		usuarios.atualizar(usuario);
+		if (usuario != null && usuarios.buscar(usuario.getCpf()) != null) {
+			usuarios.atualizar(usuario);
+		} else {
+		}
 	}
 
 	public Usuario[] listar() {
-		// Incluir validacoes e regras de negocio
 		return usuarios.listar();
 	}
 }

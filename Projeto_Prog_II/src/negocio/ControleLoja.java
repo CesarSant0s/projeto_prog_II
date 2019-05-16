@@ -8,7 +8,11 @@ public class ControleLoja {
 	RepositorioLoja lojas = new RepositorioLojaArray();
 
 	public void inserir(Loja loja) {
-		lojas.inserir(loja);
+		if (loja != null && lojas.buscar(loja.getCnpj()) == null) {
+			lojas.inserir(loja);
+		} else {
+
+		}
 	}
 
 	public void remover(String cnpj) {
@@ -16,11 +20,24 @@ public class ControleLoja {
 	}
 
 	public Loja buscar(String cnpj) {
-		return lojas.buscar(cnpj);
+		Loja resultadoBusca = lojas.buscar(cnpj);
+
+		if (resultadoBusca != null) {
+			return resultadoBusca;
+		} else {
+			return resultadoBusca;
+		}
+
 	}
 
 	public void alterar(Loja loja) {
-		lojas.alterar(loja);
+
+		if (loja != null && lojas.buscar(loja.getCnpj()) != null) {
+			lojas.alterar(loja);
+		} else {
+
+		}
+
 	}
 
 	public Loja[] listar() {

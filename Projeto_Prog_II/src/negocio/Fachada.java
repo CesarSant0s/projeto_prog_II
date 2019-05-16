@@ -85,7 +85,7 @@ public class Fachada {
 		return lojas.listar();
 	}
 
-	// Controle Conta
+	// Controle Usuario
 	public void inserirUsuario(Usuario usuario) {
 		usuarios.inserir(usuario);
 	}

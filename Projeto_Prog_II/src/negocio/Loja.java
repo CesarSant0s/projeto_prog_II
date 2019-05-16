@@ -1,6 +1,5 @@
 package negocio;
 
-import repositorio.RepositorioPedidoArray;
 import repositorio.RepositorioPratos;
 import repositorio.RepositorioPratosArray;
 
@@ -12,6 +11,7 @@ public class Loja {
 	private String telefone;
 	private String cnpj;
 	private String endereco;
+
 	private RepositorioPratos cardapio;
 
 	public Loja(String nomeUsuario, String senha, String nome, String telefone, String cnpj, String endereco) {

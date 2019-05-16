@@ -13,41 +13,40 @@ public class RepositorioPratosArray implements RepositorioPratos {
 	}
 
 	public void inserir(Prato prato) {
-		if (quantidadePratos > 0) {
-			if (!(prato == null) && !(prato.equals(buscar(prato.getNome())))) {
-				cardapio[quantidadePratos] = prato;
-				quantidadePratos++;
-			}
-		} else {
-			if (!(prato == null)) {
-				cardapio[quantidadePratos] = prato;
-				quantidadePratos++;
-			}
-		}
+		cardapio[quantidadePratos] = prato;
+		quantidadePratos++;
 	}
 
 	public void remover(String nomePrato) {
 		for (int i = 0, j = quantidadePratos; i < j; i++) {
 			if (nomePrato.equals(cardapio[i].getNome())) {
-				cardapio[i] = null;
-				for (int k = i; k < j; k++) {
-					cardapio[k] = cardapio[++k];
-				}
+
+				cardapio[i] = cardapio[quantidadePratos];
+				cardapio[quantidadePratos] = null;
 				quantidadePratos--;
+
 			}
 		}
 	}
 
 	public Prato buscar(String nomePrato) {
-		for (int i = 0, j = quantidadePratos; i < j; i++) {
-			if (nomePrato.equals(cardapio[i].getNome())) {
-				return cardapio[i];
+
+		if (quantidadePratos > 0)
+			for (int i = 0, j = quantidadePratos; i < j; i++) {
+				if (nomePrato.equals(cardapio[i].getNome())) {
+					return cardapio[i];
+				}
+			}
+		else {
+			if (nomePrato.equals(cardapio[0].getNome())) {
+				return cardapio[0];
 			}
 		}
 		return null;
 	}
 
 	public void alterar(Prato novoPrato) {
+
 		for (int i = 0, j = quantidadePratos; i < j; i++) {
 			if (novoPrato.getNome().equals(cardapio[i].getNome())) {
 				cardapio[i] = novoPrato;
