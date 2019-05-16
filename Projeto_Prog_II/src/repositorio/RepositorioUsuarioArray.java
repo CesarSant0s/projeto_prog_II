@@ -14,16 +14,19 @@ public class RepositorioUsuarioArray implements RepositorioUsuario {
 
 	@Override
 	public void inserir(Usuario usuario) {
-		if (indice > 0) {
-			for (int i = 0; i < indice; i++) {
-				if (!(usuario == null) && !(usuario.getCpf().equals((procurar(usuario.getCpf())).getCpf()))) {
-					array[i] = usuario;
+		if (usuario != null) {
+			if (indice > 0) {
+				if (buscar(usuario.getCpf()) == null) {
+					array[indice] = usuario;
+					indice++;
+				}
+
+			} else {
+				{
+					array[indice] = usuario;
 					indice++;
 				}
 			}
-		} else {
-			array[indice] = usuario;
-			indice++;
 		}
 	}
 
@@ -39,8 +42,9 @@ public class RepositorioUsuarioArray implements RepositorioUsuario {
 	}
 
 	@Override
-	public Usuario procurar(String cpf) {
-		for (int i = 0, j = indice; i < j; i++) {
+	public Usuario buscar(String cpf) {
+		for (int i = 0; i < indice; i++) {
+
 			if (cpf.equals(array[i].getCpf())) {
 				return array[i];
 			}

@@ -1,7 +1,9 @@
 package negocio;
 
+import repositorio.RepositorioPedidoArray;
+import repositorio.RepositorioPratos;
 import repositorio.RepositorioPratosArray;
-   
+
 public class Loja {
 
 	private String nomeUsuario;
@@ -10,7 +12,7 @@ public class Loja {
 	private String telefone;
 	private String cnpj;
 	private String endereco;
-	private RepositorioPratosArray cardapio;
+	private RepositorioPratos cardapio;
 
 	public Loja(String nomeUsuario, String senha, String nome, String telefone, String cnpj, String endereco) {
 		setNomeUsuario(nomeUsuario);
@@ -20,6 +22,7 @@ public class Loja {
 		setTelefone(telefone);
 		setCnpj(cnpj);
 		setEndereco(endereco);
+		cardapio = new RepositorioPratosArray();
 	}
 
 	public String getCnpj() {
@@ -40,11 +43,11 @@ public class Loja {
 			this.endereco = endereco;
 	}
 
-	public RepositorioPratosArray getCardapio() {
+	public RepositorioPratos getCardapio() {
 		return cardapio;
 	}
 
-	public void setCardapio(RepositorioPratosArray cardapio) {
+	public void setCardapio(RepositorioPratos cardapio) {
 		this.cardapio = cardapio;
 	}
 

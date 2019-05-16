@@ -2,6 +2,7 @@ package negocio;
 
 public class Pedido {
 	private int codigo;
+	
 	private Cliente cliente;
 	private Loja loja;
 	private Entregador entregador;

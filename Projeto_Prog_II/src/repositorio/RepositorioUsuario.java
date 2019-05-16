@@ -7,7 +7,7 @@ public interface RepositorioUsuario {
 
 	public void atualizar(Usuario usuario);
 
-	public Usuario procurar(String cpf);
+	public Usuario buscar(String cpf);
 
 	public void remover(String cpf);
 
