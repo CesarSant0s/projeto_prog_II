@@ -14,20 +14,8 @@ public class RepositorioUsuarioArray implements RepositorioUsuario {
 
 	@Override
 	public void inserir(Usuario usuario) {
-		if (usuario != null) {
-			if (indice > 0) {
-				if (buscar(usuario.getCpf()) == null) {
-					array[indice] = usuario;
-					indice++;
-				}
-
-			} else {
-				{
-					array[indice] = usuario;
-					indice++;
-				}
-			}
-		}
+		array[indice] = usuario;
+		indice++;
 	}
 
 	@Override
@@ -43,10 +31,12 @@ public class RepositorioUsuarioArray implements RepositorioUsuario {
 
 	@Override
 	public Usuario buscar(String cpf) {
-		for (int i = 0; i < indice; i++) {
 
-			if (cpf.equals(array[i].getCpf())) {
-				return array[i];
+		if (indice > 0) {
+			for (int i = 0; i < indice; i++) {
+				if (cpf.equals(array[i].getCpf())) {
+					return array[i];
+				}
 			}
 		}
 		return null;

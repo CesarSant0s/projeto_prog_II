@@ -37,11 +37,6 @@ public class RepositorioPratosArray implements RepositorioPratos {
 					return cardapio[i];
 				}
 			}
-		else {
-			if (nomePrato.equals(cardapio[0].getNome())) {
-				return cardapio[0];
-			}
-		}
 		return null;
 	}
 

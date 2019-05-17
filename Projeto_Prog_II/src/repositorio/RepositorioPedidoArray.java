@@ -37,11 +37,7 @@ public class RepositorioPedidoArray implements RepositorioPedido {
 					return array[i];
 				}
 			}
-		} else {
-			if (codigo == array[0].getCodigo())
-				return array[0];
 		}
-
 		return null;
 	}
 

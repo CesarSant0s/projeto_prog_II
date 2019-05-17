@@ -7,7 +7,6 @@ public class ControlePedidos {
 	RepositorioPedido pedidos = new RepositorioPedidoArray();
 
 	public void FazerPedido(Pedido pedido) {
-		// Incluir validacoes e regras de negocio
 		if (pedido != null && (pedidos.buscar(pedido.getCodigo()) == null)) {
 			pedidos.inserir(pedido);
 		} else {
@@ -17,7 +16,6 @@ public class ControlePedidos {
 	}
 
 	public void remover(int codigo) {
-		// Incluir validacoes e regras de negocio
 
 		pedidos.remover(codigo);
 
@@ -39,6 +37,8 @@ public class ControlePedidos {
 
 		if (pedido != null && (pedidos.buscar(pedido.getCodigo()) != null)) {
 			pedidos.alterar(pedido);
+		} else {
+
 		}
 	}
 

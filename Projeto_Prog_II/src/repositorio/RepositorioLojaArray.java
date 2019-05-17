@@ -32,6 +32,7 @@ public class RepositorioLojaArray implements RepositorioLoja {
 
 	@Override
 	public Loja buscar(String cnpj) {
+
 		if (indice > 0) {
 			for (int i = 0, j = indice; i < j; i++) {
 				if (cnpj.equals(array[i].getCnpj())) {
@@ -39,12 +40,9 @@ public class RepositorioLojaArray implements RepositorioLoja {
 				}
 			}
 
-		} else {
-			if (cnpj.equals(array[0].getCnpj())) {
-				return array[0];
-			}
 		}
 		return null;
+
 	}
 
 	@Override

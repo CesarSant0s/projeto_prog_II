@@ -37,6 +37,7 @@ public class ControleUsuario {
 		if (usuario != null && usuarios.buscar(usuario.getCpf()) != null) {
 			usuarios.atualizar(usuario);
 		} else {
+			
 		}
 	}
 
