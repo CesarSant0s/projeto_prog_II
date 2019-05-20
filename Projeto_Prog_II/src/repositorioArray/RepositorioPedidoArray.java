@@ -1,6 +1,6 @@
 package repositorioArray;
 
-import classesBasicasNegocio.Pedido;
+import negocioClassesBasicas.Pedido;
 import repositorio.RepositorioPedido;
 
 public class RepositorioPedidoArray implements RepositorioPedido {

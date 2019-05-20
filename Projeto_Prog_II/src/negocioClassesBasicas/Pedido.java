@@ -1,4 +1,4 @@
-package classesBasicasNegocio;
+package negocioClassesBasicas;
 
 import repositorio.RepositorioPratos;
 import repositorioArray.RepositorioPratosArray;

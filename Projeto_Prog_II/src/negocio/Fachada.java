@@ -1,12 +1,12 @@
 package negocio;
 
-import classesBasicasNegocio.Loja;
-import classesBasicasNegocio.Pedido;
-import classesBasicasNegocio.Prato;
-import classesBasicasNegocio.Usuario;
 import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import excepitonRepositorioArray.UsuarioVazioException;
+import negocioClassesBasicas.Loja;
+import negocioClassesBasicas.Pedido;
+import negocioClassesBasicas.Prato;
+import negocioClassesBasicas.Usuario;
 
 public class Fachada {
 

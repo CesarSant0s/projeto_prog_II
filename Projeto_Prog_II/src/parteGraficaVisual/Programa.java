@@ -1,10 +1,10 @@
 package parteGraficaVisual;
 
-import classesBasicasNegocio.Cliente;
-import classesBasicasNegocio.Entregador;
-import classesBasicasNegocio.Loja;
-import classesBasicasNegocio.Usuario;
 import negocio.Fachada;
+import negocioClassesBasicas.Cliente;
+import negocioClassesBasicas.Entregador;
+import negocioClassesBasicas.Loja;
+import negocioClassesBasicas.Usuario;
 
 public class Programa {
 

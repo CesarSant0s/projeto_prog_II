@@ -1,6 +1,6 @@
 package negocio;
 
-import classesBasicasNegocio.Loja;
+import negocioClassesBasicas.Loja;
 import repositorio.RepositorioLoja;
 import repositorioArray.RepositorioLojaArray;
 

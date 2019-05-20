@@ -1,4 +1,4 @@
-package classesBasicasNegocio;
+package negocioClassesBasicas;
 
 public class Entregador extends Usuario {
 

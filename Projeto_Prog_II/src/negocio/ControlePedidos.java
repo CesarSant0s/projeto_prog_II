@@ -1,7 +1,7 @@
 package negocio;
 
-import classesBasicasNegocio.Pedido;
-import classesBasicasNegocio.Prato;
+import negocioClassesBasicas.Pedido;
+import negocioClassesBasicas.Prato;
 import repositorio.RepositorioPedido;
 import repositorioArray.RepositorioPedidoArray;
 

@@ -1,6 +1,6 @@
 package excepitonRepositorioArray;
 
-import classesBasicasNegocio.Usuario;
+import negocioClassesBasicas.Usuario;
 
 public class UsuarioAnteriormenteCadastradoException extends Exception {
 

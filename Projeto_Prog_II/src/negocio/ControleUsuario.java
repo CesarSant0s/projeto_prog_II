@@ -1,6 +1,6 @@
 package negocio;
 
-import classesBasicasNegocio.Usuario;
+import negocioClassesBasicas.Usuario;
 import repositorio.RepositorioUsuario;
 import repositorioArray.RepositorioUsuarioArray;
 

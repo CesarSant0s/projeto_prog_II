@@ -1,6 +1,6 @@
 package repositorioArray;
 
-import classesBasicasNegocio.Usuario;
+import negocioClassesBasicas.Usuario;
 import repositorio.RepositorioUsuario;
 
 public class RepositorioUsuarioArray implements RepositorioUsuario {
@@ -18,6 +18,7 @@ public class RepositorioUsuarioArray implements RepositorioUsuario {
 
 		array[indice] = usuario;
 		indice++;
+
 	}
 
 	@Override

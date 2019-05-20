@@ -1,4 +1,4 @@
-package classesBasicasNegocio;
+package negocioClassesBasicas;
 
 public class Cliente extends Usuario {
 

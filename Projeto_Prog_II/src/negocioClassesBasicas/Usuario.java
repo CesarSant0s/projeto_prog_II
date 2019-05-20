@@ -1,4 +1,4 @@
-package classesBasicasNegocio;
+package negocioClassesBasicas;
 
 public abstract class Usuario {
 

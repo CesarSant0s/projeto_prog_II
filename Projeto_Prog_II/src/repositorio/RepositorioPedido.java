@@ -1,6 +1,6 @@
 package repositorio;
 
-import classesBasicasNegocio.Pedido;
+import negocioClassesBasicas.Pedido;
 
 public interface RepositorioPedido {
 
