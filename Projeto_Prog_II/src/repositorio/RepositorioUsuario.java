@@ -1,6 +1,6 @@
 package repositorio;
 
-import negocio.Usuario;
+import classesBasicasNegocio.Usuario;
 
 public interface RepositorioUsuario {
 	public void inserir(Usuario usuario);

@@ -1,6 +1,6 @@
 package repositorio;
 
-import negocio.Prato;
+import classesBasicasNegocio.Prato;
 
 public interface RepositorioPratos {
 

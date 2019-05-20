@@ -1,7 +1,7 @@
-package negocio;
+package classesBasicasNegocio;
 
 import repositorio.RepositorioPratos;
-import repositorio.RepositorioPratosArray;
+import repositorioArray.RepositorioPratosArray;
 
 public class Loja {
 

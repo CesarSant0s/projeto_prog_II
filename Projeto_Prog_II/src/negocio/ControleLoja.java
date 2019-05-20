@@ -1,7 +1,8 @@
 package negocio;
 
+import classesBasicasNegocio.Loja;
 import repositorio.RepositorioLoja;
-import repositorio.RepositorioLojaArray;
+import repositorioArray.RepositorioLojaArray;
 
 public class ControleLoja {
 

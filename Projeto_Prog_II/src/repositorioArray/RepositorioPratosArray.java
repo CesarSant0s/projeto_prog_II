@@ -1,6 +1,7 @@
-package repositorio;
+package repositorioArray;
 
-import negocio.Prato;
+import classesBasicasNegocio.Prato;
+import repositorio.RepositorioPratos;
 
 public class RepositorioPratosArray implements RepositorioPratos {
 
@@ -22,7 +23,7 @@ public class RepositorioPratosArray implements RepositorioPratos {
 			if (nomePrato.equals(cardapio[i].getNome())) {
 
 				cardapio[i] = cardapio[quantidadePratos];
-				cardapio[quantidadePratos] = null;
+				cardapio[--quantidadePratos] = null;
 				quantidadePratos--;
 
 			}

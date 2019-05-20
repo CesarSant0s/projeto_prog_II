@@ -1,7 +1,8 @@
 package negocio;
 
+import classesBasicasNegocio.Prato;
 import repositorio.RepositorioPratos;
-import repositorio.RepositorioPratosArray;
+import repositorioArray.RepositorioPratosArray;
 
 public class ControlePratos {
 

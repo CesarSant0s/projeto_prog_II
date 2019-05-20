@@ -1,6 +1,7 @@
-package repositorio;
+package repositorioArray;
 
-import negocio.Loja;
+import classesBasicasNegocio.Loja;
+import repositorio.RepositorioLoja;
 
 public class RepositorioLojaArray implements RepositorioLoja {
 	private Loja[] array;
@@ -24,7 +25,7 @@ public class RepositorioLojaArray implements RepositorioLoja {
 		for (int i = 0, j = indice; i < j; i++) {
 			if (cnpj.equals(array[i].getCnpj())) {
 				array[i] = array[indice];
-				array[indice] = null;
+				array[--indice] = null;
 				indice--;
 			}
 		}

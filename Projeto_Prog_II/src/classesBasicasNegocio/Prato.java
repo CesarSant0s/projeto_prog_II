@@ -1,4 +1,4 @@
-package negocio;
+package classesBasicasNegocio;
 
 public class Prato {
 	private String nome;

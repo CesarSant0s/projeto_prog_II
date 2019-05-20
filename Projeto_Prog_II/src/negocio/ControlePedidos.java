@@ -1,21 +1,29 @@
 package negocio;
 
+import classesBasicasNegocio.Pedido;
+import classesBasicasNegocio.Prato;
 import repositorio.RepositorioPedido;
-import repositorio.RepositorioPedidoArray;
+import repositorioArray.RepositorioPedidoArray;
 
 public class ControlePedidos {
 	RepositorioPedido pedidos = new RepositorioPedidoArray();
 
 	public void FazerPedido(Pedido pedido) {
+
 		if (pedido != null && (pedidos.buscar(pedido.getCodigo()) == null)) {
 			pedidos.inserir(pedido);
 		} else {
 
 		}
-
 	}
 
-	public void remover(int codigo) {
+	public void inserirPratoPedido(int codigoDoPedido, Prato prato) {
+		if (prato != null) {
+			pedidos.buscar(codigoDoPedido).getPratosEscolhidos().inserir(prato);
+		}
+	}
+
+	public void finalizarPedido(int codigo) {
 
 		pedidos.remover(codigo);
 

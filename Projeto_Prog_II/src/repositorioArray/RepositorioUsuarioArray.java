@@ -1,6 +1,7 @@
-package repositorio;
+package repositorioArray;
 
-import negocio.Usuario;
+import classesBasicasNegocio.Usuario;
+import repositorio.RepositorioUsuario;
 
 public class RepositorioUsuarioArray implements RepositorioUsuario {
 
@@ -14,6 +15,7 @@ public class RepositorioUsuarioArray implements RepositorioUsuario {
 
 	@Override
 	public void inserir(Usuario usuario) {
+
 		array[indice] = usuario;
 		indice++;
 	}
@@ -48,7 +50,7 @@ public class RepositorioUsuarioArray implements RepositorioUsuario {
 
 			if (cpf.equals(array[i].getCpf())) {
 
-				array[i] = array[indice];
+				array[i] = array[indice - 1];
 				array[indice] = null;
 				indice--;
 

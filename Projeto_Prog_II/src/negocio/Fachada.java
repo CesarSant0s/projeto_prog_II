@@ -1,5 +1,13 @@
 package negocio;
 
+import classesBasicasNegocio.Loja;
+import classesBasicasNegocio.Pedido;
+import classesBasicasNegocio.Prato;
+import classesBasicasNegocio.Usuario;
+import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
+import excepitonRepositorioArray.UsuarioNaoCadastradoException;
+import excepitonRepositorioArray.UsuarioVazioException;
+
 public class Fachada {
 
 	private static Fachada instance;
@@ -44,12 +52,12 @@ public class Fachada {
 	}
 
 	// Controle Pedido
-	public void inserirPedido(Pedido pedido) {
-		pedidos.inserir(pedido);
+	public void FazerPedido(Pedido pedido) {
+		pedidos.FazerPedido(pedido);
 	}
 
-	public void removerPedido(int codigo) {
-		pedidos.remover(codigo);
+	public void FinalizarPedido(int codigo) {
+		pedidos.finalizarPedido(codigo);
 	}
 
 	public Pedido buscarPedido(int codigo) {
@@ -86,19 +94,35 @@ public class Fachada {
 	}
 
 	// Controle Usuario
-	public void inserirUsuario(Usuario usuario) {
-		usuarios.inserir(usuario);
+	public void inserirUsuario(Usuario usuario) throws UsuarioVazioException, UsuarioAnteriormenteCadastradoException {
+		if (usuario == null) {
+			UsuarioVazioException e = new UsuarioVazioException();
+			throw e;
+		} else if (usuarios.buscar(usuario.getCpf()) != null) {
+			UsuarioAnteriormenteCadastradoException e = new UsuarioAnteriormenteCadastradoException(usuario);
+			throw e;
+		}
 	}
 
 	public void removerUsuario(String cpf) {
 		usuarios.remover(cpf);
 	}
 
-	public Usuario buscarUsuario(String cpf) {
-		return usuarios.buscar(cpf);
+	public Usuario buscarUsuario(String cpf) throws UsuarioNaoCadastradoException {
+		Usuario resultado = usuarios.buscar(cpf);
+		if (resultado == null) {
+			UsuarioNaoCadastradoException e = new UsuarioNaoCadastradoException(cpf);
+			throw e;
+		} else {
+			return resultado;
+		}
 	}
 
-	public void atualizarUsuario(Usuario usuario) {
+	public void atualizarUsuario(Usuario usuario) throws UsuarioVazioException {
+		if (usuario == null) {
+			UsuarioVazioException e = new UsuarioVazioException();
+			throw e;
+		}
 		usuarios.atualizar(usuario);
 	}
 

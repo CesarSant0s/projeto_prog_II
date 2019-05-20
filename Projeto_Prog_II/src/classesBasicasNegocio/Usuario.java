@@ -1,4 +1,4 @@
-package negocio;
+package classesBasicasNegocio;
 
 public abstract class Usuario {
 
@@ -21,8 +21,8 @@ public abstract class Usuario {
 	}
 
 	public void setNomeUsuario(String nomeUsuario) {
-		if (!(nomeUsuario == null) && !(nomeUsuario.equals("")))
-			this.nomeUsuario = nomeUsuario;
+		this.nomeUsuario = nomeUsuario;
+
 	}
 
 	public String getSenha() {
@@ -30,8 +30,7 @@ public abstract class Usuario {
 	}
 
 	public void setSenha(String senha) {
-		if (!(senha == null) && !(senha.equals("")))
-			this.senha = senha;
+		this.senha = senha;
 	}
 
 	public String getNome() {
@@ -39,8 +38,7 @@ public abstract class Usuario {
 	}
 
 	public void setNome(String nome) {
-		if (!(nome == null) && !(nome.equals("")))
-			this.nome = nome;
+		this.nome = nome;
 	}
 
 	public String getTelefone() {
@@ -48,8 +46,7 @@ public abstract class Usuario {
 	}
 
 	public void setTelefone(String telefone) {
-		if (!(telefone == null) && !(telefone.equals("")))
-			this.telefone = telefone;
+		this.telefone = telefone;
 	}
 
 	public String getCpf() {
@@ -57,8 +54,7 @@ public abstract class Usuario {
 	}
 
 	public void setCpf(String cpf) {
-		if (!(cpf == null) && !(cpf.equals("")))
-			this.cpf = cpf;
+		this.cpf = cpf;
 	}
 
 }

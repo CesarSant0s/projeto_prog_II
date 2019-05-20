@@ -1,7 +1,8 @@
 package negocio;
 
+import classesBasicasNegocio.Usuario;
 import repositorio.RepositorioUsuario;
-import repositorio.RepositorioUsuarioArray;
+import repositorioArray.RepositorioUsuarioArray;
 
 public class ControleUsuario {
 
