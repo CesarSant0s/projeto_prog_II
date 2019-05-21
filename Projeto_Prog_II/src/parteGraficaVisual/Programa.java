@@ -1,5 +1,7 @@
 package parteGraficaVisual;
 
+import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
+import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import excepitonRepositorioArray.UsuarioVazioException;
 import negocio.Fachada;
 import negocioClassesBasicas.Cliente;
@@ -25,21 +27,78 @@ public class Programa {
 
 		Fachada.getInstance().inserirLoja(loja1);
 
-		Fachada.getInstance().inserirUsuario(u1);
+		try {
+			Fachada.getInstance().inserirUsuario(u1);
+		} catch (UsuarioAnteriormenteCadastradoException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (UsuarioNaoCadastradoException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
-		Fachada.getInstance().inserirUsuario(u2);
+		try {
+			Fachada.getInstance().inserirUsuario(u2);
+		} catch (UsuarioAnteriormenteCadastradoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UsuarioNaoCadastradoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		Fachada.getInstance().inserirUsuario(u3);
+		try {
+			Fachada.getInstance().inserirUsuario(u3);
+		} catch (UsuarioAnteriormenteCadastradoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UsuarioNaoCadastradoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		Fachada.getInstance().inserirUsuario(u4);
+		try {
+			Fachada.getInstance().inserirUsuario(u4);
+		} catch (UsuarioAnteriormenteCadastradoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UsuarioNaoCadastradoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		Fachada.getInstance().inserirUsuario(u5);
+		try {
+			Fachada.getInstance().inserirUsuario(u5);
+		} catch (UsuarioAnteriormenteCadastradoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UsuarioNaoCadastradoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		System.out.println(Fachada.getInstance().buscarUsuario("001").getNome());
+		try {
+			System.out.println(Fachada.getInstance().buscarUsuario("001").getNome());
+		} catch (UsuarioNaoCadastradoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		Fachada.getInstance().removerUsuario("001");
+		try {
+			Fachada.getInstance().removerUsuario("001");
+		} catch (UsuarioNaoCadastradoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		Usuario teste = Fachada.getInstance().buscarUsuario("001");
+		Usuario teste = null;
+
+		try {
+			teste = Fachada.getInstance().buscarUsuario("001");
+		} catch (UsuarioNaoCadastradoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		if (teste == null) {
 			System.out.println("Removido");

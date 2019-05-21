@@ -17,42 +17,48 @@ public class RepositorioUsuarioArray implements RepositorioUsuario {
 	}
 
 	@Override
-	public void inserir(Usuario usuario) throws UsuarioVazioException, UsuarioAnteriormenteCadastradoException {
-
-		Usuario resulUsuario = null;
-
-		for (int i = 0; i < indice; i++) {
-			if (usuario.getCpf().equals(array[i].getCpf())) {
-				resulUsuario = array[i];
-			}
-		}
+	public void inserir(Usuario usuario) throws UsuarioVazioException, UsuarioNaoCadastradoException {
 
 		if (usuario == null) {
 
 			UsuarioVazioException e = new UsuarioVazioException();
 			throw e;
 
-		} else if (resulUsuario == null) {
-			UsuarioAnteriormenteCadastradoException e = new UsuarioAnteriormenteCadastradoException(usuario);
-
-			throw e;
-
 		} else {
-			array[indice] = usuario;
-			indice++;
-		}
 
+			Usuario resultadoBusca = null;
+			for (int i = 0; i < indice; i++) {
+				if (usuario.getCpf().equals(array[i].getCpf())) {
+					resultadoBusca = array[i];
+				}
+			}
+
+			if (resultadoBusca == null) {
+				UsuarioNaoCadastradoException e = new UsuarioNaoCadastradoException(usuario.getCpf());
+				throw e;
+			} else {
+				array[indice] = usuario;
+			}
+
+		}
 	}
 
 	@Override
-	public void atualizar(Usuario usuario) {
+	public void atualizar(Usuario usuario) throws UsuarioVazioException, UsuarioNaoCadastradoException {
 
-		for (int i = 0, j = indice; i < j; i++) {
-			if (usuario.getCpf().equals(array[i].getCpf())) {
-				array[i] = usuario;
+		if (usuario == null) {
+			UsuarioVazioException e = new UsuarioVazioException();
+			throw e;
+		} else {
+			buscar(usuario.getCpf());
+			for (int i = 0, j = indice; i < j; i++) {
+				if (usuario.getCpf().equals(array[i].getCpf())) {
+					array[i] = usuario;
 
+				}
 			}
 		}
+
 	}
 
 	@Override
@@ -80,7 +86,10 @@ public class RepositorioUsuarioArray implements RepositorioUsuario {
 	}
 
 	@Override
-	public void remover(String cpf) {
+	public void remover(String cpf) throws UsuarioNaoCadastradoException {
+
+		buscar(cpf);
+
 		for (int i = 0, j = indice; i < j; i++) {
 
 			if (cpf.equals(array[i].getCpf())) {
@@ -88,8 +97,8 @@ public class RepositorioUsuarioArray implements RepositorioUsuario {
 				array[i] = array[indice - 1];
 				array[--indice] = null;
 				indice--;
-
 			}
+
 		}
 
 	}

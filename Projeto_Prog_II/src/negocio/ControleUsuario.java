@@ -1,5 +1,7 @@
 package negocio;
 
+import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
+import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import excepitonRepositorioArray.UsuarioVazioException;
 import negocioClassesBasicas.Usuario;
 import repositorio.RepositorioUsuario;
@@ -9,24 +11,25 @@ public class ControleUsuario {
 
 	RepositorioUsuario usuarios = new RepositorioUsuarioArray();
 
-	public void inserir(Usuario usuario) throws UsuarioVazioException {
+	public void inserir(Usuario usuario)
+			throws UsuarioVazioException, UsuarioAnteriormenteCadastradoException, UsuarioNaoCadastradoException {
 
 		usuarios.inserir(usuario);
 	}
 
-	public void remover(String cpf) {
+	public void remover(String cpf) throws UsuarioNaoCadastradoException {
 
 		usuarios.remover(cpf);
 	}
 
-	public Usuario buscar(String cpf) {
+	public Usuario buscar(String cpf) throws UsuarioNaoCadastradoException {
 
 		Usuario resultadoBusca = usuarios.buscar(cpf);
 
 		return resultadoBusca;
 	}
 
-	public void atualizar(Usuario usuario) {
+	public void atualizar(Usuario usuario) throws UsuarioVazioException, UsuarioNaoCadastradoException {
 		usuarios.atualizar(usuario);
 
 	}
