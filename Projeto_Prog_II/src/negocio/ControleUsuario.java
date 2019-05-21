@@ -1,5 +1,6 @@
 package negocio;
 
+import excepitonRepositorioArray.UsuarioVazioException;
 import negocioClassesBasicas.Usuario;
 import repositorio.RepositorioUsuario;
 import repositorioArray.RepositorioUsuarioArray;
@@ -8,14 +9,9 @@ public class ControleUsuario {
 
 	RepositorioUsuario usuarios = new RepositorioUsuarioArray();
 
-	public void inserir(Usuario usuario) {
+	public void inserir(Usuario usuario) throws UsuarioVazioException {
 
-		if (usuario != null && usuarios.buscar(usuario.getCpf()) == null) {
-			usuarios.inserir(usuario);
-		} else {
-
-		}
-
+		usuarios.inserir(usuario);
 	}
 
 	public void remover(String cpf) {
@@ -27,19 +23,12 @@ public class ControleUsuario {
 
 		Usuario resultadoBusca = usuarios.buscar(cpf);
 
-		if (resultadoBusca != null) {
-			return resultadoBusca;
-		} else {
-			return resultadoBusca;
-		}
+		return resultadoBusca;
 	}
 
 	public void atualizar(Usuario usuario) {
-		if (usuario != null && usuarios.buscar(usuario.getCpf()) != null) {
-			usuarios.atualizar(usuario);
-		} else {
-			
-		}
+		usuarios.atualizar(usuario);
+
 	}
 
 	public Usuario[] listar() {

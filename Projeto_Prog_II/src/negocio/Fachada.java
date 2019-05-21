@@ -1,7 +1,5 @@
 package negocio;
 
-import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
-import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import excepitonRepositorioArray.UsuarioVazioException;
 import negocioClassesBasicas.Loja;
 import negocioClassesBasicas.Pedido;
@@ -94,35 +92,25 @@ public class Fachada {
 	}
 
 	// Controle Usuario
-	public void inserirUsuario(Usuario usuario) throws UsuarioVazioException, UsuarioAnteriormenteCadastradoException {
-		if (usuario == null) {
-			UsuarioVazioException e = new UsuarioVazioException();
-			throw e;
-		} else if (usuarios.buscar(usuario.getCpf()) != null) {
-			UsuarioAnteriormenteCadastradoException e = new UsuarioAnteriormenteCadastradoException(usuario);
-			throw e;
-		}
+	public void inserirUsuario(Usuario usuario) throws UsuarioVazioException {
+
+		usuarios.inserir(usuario);
+
 	}
 
 	public void removerUsuario(String cpf) {
+
 		usuarios.remover(cpf);
+
 	}
 
-	public Usuario buscarUsuario(String cpf) throws UsuarioNaoCadastradoException {
-		Usuario resultado = usuarios.buscar(cpf);
-		if (resultado == null) {
-			UsuarioNaoCadastradoException e = new UsuarioNaoCadastradoException(cpf);
-			throw e;
-		} else {
-			return resultado;
-		}
+	public Usuario buscarUsuario(String cpf) {
+
+		return usuarios.buscar(cpf);
+
 	}
 
-	public void atualizarUsuario(Usuario usuario) throws UsuarioVazioException {
-		if (usuario == null) {
-			UsuarioVazioException e = new UsuarioVazioException();
-			throw e;
-		}
+	public void atualizarUsuario(Usuario usuario) {
 		usuarios.atualizar(usuario);
 	}
 

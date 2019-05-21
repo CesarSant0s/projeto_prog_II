@@ -10,17 +10,12 @@ public class ControlePedidos {
 
 	public void FazerPedido(Pedido pedido) {
 
-		if (pedido != null && (pedidos.buscar(pedido.getCodigo()) == null)) {
-			pedidos.inserir(pedido);
-		} else {
+		pedidos.inserir(pedido);
 
-		}
 	}
 
 	public void inserirPratoPedido(int codigoDoPedido, Prato prato) {
-		if (prato != null) {
-			pedidos.buscar(codigoDoPedido).getPratosEscolhidos().inserir(prato);
-		}
+		pedidos.buscar(codigoDoPedido).getPratosEscolhidos().inserir(prato);
 	}
 
 	public void finalizarPedido(int codigo) {
@@ -33,21 +28,14 @@ public class ControlePedidos {
 
 		Pedido resultadoBuscar = pedidos.buscar(codigo);
 
-		if (resultadoBuscar != null) {
-			return resultadoBuscar;
-		} else {
-			return resultadoBuscar;
-		}
+		return resultadoBuscar;
 
 	}
 
 	public void alterar(Pedido pedido) {
 
-		if (pedido != null && (pedidos.buscar(pedido.getCodigo()) != null)) {
-			pedidos.alterar(pedido);
-		} else {
+		pedidos.alterar(pedido);
 
-		}
 	}
 
 	public Pedido[] listar() {

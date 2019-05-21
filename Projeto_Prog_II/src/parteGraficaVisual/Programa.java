@@ -1,5 +1,6 @@
 package parteGraficaVisual;
 
+import excepitonRepositorioArray.UsuarioVazioException;
 import negocio.Fachada;
 import negocioClassesBasicas.Cliente;
 import negocioClassesBasicas.Entregador;
@@ -10,7 +11,7 @@ public class Programa {
 
 	Fachada f1 = new Fachada();
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UsuarioVazioException {
 		Usuario u1 = new Cliente("nome.cliente1", "1234", "nome1", "001", "001", "casa1");
 		Usuario u2 = new Cliente("nome.cliente2", "1234", "nome2", "002", "002", "casa2");
 		Usuario u3 = new Cliente("nome.cliente3", "1234", "nome3", "003", "003", "casa3");
@@ -25,9 +26,13 @@ public class Programa {
 		Fachada.getInstance().inserirLoja(loja1);
 
 		Fachada.getInstance().inserirUsuario(u1);
+
 		Fachada.getInstance().inserirUsuario(u2);
+
 		Fachada.getInstance().inserirUsuario(u3);
+
 		Fachada.getInstance().inserirUsuario(u4);
+
 		Fachada.getInstance().inserirUsuario(u5);
 
 		System.out.println(Fachada.getInstance().buscarUsuario("001").getNome());

@@ -1,5 +1,8 @@
 package repositorioArray;
 
+import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
+import excepitonRepositorioArray.UsuarioNaoCadastradoException;
+import excepitonRepositorioArray.UsuarioVazioException;
 import negocioClassesBasicas.Usuario;
 import repositorio.RepositorioUsuario;
 
@@ -14,10 +17,30 @@ public class RepositorioUsuarioArray implements RepositorioUsuario {
 	}
 
 	@Override
-	public void inserir(Usuario usuario) {
+	public void inserir(Usuario usuario) throws UsuarioVazioException, UsuarioAnteriormenteCadastradoException {
 
-		array[indice] = usuario;
-		indice++;
+		Usuario resulUsuario = null;
+
+		for (int i = 0; i < indice; i++) {
+			if (usuario.getCpf().equals(array[i].getCpf())) {
+				resulUsuario = array[i];
+			}
+		}
+
+		if (usuario == null) {
+
+			UsuarioVazioException e = new UsuarioVazioException();
+			throw e;
+
+		} else if (resulUsuario == null) {
+			UsuarioAnteriormenteCadastradoException e = new UsuarioAnteriormenteCadastradoException(usuario);
+
+			throw e;
+
+		} else {
+			array[indice] = usuario;
+			indice++;
+		}
 
 	}
 
@@ -33,16 +56,27 @@ public class RepositorioUsuarioArray implements RepositorioUsuario {
 	}
 
 	@Override
-	public Usuario buscar(String cpf) {
+	public Usuario buscar(String cpf) throws UsuarioNaoCadastradoException {
+
+		Usuario resulUsuario = null;
 
 		if (indice > 0) {
 			for (int i = 0; i < indice; i++) {
 				if (cpf.equals(array[i].getCpf())) {
-					return array[i];
+					resulUsuario = array[i];
 				}
 			}
+		} else {
+			resulUsuario = array[0];
 		}
-		return null;
+
+		if (resulUsuario == null) {
+			UsuarioNaoCadastradoException e = new UsuarioNaoCadastradoException(cpf);
+			throw e;
+		} else {
+			return resulUsuario;
+		}
+
 	}
 
 	@Override
@@ -52,7 +86,7 @@ public class RepositorioUsuarioArray implements RepositorioUsuario {
 			if (cpf.equals(array[i].getCpf())) {
 
 				array[i] = array[indice - 1];
-				array[indice] = null;
+				array[--indice] = null;
 				indice--;
 
 			}

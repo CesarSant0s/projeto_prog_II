@@ -10,11 +10,7 @@ public class ControlePratos {
 
 	public void inserir(Prato prato) {
 
-		if (prato != null && pratos.buscar(prato.getNome()) == null) {
-			pratos.inserir(prato);
-		} else {
-
-		}
+		pratos.inserir(prato);
 
 	}
 
@@ -27,21 +23,13 @@ public class ControlePratos {
 	public Prato buscar(String nome) {
 		Prato resultadoBusca = pratos.buscar(nome);
 
-		if (resultadoBusca != null) {
-			return resultadoBusca;
-		} else {
-			return resultadoBusca;
-		}
+		return resultadoBusca;
 
 	}
 
 	public void alterar(Prato prato) {
 
-		if (prato != null && pratos.buscar(prato.getNome()) != null) {
-			pratos.alterar(prato);
-		} else {
-
-		}
+		pratos.alterar(prato);
 
 	}
 
