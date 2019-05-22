@@ -1,5 +1,8 @@
 package repositorioArray;
 
+import excepitonRepositorioArray.PedidoJaInseridoException;
+import excepitonRepositorioArray.PedidoNaoCadastrado;
+import excepitonRepositorioArray.PedidoVazioException;
 import negocioClassesBasicas.Pedido;
 import repositorio.RepositorioPedido;
 
@@ -13,13 +16,39 @@ public class RepositorioPedidoArray implements RepositorioPedido {
 		array = new Pedido[TAMANHO];
 	}
 
-	public void inserir(Pedido pedido) {
+	public void inserir(Pedido pedido) throws PedidoJaInseridoException, PedidoVazioException {
 
-		this.array[indice] = pedido;
-		indice++;
+		if (pedido == null) {
+
+			PedidoVazioException e = new PedidoVazioException();
+			throw e;
+
+		} else {
+
+			Pedido resultadoBusca = null;
+
+			for (int i = 0; i < indice; i++) {
+				if (pedido.getCodigo() == array[i].getCodigo()) {
+					resultadoBusca = array[i];
+				}
+			}
+
+			if (resultadoBusca != null) {
+				PedidoJaInseridoException e = new PedidoJaInseridoException();
+				throw e;
+			} else {
+				array[indice] = pedido;
+				indice++;
+			}
+
+		}
+
 	}
 
-	public void remover(int codigo) {
+	public void remover(int codigo) throws PedidoNaoCadastrado {
+
+		buscar(codigo);
+
 		for (int i = 0, j = indice; i < j; i++) {
 			if (codigo == array[i].getCodigo()) {
 				array[i] = null;
@@ -31,22 +60,44 @@ public class RepositorioPedidoArray implements RepositorioPedido {
 		}
 	}
 
-	public Pedido buscar(int codigo) {
+	public Pedido buscar(int codigo) throws PedidoNaoCadastrado {
+
+		Pedido resultadoBusca = null;
+
 		if (indice > 0) {
 			for (int i = 0, j = indice; i < j; i++) {
 				if (codigo == array[i].getCodigo()) {
-					return array[i];
+					resultadoBusca = array[i];
 				}
 			}
+		} else {
+			resultadoBusca = null;
 		}
-		return null;
+
+		if (resultadoBusca == null) {
+			PedidoNaoCadastrado e = new PedidoNaoCadastrado();
+
+			throw e;
+
+		} else {
+			return resultadoBusca;
+		}
+
 	}
 
-	public void alterar(Pedido pedido) {
-		for (int i = 0, j = indice; i < j; i++) {
-			if (pedido.getCodigo() == array[i].getCodigo()) {
-				array[i] = pedido;
+	public void alterar(Pedido pedido) throws PedidoVazioException, PedidoNaoCadastrado {
+
+		if (pedido == null) {
+			PedidoVazioException e = new PedidoVazioException();
+			throw e;
+		} else {
+			buscar(pedido.getCodigo());
+			for (int i = 0, j = indice; i < j; i++) {
+				if (pedido.getCodigo() == array[i].getCodigo()) {
+					array[i] = pedido;
+				}
 			}
+
 		}
 
 	}

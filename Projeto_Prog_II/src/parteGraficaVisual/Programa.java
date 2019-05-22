@@ -1,5 +1,7 @@
 package parteGraficaVisual;
 
+import excepitonRepositorioArray.LojaJaCadastradaException;
+import excepitonRepositorioArray.LojaVaziaException;
 import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import excepitonRepositorioArray.UsuarioVazioException;
@@ -25,7 +27,15 @@ public class Programa {
 		Usuario uE1 = new Entregador("nome.entregador1", "1234", "nome1", "00001", "001", "001");
 		Usuario uE2 = new Entregador("nome.entregador2", "1234", "nome2", "00002", "002", "002");
 
-		Fachada.getInstance().inserirLoja(loja1);
+		try {
+			Fachada.getInstance().inserirLoja(loja1);
+		} catch (LojaVaziaException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (LojaJaCadastradaException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 
 		try {
 			Fachada.getInstance().inserirUsuario(u1);
@@ -94,7 +104,7 @@ public class Programa {
 		Usuario teste = null;
 
 		try {
-			teste = Fachada.getInstance().buscarUsuario("001");
+			teste = Fachada.getInstance().buscarUsuario("002");
 		} catch (UsuarioNaoCadastradoException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -102,6 +112,8 @@ public class Programa {
 
 		if (teste == null) {
 			System.out.println("Removido");
+		} else {
+			System.out.println(teste.getNome());
 		}
 	}
 

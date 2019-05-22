@@ -1,5 +1,8 @@
 package repositorioArray;
 
+import excepitonRepositorioArray.PratoJaInseridoException;
+import excepitonRepositorioArray.PratoNaoEncontradoException;
+import excepitonRepositorioArray.PratoVazioException;
 import negocioClassesBasicas.Prato;
 import repositorio.RepositorioPratos;
 
@@ -13,12 +16,40 @@ public class RepositorioPratosArray implements RepositorioPratos {
 		quantidadePratos = 0;
 	}
 
-	public void inserir(Prato prato) {
-		cardapio[quantidadePratos] = prato;
-		quantidadePratos++;
+	public void inserir(Prato prato) throws PratoVazioException, PratoJaInseridoException {
+
+		if (prato == null) {
+
+			PratoVazioException e = new PratoVazioException();
+			throw e;
+
+		} else {
+
+			Prato resultadoPrato = null;
+
+			for (int i = 0; i < quantidadePratos; i++) {
+				if (prato.getNome().equals(cardapio[i].getNome())) {
+					resultadoPrato = cardapio[i];
+				}
+
+				if (resultadoPrato != null) {
+
+					PratoJaInseridoException e = new PratoJaInseridoException(prato.getNome());
+					throw e;
+				} else {
+					cardapio[quantidadePratos] = prato;
+					quantidadePratos++;
+				}
+
+			}
+		}
+
 	}
 
-	public void remover(String nomePrato) {
+	public void remover(String nomePrato) throws PratoNaoEncontradoException {
+
+		buscar(nomePrato);
+
 		for (int i = 0, j = quantidadePratos; i < j; i++) {
 			if (nomePrato.equals(cardapio[i].getNome())) {
 
@@ -30,23 +61,47 @@ public class RepositorioPratosArray implements RepositorioPratos {
 		}
 	}
 
-	public Prato buscar(String nomePrato) {
+	public Prato buscar(String nomePrato) throws PratoNaoEncontradoException {
 
-		if (quantidadePratos > 0)
+		Prato resultadoPrato = null;
+
+		if (quantidadePratos > 0) {
 			for (int i = 0, j = quantidadePratos; i < j; i++) {
 				if (nomePrato.equals(cardapio[i].getNome())) {
-					return cardapio[i];
+					resultadoPrato = cardapio[i];
 				}
 			}
-		return null;
+		} else {
+			resultadoPrato = null;
+		}
+
+		if (resultadoPrato == null) {
+			PratoNaoEncontradoException e = new PratoNaoEncontradoException();
+			throw e;
+		} else {
+			return resultadoPrato;
+		}
+
 	}
 
-	public void alterar(Prato novoPrato) {
+	public void alterar(Prato novoPrato) throws PratoVazioException, PratoNaoEncontradoException {
 
-		for (int i = 0, j = quantidadePratos; i < j; i++) {
-			if (novoPrato.getNome().equals(cardapio[i].getNome())) {
-				cardapio[i] = novoPrato;
+		if (novoPrato == null) {
+
+			PratoVazioException e = new PratoVazioException();
+			throw e;
+
+		} else {
+
+			buscar(novoPrato.getNome());
+
+			for (int i = 0, j = quantidadePratos; i < j; i++) {
+				if (novoPrato.getNome().equals(cardapio[i].getNome())) {
+					cardapio[i] = novoPrato;
+				}
+
 			}
+
 		}
 
 	}

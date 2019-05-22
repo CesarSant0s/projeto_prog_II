@@ -1,5 +1,8 @@
 package negocioClassesBasicas;
 
+import excepitonRepositorioArray.PratoJaInseridoException;
+import excepitonRepositorioArray.PratoNaoEncontradoException;
+import excepitonRepositorioArray.PratoVazioException;
 import repositorio.RepositorioPratos;
 import repositorioArray.RepositorioPratosArray;
 
@@ -59,7 +62,7 @@ public class Pedido {
 	}
 
 	// duvida sobre o projeto
-	public void inserirPratoPedido(Prato prato) {
+	public void inserirPratoPedido(Prato prato) throws PratoVazioException, PratoJaInseridoException {
 
 		valorTotal += prato.getValorDoPrato();
 
@@ -67,12 +70,12 @@ public class Pedido {
 
 	}
 
-	public void RemoverPratoPedido(Prato prato) {
+	public void RemoverPratoPedido(Prato prato) throws PratoNaoEncontradoException {
 
 		valorTotal -= prato.getValorDoPrato();
-		
+
 		pratosEscolhidos.remover(prato.getNome());
-		
+
 	}
 
 	public RepositorioPratos getPratosEscolhidos() {

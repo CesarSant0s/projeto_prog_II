@@ -1,5 +1,14 @@
 package negocio;
 
+import excepitonRepositorioArray.LojaJaCadastradaException;
+import excepitonRepositorioArray.LojaNaoCadastradaException;
+import excepitonRepositorioArray.LojaVaziaException;
+import excepitonRepositorioArray.PedidoJaInseridoException;
+import excepitonRepositorioArray.PedidoNaoCadastrado;
+import excepitonRepositorioArray.PedidoVazioException;
+import excepitonRepositorioArray.PratoJaInseridoException;
+import excepitonRepositorioArray.PratoNaoEncontradoException;
+import excepitonRepositorioArray.PratoVazioException;
 import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import excepitonRepositorioArray.UsuarioVazioException;
@@ -31,19 +40,19 @@ public class Fachada {
 	}
 
 	// Controle Pratos
-	public void inserirPrato(Prato prato) {
+	public void inserirPrato(Prato prato) throws PratoVazioException, PratoJaInseridoException {
 		pratos.inserir(prato);
 	}
 
-	public void removerPrato(String nome) {
+	public void removerPrato(String nome) throws PratoNaoEncontradoException {
 		pratos.remover(nome);
 	}
 
-	public Prato buscarPrato(String nome) {
+	public Prato buscarPrato(String nome) throws PratoNaoEncontradoException {
 		return pratos.buscar(nome);
 	}
 
-	public void alterarPrato(Prato prato) {
+	public void alterarPrato(Prato prato) throws PratoVazioException, PratoNaoEncontradoException {
 		pratos.alterar(prato);
 	}
 
@@ -52,19 +61,19 @@ public class Fachada {
 	}
 
 	// Controle Pedido
-	public void FazerPedido(Pedido pedido) {
+	public void FazerPedido(Pedido pedido) throws PedidoJaInseridoException, PedidoVazioException {
 		pedidos.FazerPedido(pedido);
 	}
 
-	public void FinalizarPedido(int codigo) {
+	public void FinalizarPedido(int codigo) throws PedidoNaoCadastrado {
 		pedidos.finalizarPedido(codigo);
 	}
 
-	public Pedido buscarPedido(int codigo) {
+	public Pedido buscarPedido(int codigo) throws PedidoNaoCadastrado {
 		return pedidos.buscar(codigo);
 	}
 
-	public void alterarPedido(Pedido pedido) {
+	public void alterarPedido(Pedido pedido) throws PedidoVazioException, PedidoNaoCadastrado {
 		pedidos.alterar(pedido);
 	}
 
@@ -73,19 +82,19 @@ public class Fachada {
 	}
 
 	// Controle Loja
-	public void inserirLoja(Loja loja) {
+	public void inserirLoja(Loja loja) throws LojaVaziaException, LojaJaCadastradaException {
 		lojas.inserir(loja);
 	}
 
-	public void removerLoja(String cnpj) {
+	public void removerLoja(String cnpj) throws LojaNaoCadastradaException {
 		lojas.remover(cnpj);
 	}
 
-	public Loja buscarLoja(String cnpj) {
+	public Loja buscarLoja(String cnpj) throws LojaNaoCadastradaException {
 		return lojas.buscar(cnpj);
 	}
 
-	public void alterarLoja(Loja loja) {
+	public void alterarLoja(Loja loja) throws LojaVaziaException, LojaNaoCadastradaException {
 		lojas.alterar(loja);
 	}
 

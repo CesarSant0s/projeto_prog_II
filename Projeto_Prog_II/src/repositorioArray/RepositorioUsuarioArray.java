@@ -1,5 +1,7 @@
 package repositorioArray;
 
+import java.util.UUID;
+
 import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import excepitonRepositorioArray.UsuarioVazioException;
@@ -17,7 +19,7 @@ public class RepositorioUsuarioArray implements RepositorioUsuario {
 	}
 
 	@Override
-	public void inserir(Usuario usuario) throws UsuarioVazioException, UsuarioNaoCadastradoException {
+	public void inserir(Usuario usuario) throws UsuarioVazioException, UsuarioAnteriormenteCadastradoException {
 
 		if (usuario == null) {
 
@@ -33,14 +35,16 @@ public class RepositorioUsuarioArray implements RepositorioUsuario {
 				}
 			}
 
-			if (resultadoBusca == null) {
-				UsuarioNaoCadastradoException e = new UsuarioNaoCadastradoException(usuario.getCpf());
+			if (resultadoBusca != null) {
+				UsuarioAnteriormenteCadastradoException e = new UsuarioAnteriormenteCadastradoException(usuario);
 				throw e;
 			} else {
 				array[indice] = usuario;
+				indice++;
 			}
 
 		}
+
 	}
 
 	@Override
@@ -73,7 +77,7 @@ public class RepositorioUsuarioArray implements RepositorioUsuario {
 				}
 			}
 		} else {
-			resulUsuario = array[0];
+			resulUsuario = null;
 		}
 
 		if (resulUsuario == null) {
@@ -90,12 +94,12 @@ public class RepositorioUsuarioArray implements RepositorioUsuario {
 
 		buscar(cpf);
 
-		for (int i = 0, j = indice; i < j; i++) {
+		for (int i = 0; i < indice; i++) {
 
 			if (cpf.equals(array[i].getCpf())) {
 
 				array[i] = array[indice - 1];
-				array[--indice] = null;
+				array[indice-1] = null;
 				indice--;
 			}
 

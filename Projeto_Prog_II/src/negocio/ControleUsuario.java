@@ -11,8 +11,7 @@ public class ControleUsuario {
 
 	RepositorioUsuario usuarios = new RepositorioUsuarioArray();
 
-	public void inserir(Usuario usuario)
-			throws UsuarioVazioException, UsuarioAnteriormenteCadastradoException, UsuarioNaoCadastradoException {
+	public void inserir(Usuario usuario) throws UsuarioVazioException, UsuarioAnteriormenteCadastradoException {
 
 		usuarios.inserir(usuario);
 	}

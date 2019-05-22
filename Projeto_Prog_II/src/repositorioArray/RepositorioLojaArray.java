@@ -1,6 +1,13 @@
 package repositorioArray;
 
+import excepitonRepositorioArray.LojaJaCadastradaException;
+import excepitonRepositorioArray.LojaNaoCadastradaException;
+import excepitonRepositorioArray.LojaVaziaException;
+import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
+import excepitonRepositorioArray.UsuarioNaoCadastradoException;
+import excepitonRepositorioArray.UsuarioVazioException;
 import negocioClassesBasicas.Loja;
+import negocioClassesBasicas.Usuario;
 import repositorio.RepositorioLoja;
 
 public class RepositorioLojaArray implements RepositorioLoja {
@@ -13,15 +20,39 @@ public class RepositorioLojaArray implements RepositorioLoja {
 	}
 
 	@Override
-	public void inserir(Loja loja) {
+	public void inserir(Loja loja) throws LojaVaziaException, LojaJaCadastradaException {
 
-		this.array[indice] = loja;
-		indice++;
+		if (loja == null) {
 
+			LojaVaziaException e = new LojaVaziaException();
+
+			throw e;
+
+		} else {
+
+			Loja resultadoBusca = null;
+			for (int i = 0; i < indice; i++) {
+				if (loja.getCnpj().equals(array[i].getCnpj())) {
+					resultadoBusca = array[i];
+				}
+			}
+
+			if (resultadoBusca != null) {
+
+				LojaJaCadastradaException e = new LojaJaCadastradaException();
+				throw e;
+			} else {
+				array[indice] = loja;
+				indice++;
+			}
+		}
 	}
 
 	@Override
-	public void remover(String cnpj) {
+	public void remover(String cnpj) throws LojaNaoCadastradaException {
+
+		buscar(cnpj);
+
 		for (int i = 0, j = indice; i < j; i++) {
 			if (cnpj.equals(array[i].getCnpj())) {
 				array[i] = array[indice];
@@ -32,25 +63,46 @@ public class RepositorioLojaArray implements RepositorioLoja {
 	}
 
 	@Override
-	public Loja buscar(String cnpj) {
+	public Loja buscar(String cnpj) throws LojaNaoCadastradaException {
+
+		Loja resultadoBusca = null;
 
 		if (indice > 0) {
 			for (int i = 0, j = indice; i < j; i++) {
 				if (cnpj.equals(array[i].getCnpj())) {
-					return array[i];
+					resultadoBusca = array[i];
 				}
 			}
 
+		} else {
+			resultadoBusca = null;
 		}
-		return null;
+
+		if (resultadoBusca == null) {
+			LojaNaoCadastradaException e = new LojaNaoCadastradaException();
+			throw e;
+		} else {
+			return resultadoBusca;
+		}
 
 	}
 
 	@Override
-	public void alterar(Loja novoLoja) {
-		for (int i = 0, j = indice; i < j; i++) {
-			if (novoLoja.getCnpj().equals(array[i].getCnpj())) {
-				array[i] = novoLoja;
+	public void alterar(Loja novoLoja) throws LojaVaziaException, LojaNaoCadastradaException {
+
+		if (novoLoja == null) {
+
+			LojaVaziaException e = new LojaVaziaException();
+
+			throw e;
+		} else {
+
+			buscar(novoLoja.getCnpj());
+
+			for (int i = 0, j = indice; i < j; i++) {
+				if (novoLoja.getCnpj().equals(array[i].getCnpj())) {
+					array[i] = novoLoja;
+				}
 			}
 		}
 

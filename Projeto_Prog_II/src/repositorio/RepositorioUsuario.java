@@ -6,8 +6,7 @@ import excepitonRepositorioArray.UsuarioVazioException;
 import negocioClassesBasicas.Usuario;
 
 public interface RepositorioUsuario {
-	public void inserir(Usuario usuario)
-			throws UsuarioVazioException, UsuarioAnteriormenteCadastradoException, UsuarioNaoCadastradoException;
+	public void inserir(Usuario usuario) throws UsuarioVazioException, UsuarioAnteriormenteCadastradoException;
 
 	public void atualizar(Usuario usuario) throws UsuarioVazioException, UsuarioNaoCadastradoException;
 
