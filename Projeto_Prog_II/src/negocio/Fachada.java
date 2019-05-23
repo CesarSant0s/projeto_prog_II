@@ -12,6 +12,8 @@ import excepitonRepositorioArray.PratoVazioException;
 import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import excepitonRepositorioArray.UsuarioVazioException;
+import negocioClassesBasicas.Cliente;
+import negocioClassesBasicas.Entregador;
 import negocioClassesBasicas.Loja;
 import negocioClassesBasicas.Pedido;
 import negocioClassesBasicas.Prato;
@@ -40,8 +42,9 @@ public class Fachada {
 	}
 
 	// Controle Pratos
-	public void inserirPrato(Prato prato) throws PratoVazioException, PratoJaInseridoException {
-		pratos.inserir(prato);
+	public void inserirPrato(String nome, float peso, float valorDoPrato, int quantiadeDisponivel)
+			throws PratoVazioException, PratoJaInseridoException {
+		pratos.inserir(new Prato(nome, peso, valorDoPrato, quantiadeDisponivel));
 	}
 
 	public void removerPrato(String nome) throws PratoNaoEncontradoException {
@@ -52,8 +55,11 @@ public class Fachada {
 		return pratos.buscar(nome);
 	}
 
-	public void alterarPrato(Prato prato) throws PratoVazioException, PratoNaoEncontradoException {
-		pratos.alterar(prato);
+	public void alterarPrato(String nome, float peso, float valorDoPrato, int quantiadeDisponivel)
+			throws PratoVazioException, PratoNaoEncontradoException {
+
+		pratos.alterar(new Prato(nome, peso, valorDoPrato, quantiadeDisponivel));
+
 	}
 
 	public Prato[] listar() {
@@ -61,8 +67,14 @@ public class Fachada {
 	}
 
 	// Controle Pedido
-	public void FazerPedido(Pedido pedido) throws PedidoJaInseridoException, PedidoVazioException {
-		pedidos.FazerPedido(pedido);
+	public void FazerPedido(String cpfCliente, String cpfEntregador, String cnpjLoja) throws PedidoJaInseridoException,
+			PedidoVazioException, UsuarioNaoCadastradoException, LojaNaoCadastradaException {
+
+		Cliente cliente = (Cliente) getInstance().buscarUsuario(cpfCliente);
+		Entregador entregador = (Entregador) getInstance().buscarUsuario(cpfEntregador);
+		Loja loja = getInstance().buscarLoja(cnpjLoja);
+		pedidos.FazerPedido(new Pedido(cliente, loja, entregador));
+
 	}
 
 	public void FinalizarPedido(int codigo) throws PedidoNaoCadastrado {
@@ -74,6 +86,7 @@ public class Fachada {
 	}
 
 	public void alterarPedido(Pedido pedido) throws PedidoVazioException, PedidoNaoCadastrado {
+
 		pedidos.alterar(pedido);
 	}
 
@@ -82,8 +95,10 @@ public class Fachada {
 	}
 
 	// Controle Loja
-	public void inserirLoja(Loja loja) throws LojaVaziaException, LojaJaCadastradaException {
-		lojas.inserir(loja);
+
+	public void inserirLoja(String nomeUsuario, String senha, String nome, String telefone, String cnpj,
+			String endereco) throws LojaVaziaException, LojaJaCadastradaException {
+		lojas.inserir(new Loja(nomeUsuario, senha, nome, telefone, cnpj, endereco));
 	}
 
 	public void removerLoja(String cnpj) throws LojaNaoCadastradaException {
@@ -94,8 +109,9 @@ public class Fachada {
 		return lojas.buscar(cnpj);
 	}
 
-	public void alterarLoja(Loja loja) throws LojaVaziaException, LojaNaoCadastradaException {
-		lojas.alterar(loja);
+	public void alterarLoja(String nomeUsuario, String senha, String nome, String telefone, String cnpj,
+			String endereco) throws LojaVaziaException, LojaNaoCadastradaException {
+		lojas.alterar(new Loja(nomeUsuario, senha, nome, telefone, cnpj, endereco));
 	}
 
 	public Loja[] listarLoja() {
@@ -103,10 +119,19 @@ public class Fachada {
 	}
 
 	// Controle Usuario
-	public void inserirUsuario(Usuario usuario)
+	public void inserirUsuarioCliente(String nomeUsuario, String senha, String nome, String telefone, String cpf,
+			String endereco)
 			throws UsuarioVazioException, UsuarioAnteriormenteCadastradoException, UsuarioNaoCadastradoException {
 
-		usuarios.inserir(usuario);
+		usuarios.inserir(new Cliente(nomeUsuario, senha, nome, telefone, cpf, endereco));
+
+	}
+
+	public void inserirUsuarioEntregador(String nomeUsuario, String senha, String nome, String telefone, String cpf,
+			String placaVeiculo)
+			throws UsuarioVazioException, UsuarioAnteriormenteCadastradoException, UsuarioNaoCadastradoException {
+
+		usuarios.inserir(new Entregador(nomeUsuario, senha, nome, telefone, cpf, placaVeiculo));
 
 	}
 
@@ -122,8 +147,16 @@ public class Fachada {
 
 	}
 
-	public void atualizarUsuario(Usuario usuario) throws UsuarioVazioException, UsuarioNaoCadastradoException {
-		usuarios.atualizar(usuario);
+	public void atualizarUsuarioEntregador(String nomeUsuario, String senha, String nome, String telefone, String cpf,
+			String placaVeiculo) throws UsuarioVazioException, UsuarioNaoCadastradoException {
+
+		usuarios.atualizar(new Entregador(nomeUsuario, senha, nome, telefone, cpf, placaVeiculo));
+	}
+
+	public void atualizarUsuarioCliente(String nomeUsuario, String senha, String nome, String telefone, String cpf,
+			String endereco) throws UsuarioVazioException, UsuarioNaoCadastradoException {
+
+		usuarios.atualizar(new Cliente(nomeUsuario, senha, nome, telefone, cpf, endereco));
 	}
 
 	public Usuario[] listarUsuario() {

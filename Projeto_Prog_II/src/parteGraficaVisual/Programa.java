@@ -16,8 +16,7 @@ public class Programa {
 	Fachada f1 = new Fachada();
 
 	public static void main(String[] args) throws UsuarioVazioException {
-		Usuario u1 = new Cliente("nome.cliente1", "1234", "nome1", "001", "001", "casa1");
-		Usuario u2 = new Cliente("nome.cliente2", "1234", "nome2", "002", "002", "casa2");
+
 		Usuario u3 = new Cliente("nome.cliente3", "1234", "nome3", "003", "003", "casa3");
 		Usuario u4 = new Cliente("nome.cliente5", "1234", "nome4", "004", "004", "casa4");
 		Usuario u5 = new Cliente("nome.cliente5", "1234", "nome5", "005", "005", "casa5");
@@ -27,94 +26,8 @@ public class Programa {
 		Usuario uE1 = new Entregador("nome.entregador1", "1234", "nome1", "00001", "001", "001");
 		Usuario uE2 = new Entregador("nome.entregador2", "1234", "nome2", "00002", "002", "002");
 
-		try {
-			Fachada.getInstance().inserirLoja(loja1);
-		} catch (LojaVaziaException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		} catch (LojaJaCadastradaException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-
-		try {
-			Fachada.getInstance().inserirUsuario(u1);
-		} catch (UsuarioAnteriormenteCadastradoException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (UsuarioNaoCadastradoException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		try {
-			Fachada.getInstance().inserirUsuario(u2);
-		} catch (UsuarioAnteriormenteCadastradoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UsuarioNaoCadastradoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			Fachada.getInstance().inserirUsuario(u3);
-		} catch (UsuarioAnteriormenteCadastradoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UsuarioNaoCadastradoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			Fachada.getInstance().inserirUsuario(u4);
-		} catch (UsuarioAnteriormenteCadastradoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UsuarioNaoCadastradoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			Fachada.getInstance().inserirUsuario(u5);
-		} catch (UsuarioAnteriormenteCadastradoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UsuarioNaoCadastradoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			System.out.println(Fachada.getInstance().buscarUsuario("001").getNome());
-		} catch (UsuarioNaoCadastradoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			Fachada.getInstance().removerUsuario("001");
-		} catch (UsuarioNaoCadastradoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		Usuario teste = null;
-
-		try {
-			teste = Fachada.getInstance().buscarUsuario("002");
-		} catch (UsuarioNaoCadastradoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		if (teste == null) {
-			System.out.println("Removido");
-		} else {
-			System.out.println(teste.getNome());
-		}
+		// Fachada.getInstance().inserirUsuarioCliente("nome.cliente2", "1234", "nome2",
+		// "002", "002", "casa2");
 	}
 
 }
