@@ -1,9 +1,5 @@
 package parteGraficaVisual;
 
-import excepitonRepositorioArray.LojaJaCadastradaException;
-import excepitonRepositorioArray.LojaVaziaException;
-import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
-import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import excepitonRepositorioArray.UsuarioVazioException;
 import negocio.Fachada;
 import negocioClassesBasicas.Cliente;

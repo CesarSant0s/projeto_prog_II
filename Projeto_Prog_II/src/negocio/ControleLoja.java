@@ -9,6 +9,15 @@ import repositorioArray.RepositorioLojaArray;
 
 public class ControleLoja {
 
+	private static ControleLoja instance;
+
+	public static ControleLoja getInstance() {
+		if (ControleLoja.instance == null) {
+			ControleLoja.instance = new ControleLoja();
+		}
+		return ControleLoja.instance;
+	}
+
 	RepositorioLoja lojas = new RepositorioLojaArray();
 
 	public void inserir(Loja loja) throws LojaVaziaException, LojaJaCadastradaException {

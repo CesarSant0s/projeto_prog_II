@@ -1,5 +1,7 @@
 package negocioClassesBasicas;
 
+import excepitonRepositorioArray.QuantidadeIndisponívelException;
+
 public class Prato {
 	private String nome;
 	private float peso;
@@ -18,8 +20,7 @@ public class Prato {
 	}
 
 	public void setNome(String nome) {
-		if (!(nome == null) && !(nome.equals("")))
-			this.nome = nome;
+		this.nome = nome;
 	}
 
 	public float getPeso() {
@@ -36,8 +37,7 @@ public class Prato {
 	}
 
 	public void setValorDoPrato(float valorDoPrato) {
-		if (valorDoPrato > 0)
-			this.valorDoPrato = valorDoPrato;
+		this.valorDoPrato = valorDoPrato;
 	}
 
 	public int getQuantiadeDisponivel() {
@@ -45,8 +45,14 @@ public class Prato {
 	}
 
 	public void setQuantiadeDisponivel(int quantiadeDisponivel) {
-		if (quantiadeDisponivel > 0)
-			this.quantiadeDisponivel = quantiadeDisponivel;
+		this.quantiadeDisponivel = quantiadeDisponivel;
+	}
+	
+	public void retirarStock(int quantidade) throws QuantidadeIndisponívelException {
+		if (quantidade > quantiadeDisponivel) {
+			QuantidadeIndisponívelException e = new QuantidadeIndisponívelException();
+			throw e;
+		}
 	}
 
 }

@@ -55,7 +55,7 @@ public class CadastrarCliente {
 	 */
 	private void initialize() {
 		Cadastro = new JFrame();
-		Cadastro.setBounds(100, 100, 400, 600);
+		Cadastro.setBounds(100, 100, 400, 350);
 		Cadastro.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Cadastro.getContentPane().setLayout(null);
 
@@ -73,7 +73,7 @@ public class CadastrarCliente {
 		Cadastro.getContentPane().add(lblSenha);
 
 		pwdSenha = new JPasswordField();
-		pwdSenha.setBounds(72, 37, 189, 20);
+		pwdSenha.setBounds(127, 37, 134, 20);
 		Cadastro.getContentPane().add(pwdSenha);
 
 		JLabel lblNomeCompleto = new JLabel("Nome Completo:");
@@ -90,7 +90,7 @@ public class CadastrarCliente {
 		Cadastro.getContentPane().add(lblTelefone);
 
 		textTelefone = new JTextField();
-		textTelefone.setBounds(82, 87, 179, 20);
+		textTelefone.setBounds(127, 87, 134, 20);
 		Cadastro.getContentPane().add(textTelefone);
 		textTelefone.setColumns(10);
 
@@ -103,12 +103,12 @@ public class CadastrarCliente {
 		Cadastro.getContentPane().add(lblNewLabel_2);
 
 		textCpf = new JTextField();
-		textCpf.setBounds(43, 110, 218, 20);
+		textCpf.setBounds(127, 110, 134, 20);
 		Cadastro.getContentPane().add(textCpf);
 		textCpf.setColumns(10);
 
 		textEndereco = new JTextField();
-		textEndereco.setBounds(82, 135, 179, 20);
+		textEndereco.setBounds(127, 135, 134, 20);
 		Cadastro.getContentPane().add(textEndereco);
 		textEndereco.setColumns(10);
 
@@ -118,12 +118,12 @@ public class CadastrarCliente {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				textCpf.setText("");
-				textEndereco.setText("");
-				textNomeCompleto.setText("");
-				textNomeDeLogin.setText("");
-				textTelefone.setText("");
-				pwdSenha.setText("");
+				textCpf.setText("Gostosa");
+				textEndereco.setText("Gostosa");
+				textNomeCompleto.setText("Gostosa");
+				textNomeDeLogin.setText("Gostosa");
+				textTelefone.setText("Gostosa");
+				pwdSenha.setText("Gostosa");
 			}
 		});
 

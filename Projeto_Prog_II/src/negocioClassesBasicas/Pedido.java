@@ -25,6 +25,8 @@ public class Pedido {
 		setPratosEscolhidos(new RepositorioPratosArray());
 	}
 
+	/* O pedido tem que retirar os pratos escolhidos do repositório loja */
+
 	public Cliente getCliente() {
 		return cliente;
 	}
