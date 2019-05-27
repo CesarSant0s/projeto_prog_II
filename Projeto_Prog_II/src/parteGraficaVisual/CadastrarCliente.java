@@ -118,12 +118,12 @@ public class CadastrarCliente {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				textCpf.setText("Gostosa");
-				textEndereco.setText("Gostosa");
-				textNomeCompleto.setText("Gostosa");
-				textNomeDeLogin.setText("Gostosa");
-				textTelefone.setText("Gostosa");
-				pwdSenha.setText("Gostosa");
+				textCpf.setText("");
+				textEndereco.setText("");
+				textNomeCompleto.setText("");
+				textNomeDeLogin.setText("");
+				textTelefone.setText("");
+				pwdSenha.setText("");
 			}
 		});
 

@@ -13,6 +13,8 @@ import excepitonRepositorioArray.QuantidadeIndisponívelException;
 import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import excepitonRepositorioArray.UsuarioVazioException;
+import exception.CpfNaoCadastradoException;
+import exception.SenhaIncorretaException;
 import negocioClassesBasicas.Cliente;
 import negocioClassesBasicas.Entregador;
 import negocioClassesBasicas.Loja;
@@ -27,12 +29,14 @@ public class Fachada {
 	private ControleLoja lojas;
 	private ControlePedidos pedidos;
 	private ControlePratos pratos;
+	private ControleLogin login;
 
 	public Fachada() {
 		usuarios = new ControleUsuario();
 		lojas = new ControleLoja();
 		pedidos = new ControlePedidos();
 		pratos = new ControlePratos();
+		login = new ControleLogin();
 	}
 
 	public static Fachada getInstance() {
@@ -40,6 +44,13 @@ public class Fachada {
 			Fachada.instance = new Fachada();
 		}
 		return Fachada.instance;
+	}
+
+	// ControleLogin
+
+	public void login(String cpfOUcnpj, String senha) throws UsuarioNaoCadastradoException, LojaNaoCadastradaException,
+			CpfNaoCadastradoException, SenhaIncorretaException {
+		login.login(cpfOUcnpj, senha);
 	}
 
 	// Controle Pratos

@@ -9,6 +9,8 @@ import javax.swing.border.EmptyBorder;
 
 import excepitonRepositorioArray.LojaNaoCadastradaException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
+import exception.CpfNaoCadastradoException;
+import exception.SenhaIncorretaException;
 import negocio.Fachada;
 import negocioClassesBasicas.Usuario;
 
@@ -71,26 +73,6 @@ public class Login extends JFrame {
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				try {
-					Fachada.getInstance().buscarLoja(textFieldLogin.getText());
-				} catch (LojaNaoCadastradaException e) {
-					// e.printStackTrace();
-					// JOptionPane.showConfirmDialog(contentPane, e.getMessage(), "",
-					// JOptionPane.ERROR_MESSAGE);
-				}
-
-				try {
-					Usuario usuario = Fachada.getInstance().buscarUsuario(textFieldLogin.getText());
-
-					if (usuario.getSenha().equals(new String(passwordFieldSenha.getPassword()))) {
-
-					}
-
-				} catch (UsuarioNaoCadastradoException e) {
-					// e.printStackTrace();
-					JOptionPane.showConfirmDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
-				}
-
 			}
 		});
 		contentPane.add(btnEntrar);
@@ -99,7 +81,23 @@ public class Login extends JFrame {
 		btnCadastrar.setBounds(121, 165, 101, 25);
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
+				try {
+					Fachada.getInstance().login(textFieldLogin.getText(), new String(passwordFieldSenha.getPassword()));
+				} catch (UsuarioNaoCadastradoException e) {
+					// TODO Auto-generated catch block
+					// e.printStackTrace();
+				} catch (LojaNaoCadastradaException e) {
+					// TODO Auto-generated catch block
+					// e.printStackTrace();
+				} catch (CpfNaoCadastradoException e) {
+					// TODO Auto-generated catch block
+					// e.printStackTrace();
+					JOptionPane.showMessageDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+				} catch (SenhaIncorretaException e) {
+					// TODO Auto-generated catch block
+					// e.printStackTrace();
+					JOptionPane.showMessageDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		contentPane.add(btnCadastrar);

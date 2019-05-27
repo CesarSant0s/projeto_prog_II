@@ -9,6 +9,15 @@ import repositorioArray.RepositorioUsuarioArray;
 
 public class ControleUsuario {
 
+	private static ControleUsuario instance;
+
+	public static ControleUsuario getInstance() {
+		if (ControleUsuario.instance == null) {
+			ControleUsuario.instance = new ControleUsuario();
+		}
+		return ControleUsuario.instance;
+	}
+
 	RepositorioUsuario usuarios = new RepositorioUsuarioArray();
 
 	public void inserir(Usuario usuario) throws UsuarioVazioException, UsuarioAnteriormenteCadastradoException {
