@@ -1,18 +1,15 @@
 package parteGraficaVisual;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import excepitonRepositorioArray.LojaNaoCadastradaException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import exception.CpfNaoCadastradoException;
 import exception.SenhaIncorretaException;
 import negocio.Fachada;
-import negocioClassesBasicas.Usuario;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -22,11 +19,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 
-public class Login extends JFrame {
+public class TelaLoginUsuario extends JFrame {
+
+	private static TelaLoginUsuario instance;
 
 	private JPanel contentPane;
 	private JTextField textFieldLogin;
 	private JPasswordField passwordFieldSenha;
+
+	public static TelaLoginUsuario getInstance() {
+		if (TelaLoginUsuario.instance == null) {
+			TelaLoginUsuario.instance = new TelaLoginUsuario();
+		}
+		return TelaLoginUsuario.instance;
+	}
 
 	/**
 	 * Launch the application.
@@ -35,7 +41,7 @@ public class Login extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Login frame = new Login();
+					TelaLoginUsuario frame = new TelaLoginUsuario();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,7 +53,7 @@ public class Login extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Login() {
+	public TelaLoginUsuario() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 400, 350);
 		contentPane = new JPanel();
@@ -83,10 +89,10 @@ public class Login extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					Fachada.getInstance().login(textFieldLogin.getText(), new String(passwordFieldSenha.getPassword()));
+					JOptionPane.showMessageDialog(contentPane, "Login Efetuado com Sucesso!", "",
+							JOptionPane.INFORMATION_MESSAGE);
+
 				} catch (UsuarioNaoCadastradoException e) {
-					// TODO Auto-generated catch block
-					// e.printStackTrace();
-				} catch (LojaNaoCadastradaException e) {
 					// TODO Auto-generated catch block
 					// e.printStackTrace();
 				} catch (CpfNaoCadastradoException e) {
@@ -98,6 +104,7 @@ public class Login extends JFrame {
 					// e.printStackTrace();
 					JOptionPane.showMessageDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
 				}
+
 			}
 		});
 		contentPane.add(btnCadastrar);

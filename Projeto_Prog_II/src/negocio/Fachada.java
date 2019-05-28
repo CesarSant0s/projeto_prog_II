@@ -48,9 +48,9 @@ public class Fachada {
 
 	// ControleLogin
 
-	public void login(String cpfOUcnpj, String senha) throws UsuarioNaoCadastradoException, LojaNaoCadastradaException,
-			CpfNaoCadastradoException, SenhaIncorretaException {
-		login.login(cpfOUcnpj, senha);
+	public void login(String cpf, String senha)
+			throws UsuarioNaoCadastradoException, CpfNaoCadastradoException, SenhaIncorretaException {
+		login.loginUsuario(cpf, senha);
 	}
 
 	// Controle Pratos

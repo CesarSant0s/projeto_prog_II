@@ -17,7 +17,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class CadastrarCliente {
+public class TelaCadastrarCliente {
 
 	private JFrame Cadastro;
 	private JTextField textNomeDeLogin;
@@ -34,7 +34,7 @@ public class CadastrarCliente {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastrarCliente window = new CadastrarCliente();
+					TelaCadastrarCliente window = new TelaCadastrarCliente();
 					window.Cadastro.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -46,7 +46,7 @@ public class CadastrarCliente {
 	/**
 	 * Create the application.
 	 */
-	public CadastrarCliente() {
+	public TelaCadastrarCliente() {
 		initialize();
 	}
 
