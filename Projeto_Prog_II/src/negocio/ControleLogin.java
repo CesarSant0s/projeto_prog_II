@@ -2,14 +2,26 @@ package negocio;
 
 import excepitonRepositorioArray.LojaNaoCadastradaException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
+import exception.CnpjNaoCadastradoException;
 import exception.CpfNaoCadastradoException;
 import exception.SenhaIncorretaException;
+import negocioClassesBasicas.Administrador;
 import negocioClassesBasicas.Loja;
 import negocioClassesBasicas.Usuario;
 
 public class ControleLogin {
 
+	private static ControleLogin instance;
+
 	public ControleLogin() {
+	}
+
+	public ControleLogin getInstance() {
+
+		if (ControleLogin.instance == null) {
+			ControleLogin.instance = new ControleLogin();
+		}
+		return ControleLogin.instance;
 	}
 
 	public void loginUsuario(String cpf, String senha)
@@ -22,6 +34,23 @@ public class ControleLogin {
 			throw e;
 		} else {
 			if (!(usuario.getSenha().equals(senha))) {
+				SenhaIncorretaException e = new SenhaIncorretaException();
+				throw e;
+			}
+		}
+
+	}
+
+	public void lojaLogin(String cnpj, String senha)
+			throws LojaNaoCadastradaException, CnpjNaoCadastradoException, SenhaIncorretaException {
+
+		Loja loja = ControleLoja.getInstance().buscar(cnpj);
+
+		if (loja == null) {
+			CnpjNaoCadastradoException e = new CnpjNaoCadastradoException();
+			throw e;
+		} else {
+			if (!(loja.getSenha().equals(senha))) {
 				SenhaIncorretaException e = new SenhaIncorretaException();
 				throw e;
 			}

@@ -22,7 +22,7 @@ import java.awt.Font;
 
 public class TelaCadastrarCliente {
 
-	 JFrame Cadastro;
+	JFrame Cadastro;
 	private JTextField textNomeDeLogin;
 	private JPasswordField pwdSenha;
 	private JTextField textNomeCompleto;

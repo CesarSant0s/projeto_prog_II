@@ -6,7 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import excepitonRepositorioArray.LojaNaoCadastradaException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
+import exception.CnpjNaoCadastradoException;
 import exception.CpfNaoCadastradoException;
 import exception.SenhaIncorretaException;
 import negocio.Fachada;
@@ -42,15 +44,16 @@ public class TelaLoginUsuario extends JFrame {
 	 */
 	public static void main(String[] args) {
 		try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException  ex) {
-            System.err.println(ex);
-} 
+			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+				if ("Nimbus".equals(info.getName())) {
+					javax.swing.UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| javax.swing.UnsupportedLookAndFeelException ex) {
+			System.err.println(ex);
+		}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -100,25 +103,31 @@ public class TelaLoginUsuario extends JFrame {
 		btnEntrar.setBounds(87, 158, 101, 25);
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					Fachada.getInstance().login(textFieldLogin.getText(), new String(passwordFieldSenha.getPassword()));
-					JOptionPane.showMessageDialog(contentPane, "Login Efetuado com Sucesso!", "",
-							JOptionPane.INFORMATION_MESSAGE);
 
-				} catch (UsuarioNaoCadastradoException e) {
-					// TODO Auto-generated catch block
-					// e.printStackTrace();
-				} catch (CpfNaoCadastradoException e) {
-					// TODO Auto-generated catch block
-					// e.printStackTrace();
-					JOptionPane.showMessageDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
-				} catch (SenhaIncorretaException e) {
-					// TODO Auto-generated catch block
-					// e.printStackTrace();
-					JOptionPane.showMessageDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+				try {
+					Fachada.getInstance().loginLoja(textFieldLogin.getText(),
+							new String(passwordFieldSenha.getPassword()));
+				} catch (LojaNaoCadastradaException e1) {
+					// e1.printStackTrace();
+				} catch (CnpjNaoCadastradoException e1) {
+					// e1.printStackTrace();
+				} catch (SenhaIncorretaException e1) {
+					// e1.printStackTrace();
 				}
 
-
+				try {
+					Fachada.getInstance().loginUsuario(textFieldLogin.getText(),
+							new String(passwordFieldSenha.getPassword()));
+				} catch (UsuarioNaoCadastradoException e) {
+					JOptionPane.showMessageDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+					// e.printStackTrace();
+				} catch (CpfNaoCadastradoException e) {
+					JOptionPane.showMessageDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+					// e.printStackTrace();
+				} catch (SenhaIncorretaException e) {
+					JOptionPane.showMessageDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+					// e.printStackTrace();
+				}
 			}
 		});
 		contentPane.add(btnEntrar);
@@ -141,7 +150,7 @@ public class TelaLoginUsuario extends JFrame {
 		passwordFieldSenha = new JPasswordField();
 		passwordFieldSenha.setBounds(127, 116, 160, 25);
 		contentPane.add(passwordFieldSenha);
-		
+
 		JButton btnSair = new JButton("Sair");
 		btnSair.setFont(new Font("Dialog", Font.BOLD, 12));
 		btnSair.addActionListener(new ActionListener() {
@@ -151,16 +160,16 @@ public class TelaLoginUsuario extends JFrame {
 		});
 		btnSair.setBackground(new Color(255, 255, 255));
 		btnSair.setForeground(new Color(128, 0, 0));
-		btnSair.setBounds(150, 193, 101, 25);
+		btnSair.setBounds(155, 195, 101, 25);
 		contentPane.add(btnSair);
-		
+
 		JLabel lblNewLabel = new JLabel("TÔ COM FOME");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Chilanka", Font.BOLD, 18));
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setBounds(122, 30, 147, 48);
 		contentPane.add(lblNewLabel);
-		
+
 		JLabel lblNewLabel_1 = new JLabel("Entre com suas informações acima");
 		lblNewLabel_1.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 12));
 		lblNewLabel_1.setForeground(new Color(255, 255, 255));

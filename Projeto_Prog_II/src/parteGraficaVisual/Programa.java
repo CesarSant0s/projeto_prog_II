@@ -1,5 +1,9 @@
 package parteGraficaVisual;
 
+import javax.swing.JOptionPane;
+
+import excepitonRepositorioArray.LojaJaCadastradaException;
+import excepitonRepositorioArray.LojaVaziaException;
 import excepitonRepositorioArray.UsuarioVazioException;
 import negocio.Fachada;
 import negocioClassesBasicas.Cliente;
@@ -22,6 +26,15 @@ public class Programa {
 		Usuario uE1 = new Entregador("nome.entregador1", "1234", "nome1", "00001", "001", "001");
 		Usuario uE2 = new Entregador("nome.entregador2", "1234", "nome2", "00002", "002", "002");
 
+		try {
+			Fachada.getInstance().inserirLoja("nome.entregador1", "1234", "nome1", "00001", "001", "001");
+		} catch (LojaVaziaException e) {
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+		} catch (LojaJaCadastradaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// Fachada.getInstance().inserirUsuarioCliente("nome.cliente2", "1234", "nome2",
 		// "002", "002", "casa2");
 	}
