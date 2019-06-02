@@ -1,4 +1,4 @@
-package parteGraficaVisual;
+package negocio;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -13,12 +13,17 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import excepitonRepositorioArray.UsuarioNaoCadastradoException;
+import excepitonRepositorioArray.UsuarioVazioException;
+
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 
-public class TelaEntregador extends JFrame {
+public class TelaCliente extends JFrame {
 
-	private static TelaEntregador instance;
+	private static TelaCliente instance;
 
 	private JPanel contentPane;
 	private JTextField textNomeDeLogin;
@@ -31,11 +36,11 @@ public class TelaEntregador extends JFrame {
 	private JButton btnAtualizar;
 	private JButton btnLimpar;
 
-	public static TelaEntregador getInstance() {
-		if (TelaEntregador.instance == null) {
-			TelaEntregador.instance = new TelaEntregador();
+	public static TelaCliente getInstance() {
+		if (TelaCliente.instance == null) {
+			TelaCliente.instance = new TelaCliente();
 		}
-		return TelaEntregador.instance;
+		return TelaCliente.instance;
 	}
 
 	/**
@@ -45,7 +50,7 @@ public class TelaEntregador extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaEntregador frame = new TelaEntregador();
+					TelaCliente frame = new TelaCliente();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,7 +62,7 @@ public class TelaEntregador extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaEntregador() {
+	public TelaCliente() {
 		setTitle("Tô com fome - O aplicativo de comida mais próximo de você");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 400, 350);
@@ -75,14 +80,14 @@ public class TelaEntregador extends JFrame {
 		JLabel lblNomeDeLogin = new JLabel("Nome de Login:");
 		lblNomeDeLogin.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblNomeDeLogin.setForeground(new Color(255, 255, 255));
-		lblNomeDeLogin.setBounds(36, 17, 151, 15);
+		lblNomeDeLogin.setBounds(50, 16, 151, 15);
 		getContentPane().add(lblNomeDeLogin);
 
 		JLabel lblSenha = new JLabel("Senha:");
 		lblSenha.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSenha.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblSenha.setForeground(new Color(255, 255, 255));
-		lblSenha.setBounds(86, 54, 71, 15);
+		lblSenha.setBounds(100, 53, 49, 15);
 		getContentPane().add(lblSenha);
 
 		pwdSenha = new JPasswordField();
@@ -92,7 +97,7 @@ public class TelaEntregador extends JFrame {
 		JLabel lblNomeCompleto = new JLabel("Nome Completo:");
 		lblNomeCompleto.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblNomeCompleto.setForeground(new Color(255, 255, 255));
-		lblNomeCompleto.setBounds(29, 94, 133, 15);
+		lblNomeCompleto.setBounds(45, 93, 104, 15);
 		getContentPane().add(lblNomeCompleto);
 
 		textNomeCompleto = new JTextField();
@@ -103,7 +108,7 @@ public class TelaEntregador extends JFrame {
 		JLabel lblTelefone = new JLabel("Telefone:");
 		lblTelefone.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblTelefone.setForeground(new Color(255, 255, 255));
-		lblTelefone.setBounds(82, 131, 90, 15);
+		lblTelefone.setBounds(92, 127, 57, 20);
 		getContentPane().add(lblTelefone);
 
 		textTelefone = new JTextField();
@@ -114,13 +119,13 @@ public class TelaEntregador extends JFrame {
 		JLabel lblNewLabel = new JLabel("Cpf:");
 		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setBounds(121, 168, 66, 15);
+		lblNewLabel.setBounds(124, 167, 25, 15);
 		getContentPane().add(lblNewLabel);
 
-		JLabel lblNewLabel_2 = new JLabel("Placa do Veículo:");
+		JLabel lblNewLabel_2 = new JLabel("Endereco:");
 		lblNewLabel_2.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblNewLabel_2.setForeground(new Color(255, 255, 255));
-		lblNewLabel_2.setBounds(25, 205, 130, 15);
+		lblNewLabel_2.setBounds(86, 204, 63, 15);
 		getContentPane().add(lblNewLabel_2);
 
 		textCpf = new JTextField();
@@ -132,29 +137,49 @@ public class TelaEntregador extends JFrame {
 		textEndereco.setBounds(151, 200, 160, 25);
 		getContentPane().add(textEndereco);
 		textEndereco.setColumns(10);
-		
+
 		btnVoltar = new JButton("Voltar");
 		btnVoltar.setBackground(new Color(255, 255, 255));
 		btnVoltar.setForeground(new Color(128, 0, 0));
-		btnVoltar.setBounds(250, 285, 114, 25);
+		btnVoltar.setBounds(250, 272, 114, 25);
 		contentPane.add(btnVoltar);
-		
+
 		btnAtualizar = new JButton("Atualizar");
+		btnAtualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Fachada.getInstance().atualizarUsuarioCliente(textNomeDeLogin.getText(),
+							new String(pwdSenha.getPassword()), textNomeCompleto.getText(), textTelefone.getText(),
+							textCpf.getText(), textEndereco.getText());
+				} catch (UsuarioVazioException | UsuarioNaoCadastradoException e1) {
+
+					JOptionPane.showMessageDialog(contentPane, e1.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+					// TODO Auto-generated catch block
+					// e1.printStackTrace();
+				}
+			}
+		});
 		btnAtualizar.setForeground(new Color(128, 0, 0));
 		btnAtualizar.setBackground(Color.WHITE);
-		btnAtualizar.setBounds(250, 248, 114, 25);
+		btnAtualizar.setBounds(250, 236, 114, 25);
 		contentPane.add(btnAtualizar);
-		
+
 		btnLimpar = new JButton("Limpar");
+		btnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textCpf.setText("");
+				textEndereco.setText("");
+				textNomeCompleto.setText("");
+				textNomeDeLogin.setText("");
+				textTelefone.setText("");
+				pwdSenha.setText("");
+
+			}
+		});
 		btnLimpar.setForeground(new Color(128, 0, 0));
 		btnLimpar.setBackground(Color.WHITE);
-		btnLimpar.setBounds(121, 285, 114, 25);
+		btnLimpar.setBounds(124, 272, 114, 25);
 		contentPane.add(btnLimpar);
-		
-		JButton btnCadastrar = new JButton("Cadastrar");
-		btnCadastrar.setBounds(121, 248, 114, 25);
-		contentPane.add(btnCadastrar);
-		
-		
+
 	}
 }

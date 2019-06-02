@@ -1,4 +1,4 @@
-package parteGraficaVisual;
+package guiGeral;
 
 import java.awt.EventQueue;
 
@@ -11,6 +11,7 @@ import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import exception.CnpjNaoCadastradoException;
 import exception.CpfNaoCadastradoException;
 import exception.SenhaIncorretaException;
+import guiCliente.TelaCadastrarCliente;
 import negocio.Fachada;
 
 import javax.swing.JLabel;
@@ -163,14 +164,14 @@ public class TelaLoginUsuario extends JFrame {
 		btnSair.setBounds(155, 195, 101, 25);
 		contentPane.add(btnSair);
 
-		JLabel lblNewLabel = new JLabel("TÔ COM FOME");
+		JLabel lblNewLabel = new JLabel("TO COM FOME");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Chilanka", Font.BOLD, 18));
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setBounds(122, 30, 147, 48);
 		contentPane.add(lblNewLabel);
 
-		JLabel lblNewLabel_1 = new JLabel("Entre com suas informações acima");
+		JLabel lblNewLabel_1 = new JLabel("Entre com suas informacoes acima");
 		lblNewLabel_1.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 12));
 		lblNewLabel_1.setForeground(new Color(255, 255, 255));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);

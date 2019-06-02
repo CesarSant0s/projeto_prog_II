@@ -1,6 +1,6 @@
 package negocioClassesBasicas;
 
-import excepitonRepositorioArray.QuantidadeIndisponívelException;
+import excepitonRepositorioArray.QuantidadeIndisponivelException;
 
 public class Prato {
 	private String nome;
@@ -48,9 +48,9 @@ public class Prato {
 		this.quantiadeDisponivel = quantiadeDisponivel;
 	}
 	
-	public void retirarStock(int quantidade) throws QuantidadeIndisponívelException {
+	public void retirarStock(int quantidade) throws QuantidadeIndisponivelException {
 		if (quantidade > quantiadeDisponivel) {
-			QuantidadeIndisponívelException e = new QuantidadeIndisponívelException();
+			QuantidadeIndisponivelException e = new QuantidadeIndisponivelException();
 			throw e;
 		}
 	}

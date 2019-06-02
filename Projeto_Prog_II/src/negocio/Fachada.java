@@ -9,7 +9,7 @@ import excepitonRepositorioArray.PedidoVazioException;
 import excepitonRepositorioArray.PratoJaInseridoException;
 import excepitonRepositorioArray.PratoNaoEncontradoException;
 import excepitonRepositorioArray.PratoVazioException;
-import excepitonRepositorioArray.QuantidadeIndisponívelException;
+import excepitonRepositorioArray.QuantidadeIndisponivelException;
 import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import excepitonRepositorioArray.UsuarioVazioException;
@@ -96,7 +96,7 @@ public class Fachada {
 	}
 
 	public void FinalizarPedido(int codigo) throws PedidoNaoCadastrado, PratoNaoEncontradoException,
-			LojaNaoCadastradaException, QuantidadeIndisponívelException {
+			LojaNaoCadastradaException, QuantidadeIndisponivelException {
 		pedidos.finalizarPedido(codigo);
 	}
 

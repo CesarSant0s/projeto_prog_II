@@ -1,4 +1,4 @@
-package parteGraficaVisual;
+package guiCliente;
 
 import java.awt.EventQueue;
 
@@ -8,6 +8,7 @@ import javax.swing.JTextField;
 import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import excepitonRepositorioArray.UsuarioVazioException;
+import guiGeral.TelaLoginUsuario;
 import negocio.Fachada;
 
 import javax.swing.JLabel;
@@ -22,7 +23,7 @@ import java.awt.Font;
 
 public class TelaCadastrarCliente {
 
-	JFrame Cadastro;
+	public JFrame Cadastro;
 	private JTextField textNomeDeLogin;
 	private JPasswordField pwdSenha;
 	private JTextField textNomeCompleto;
@@ -35,15 +36,16 @@ public class TelaCadastrarCliente {
 	 */
 	public static void main(String[] args) {
 		try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException  ex) {
-            System.err.println(ex);
-        }
+			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+				if ("Nimbus".equals(info.getName())) {
+					javax.swing.UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| javax.swing.UnsupportedLookAndFeelException ex) {
+			System.err.println(ex);
+		}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -82,14 +84,14 @@ public class TelaCadastrarCliente {
 		JLabel lblNomeDeLogin = new JLabel("Nome de Login:");
 		lblNomeDeLogin.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblNomeDeLogin.setForeground(new Color(255, 255, 255));
-		lblNomeDeLogin.setBounds(36, 17, 151, 15);
+		lblNomeDeLogin.setBounds(50, 16, 99, 15);
 		Cadastro.getContentPane().add(lblNomeDeLogin);
 
 		JLabel lblSenha = new JLabel("Senha:");
 		lblSenha.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSenha.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblSenha.setForeground(new Color(255, 255, 255));
-		lblSenha.setBounds(86, 54, 71, 15);
+		lblSenha.setBounds(94, 53, 55, 15);
 		Cadastro.getContentPane().add(lblSenha);
 
 		pwdSenha = new JPasswordField();
@@ -99,7 +101,7 @@ public class TelaCadastrarCliente {
 		JLabel lblNomeCompleto = new JLabel("Nome Completo:");
 		lblNomeCompleto.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblNomeCompleto.setForeground(new Color(255, 255, 255));
-		lblNomeCompleto.setBounds(29, 94, 133, 15);
+		lblNomeCompleto.setBounds(45, 93, 104, 15);
 		Cadastro.getContentPane().add(lblNomeCompleto);
 
 		textNomeCompleto = new JTextField();
@@ -110,7 +112,7 @@ public class TelaCadastrarCliente {
 		JLabel lblTelefone = new JLabel("Telefone:");
 		lblTelefone.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblTelefone.setForeground(new Color(255, 255, 255));
-		lblTelefone.setBounds(82, 131, 90, 15);
+		lblTelefone.setBounds(92, 130, 57, 15);
 		Cadastro.getContentPane().add(lblTelefone);
 
 		textTelefone = new JTextField();
@@ -121,13 +123,13 @@ public class TelaCadastrarCliente {
 		JLabel lblNewLabel = new JLabel("Cpf:");
 		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setBounds(121, 168, 66, 15);
+		lblNewLabel.setBounds(122, 167, 25, 15);
 		Cadastro.getContentPane().add(lblNewLabel);
 
-		JLabel lblNewLabel_2 = new JLabel("Endereço:");
+		JLabel lblNewLabel_2 = new JLabel("Endereco:");
 		lblNewLabel_2.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblNewLabel_2.setForeground(new Color(255, 255, 255));
-		lblNewLabel_2.setBounds(78, 205, 83, 15);
+		lblNewLabel_2.setBounds(83, 204, 66, 15);
 		Cadastro.getContentPane().add(lblNewLabel_2);
 
 		textCpf = new JTextField();
@@ -188,7 +190,7 @@ public class TelaCadastrarCliente {
 
 		btnCadastrarCliente.setBounds(112, 248, 114, 25);
 		Cadastro.getContentPane().add(btnCadastrarCliente);
-		
+
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

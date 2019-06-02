@@ -5,7 +5,6 @@ import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import exception.CnpjNaoCadastradoException;
 import exception.CpfNaoCadastradoException;
 import exception.SenhaIncorretaException;
-import negocioClassesBasicas.Administrador;
 import negocioClassesBasicas.Loja;
 import negocioClassesBasicas.Usuario;
 

@@ -1,4 +1,4 @@
-package parteGraficaVisual;
+package guiGeral;
 
 import javax.swing.JOptionPane;
 

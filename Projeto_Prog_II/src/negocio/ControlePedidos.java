@@ -7,7 +7,7 @@ import excepitonRepositorioArray.PedidoVazioException;
 import excepitonRepositorioArray.PratoJaInseridoException;
 import excepitonRepositorioArray.PratoNaoEncontradoException;
 import excepitonRepositorioArray.PratoVazioException;
-import excepitonRepositorioArray.QuantidadeIndisponívelException;
+import excepitonRepositorioArray.QuantidadeIndisponivelException;
 import negocioClassesBasicas.Loja;
 import negocioClassesBasicas.Pedido;
 import negocioClassesBasicas.Prato;
@@ -29,7 +29,7 @@ public class ControlePedidos {
 	}
 
 	public void finalizarPedido(int codigo) throws PedidoNaoCadastrado, PratoNaoEncontradoException,
-			LojaNaoCadastradaException, QuantidadeIndisponívelException {
+			LojaNaoCadastradaException, QuantidadeIndisponivelException {
 
 		Prato[] array = pedidos.buscar(codigo).getPratosEscolhidos().listar();
 

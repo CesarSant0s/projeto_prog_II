@@ -1,4 +1,4 @@
-package parteGraficaVisual;
+package guiAdministrador;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -13,12 +13,18 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import excepitonRepositorioArray.UsuarioNaoCadastradoException;
+import excepitonRepositorioArray.UsuarioVazioException;
+import negocio.Fachada;
+
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 
-public class TelaCliente extends JFrame {
+public class TelaCadastrarAdministrador extends JFrame {
 
-	private static TelaCliente instance;
+	private static TelaCadastrarAdministrador instance;
 
 	private JPanel contentPane;
 	private JTextField textNomeDeLogin;
@@ -26,16 +32,15 @@ public class TelaCliente extends JFrame {
 	private JTextField textNomeCompleto;
 	private JTextField textTelefone;
 	private JTextField textCpf;
-	private JTextField textEndereco;
 	private JButton btnVoltar;
 	private JButton btnAtualizar;
 	private JButton btnLimpar;
 
-	public static TelaCliente getInstance() {
-		if (TelaCliente.instance == null) {
-			TelaCliente.instance = new TelaCliente();
+	public static TelaCadastrarAdministrador getInstance() {
+		if (TelaCadastrarAdministrador.instance == null) {
+			TelaCadastrarAdministrador.instance = new TelaCadastrarAdministrador();
 		}
-		return TelaCliente.instance;
+		return TelaCadastrarAdministrador.instance;
 	}
 
 	/**
@@ -45,7 +50,7 @@ public class TelaCliente extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaCliente frame = new TelaCliente();
+					TelaCadastrarAdministrador frame = new TelaCadastrarAdministrador();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,7 +62,7 @@ public class TelaCliente extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaCliente() {
+	public TelaCadastrarAdministrador() {
 		setTitle("Tô com fome - O aplicativo de comida mais próximo de você");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 400, 350);
@@ -75,14 +80,14 @@ public class TelaCliente extends JFrame {
 		JLabel lblNomeDeLogin = new JLabel("Nome de Login:");
 		lblNomeDeLogin.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblNomeDeLogin.setForeground(new Color(255, 255, 255));
-		lblNomeDeLogin.setBounds(36, 17, 151, 15);
+		lblNomeDeLogin.setBounds(50, 16, 151, 15);
 		getContentPane().add(lblNomeDeLogin);
 
 		JLabel lblSenha = new JLabel("Senha:");
 		lblSenha.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSenha.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblSenha.setForeground(new Color(255, 255, 255));
-		lblSenha.setBounds(86, 54, 71, 15);
+		lblSenha.setBounds(100, 53, 49, 15);
 		getContentPane().add(lblSenha);
 
 		pwdSenha = new JPasswordField();
@@ -92,7 +97,7 @@ public class TelaCliente extends JFrame {
 		JLabel lblNomeCompleto = new JLabel("Nome Completo:");
 		lblNomeCompleto.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblNomeCompleto.setForeground(new Color(255, 255, 255));
-		lblNomeCompleto.setBounds(29, 94, 133, 15);
+		lblNomeCompleto.setBounds(45, 93, 104, 15);
 		getContentPane().add(lblNomeCompleto);
 
 		textNomeCompleto = new JTextField();
@@ -103,7 +108,7 @@ public class TelaCliente extends JFrame {
 		JLabel lblTelefone = new JLabel("Telefone:");
 		lblTelefone.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblTelefone.setForeground(new Color(255, 255, 255));
-		lblTelefone.setBounds(82, 131, 90, 15);
+		lblTelefone.setBounds(92, 127, 57, 20);
 		getContentPane().add(lblTelefone);
 
 		textTelefone = new JTextField();
@@ -114,43 +119,46 @@ public class TelaCliente extends JFrame {
 		JLabel lblNewLabel = new JLabel("Cpf:");
 		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setBounds(121, 168, 66, 15);
+		lblNewLabel.setBounds(124, 167, 25, 15);
 		getContentPane().add(lblNewLabel);
-
-		JLabel lblNewLabel_2 = new JLabel("Endereço:");
-		lblNewLabel_2.setFont(new Font("Dialog", Font.BOLD, 13));
-		lblNewLabel_2.setForeground(new Color(255, 255, 255));
-		lblNewLabel_2.setBounds(78, 205, 83, 15);
-		getContentPane().add(lblNewLabel_2);
 
 		textCpf = new JTextField();
 		textCpf.setBounds(151, 163, 160, 25);
 		getContentPane().add(textCpf);
 		textCpf.setColumns(10);
 
-		textEndereco = new JTextField();
-		textEndereco.setBounds(151, 200, 160, 25);
-		getContentPane().add(textEndereco);
-		textEndereco.setColumns(10);
-		
 		btnVoltar = new JButton("Voltar");
 		btnVoltar.setBackground(new Color(255, 255, 255));
 		btnVoltar.setForeground(new Color(128, 0, 0));
-		btnVoltar.setBounds(250, 285, 114, 25);
+		btnVoltar.setBounds(250, 272, 114, 25);
 		contentPane.add(btnVoltar);
-		
+
 		btnAtualizar = new JButton("Atualizar");
+		btnAtualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
 		btnAtualizar.setForeground(new Color(128, 0, 0));
 		btnAtualizar.setBackground(Color.WHITE);
-		btnAtualizar.setBounds(250, 248, 114, 25);
+		btnAtualizar.setBounds(250, 236, 114, 25);
 		contentPane.add(btnAtualizar);
-		
+
 		btnLimpar = new JButton("Limpar");
+		btnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textCpf.setText("");
+				textNomeCompleto.setText("");
+				textNomeDeLogin.setText("");
+				textTelefone.setText("");
+				pwdSenha.setText("");
+
+			}
+		});
 		btnLimpar.setForeground(new Color(128, 0, 0));
 		btnLimpar.setBackground(Color.WHITE);
-		btnLimpar.setBounds(121, 285, 114, 25);
+		btnLimpar.setBounds(124, 272, 114, 25);
 		contentPane.add(btnLimpar);
-		
-		
+
 	}
 }

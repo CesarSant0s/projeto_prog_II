@@ -1,4 +1,4 @@
-package parteGraficaVisual;
+package guiAdministrador;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
