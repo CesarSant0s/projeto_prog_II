@@ -1,11 +1,2 @@
-/guiCliente/
-/parteGraficaVisual/
 /negocio/
-/guiGeral/
-/guiEntregador/
-/guiLoja/
-/guiAdministrador/
-/negocioClassesBasicas/
-/repositorioArray/
-/repositorio/
-/excepitonRepositorioArray/
+/exception/

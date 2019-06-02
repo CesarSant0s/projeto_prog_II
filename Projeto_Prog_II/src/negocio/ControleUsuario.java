@@ -10,6 +10,11 @@ import repositorioArray.RepositorioUsuarioArray;
 public class ControleUsuario {
 
 	private static ControleUsuario instance;
+	private RepositorioUsuario usuarios;
+
+	public ControleUsuario() {
+		usuarios = new RepositorioUsuarioArray();
+	}
 
 	public static ControleUsuario getInstance() {
 		if (ControleUsuario.instance == null) {
@@ -18,28 +23,21 @@ public class ControleUsuario {
 		return ControleUsuario.instance;
 	}
 
-	RepositorioUsuario usuarios = new RepositorioUsuarioArray();
-
 	public void inserir(Usuario usuario) throws UsuarioVazioException, UsuarioAnteriormenteCadastradoException {
-
 		usuarios.inserir(usuario);
 	}
 
 	public void remover(String cpf) throws UsuarioNaoCadastradoException {
-
 		usuarios.remover(cpf);
 	}
 
 	public Usuario buscar(String cpf) throws UsuarioNaoCadastradoException {
-
 		Usuario resultadoBusca = usuarios.buscar(cpf);
-
 		return resultadoBusca;
 	}
 
 	public void atualizar(Usuario usuario) throws UsuarioVazioException, UsuarioNaoCadastradoException {
 		usuarios.atualizar(usuario);
-
 	}
 
 	public Usuario[] listar() {

@@ -41,21 +41,5 @@ public class TelaAdministrador extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JLabel lblCadastrarCLiente = new JLabel("Cadstrar Cliente");
-		lblCadastrarCLiente.setBounds(12, 12, 118, 15);
-		contentPane.add(lblCadastrarCLiente);
-		
-		JLabel lblBuscarCliente = new JLabel("Buscar Cliente");
-		lblBuscarCliente.setBounds(12, 39, 118, 15);
-		contentPane.add(lblBuscarCliente);
-		
-		JLabel lblNewLabel_2 = new JLabel("Remover Cliente");
-		lblNewLabel_2.setBounds(12, 66, 118, 15);
-		contentPane.add(lblNewLabel_2);
-		
-		JLabel lblNewLabel_3 = new JLabel("Alterar Cliente");
-		lblNewLabel_3.setBounds(12, 93, 118, 15);
-		contentPane.add(lblNewLabel_3);
 	}
 }

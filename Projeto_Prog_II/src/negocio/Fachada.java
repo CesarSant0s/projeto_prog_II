@@ -1,5 +1,8 @@
 package negocio;
 
+import excepitonRepositorioArray.AdministradorJaCadastradoException;
+import excepitonRepositorioArray.AdministradorNaoEncotradoException;
+import excepitonRepositorioArray.AdministradorVazioException;
 import excepitonRepositorioArray.LojaJaCadastradaException;
 import excepitonRepositorioArray.LojaNaoCadastradaException;
 import excepitonRepositorioArray.LojaVaziaException;
@@ -15,7 +18,9 @@ import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import excepitonRepositorioArray.UsuarioVazioException;
 import exception.CnpjNaoCadastradoException;
 import exception.CpfNaoCadastradoException;
+import exception.IdNaoCadastradoException;
 import exception.SenhaIncorretaException;
+import negocioClassesBasicas.Administrador;
 import negocioClassesBasicas.Cliente;
 import negocioClassesBasicas.Entregador;
 import negocioClassesBasicas.Loja;
@@ -31,6 +36,7 @@ public class Fachada {
 	private ControlePedidos pedidos;
 	private ControlePratos pratos;
 	private ControleLogin login;
+	private ControleAdiministrador adiministrador;
 
 	public Fachada() {
 		usuarios = new ControleUsuario();
@@ -38,6 +44,7 @@ public class Fachada {
 		pedidos = new ControlePedidos();
 		pratos = new ControlePratos();
 		login = new ControleLogin();
+		adiministrador = new ControleAdiministrador();
 	}
 
 	public static Fachada getInstance() {
@@ -59,6 +66,34 @@ public class Fachada {
 		login.getInstance().lojaLogin(cnpj, senha);
 	}
 
+	public void login(int id, String senha) throws AdministradorNaoEncotradoException, IdNaoCadastradoException {
+		login.getInstance().loginAdministrador(id, senha);
+	}
+
+	// ControleAdministrador
+
+	public void inserirAdmnistrador(Administrador adm)
+			throws AdministradorVazioException, AdministradorJaCadastradoException {
+		adiministrador.inserirAdmnistrador(adm);
+	}
+
+	public void removerAdmnistrador(int id) throws AdministradorNaoEncotradoException {
+		adiministrador.removerAdmnistrador(id);
+	}
+
+	public Administrador buscarAdmnistrador(int id) throws AdministradorNaoEncotradoException {
+		return adiministrador.buscarAdmnistrador(id);
+	}
+
+	public void alterarAdministrador(Administrador adm)
+			throws AdministradorVazioException, AdministradorNaoEncotradoException {
+		adiministrador.alterarAdministrador(adm);
+	}
+
+	public Administrador[] listarAdiministrador() {
+		return adiministrador.listarAdministrador();
+	}
+
 	// Controle Pratos
 	public void inserirPrato(String nome, float peso, float valorDoPrato, int quantiadeDisponivel)
 			throws PratoVazioException, PratoJaInseridoException {
@@ -75,9 +110,7 @@ public class Fachada {
 
 	public void alterarPrato(String nome, float peso, float valorDoPrato, int quantiadeDisponivel)
 			throws PratoVazioException, PratoNaoEncontradoException {
-
 		pratos.alterar(new Prato(nome, peso, valorDoPrato, quantiadeDisponivel));
-
 	}
 
 	public Prato[] listar() {
@@ -87,12 +120,10 @@ public class Fachada {
 	// Controle Pedido
 	public void FazerPedido(String cpfCliente, String cpfEntregador, String cnpjLoja) throws PedidoJaInseridoException,
 			PedidoVazioException, UsuarioNaoCadastradoException, LojaNaoCadastradaException {
-
 		Cliente cliente = (Cliente) getInstance().buscarUsuario(cpfCliente);
 		Entregador entregador = (Entregador) getInstance().buscarUsuario(cpfEntregador);
 		Loja loja = getInstance().buscarLoja(cnpjLoja);
 		pedidos.FazerPedido(new Pedido(cliente, loja, entregador));
-
 	}
 
 	public void FinalizarPedido(int codigo) throws PedidoNaoCadastrado, PratoNaoEncontradoException,
@@ -105,7 +136,6 @@ public class Fachada {
 	}
 
 	public void alterarPedido(Pedido pedido) throws PedidoVazioException, PedidoNaoCadastrado {
-
 		pedidos.alterar(pedido);
 	}
 
@@ -141,40 +171,31 @@ public class Fachada {
 	public void inserirUsuarioCliente(String nomeUsuario, String senha, String nome, String telefone, String cpf,
 			String endereco)
 			throws UsuarioVazioException, UsuarioAnteriormenteCadastradoException, UsuarioNaoCadastradoException {
-
 		usuarios.inserir(new Cliente(nomeUsuario, senha, nome, telefone, cpf, endereco));
-
 	}
 
 	public void inserirUsuarioEntregador(String nomeUsuario, String senha, String nome, String telefone, String cpf,
 			String placaVeiculo)
 			throws UsuarioVazioException, UsuarioAnteriormenteCadastradoException, UsuarioNaoCadastradoException {
-
 		usuarios.inserir(new Entregador(nomeUsuario, senha, nome, telefone, cpf, placaVeiculo));
 
 	}
 
 	public void removerUsuario(String cpf) throws UsuarioNaoCadastradoException {
-
 		usuarios.remover(cpf);
-
 	}
 
 	public Usuario buscarUsuario(String cpf) throws UsuarioNaoCadastradoException {
-
 		return usuarios.buscar(cpf);
-
 	}
 
 	public void atualizarUsuarioEntregador(String nomeUsuario, String senha, String nome, String telefone, String cpf,
 			String placaVeiculo) throws UsuarioVazioException, UsuarioNaoCadastradoException {
-
 		usuarios.atualizar(new Entregador(nomeUsuario, senha, nome, telefone, cpf, placaVeiculo));
 	}
 
 	public void atualizarUsuarioCliente(String nomeUsuario, String senha, String nome, String telefone, String cpf,
 			String endereco) throws UsuarioVazioException, UsuarioNaoCadastradoException {
-
 		usuarios.atualizar(new Cliente(nomeUsuario, senha, nome, telefone, cpf, endereco));
 	}
 

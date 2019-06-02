@@ -10,6 +10,11 @@ import repositorioArray.RepositorioLojaArray;
 public class ControleLoja {
 
 	private static ControleLoja instance;
+	private RepositorioLoja lojas;
+
+	public ControleLoja() {
+		lojas = new RepositorioLojaArray();
+	}
 
 	public static ControleLoja getInstance() {
 		if (ControleLoja.instance == null) {
@@ -17,8 +22,6 @@ public class ControleLoja {
 		}
 		return ControleLoja.instance;
 	}
-
-	RepositorioLoja lojas = new RepositorioLojaArray();
 
 	public void inserir(Loja loja) throws LojaVaziaException, LojaJaCadastradaException {
 
