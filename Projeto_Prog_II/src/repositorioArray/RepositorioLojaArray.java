@@ -1,5 +1,8 @@
 package repositorioArray;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import excepitonRepositorioArray.LojaJaCadastradaException;
 import excepitonRepositorioArray.LojaNaoCadastradaException;
 import excepitonRepositorioArray.LojaVaziaException;
@@ -14,6 +17,7 @@ public class RepositorioLojaArray implements RepositorioLoja {
 	private Loja[] array;
 	private int indice;
 	private static final int TAMANHO = 100;
+	
 
 	public RepositorioLojaArray() {
 		array = new Loja[TAMANHO];
@@ -108,9 +112,15 @@ public class RepositorioLojaArray implements RepositorioLoja {
 
 	}
 
-	@Override
-	public Loja[] listarLoja() {
-		return array;
+public List listarLoja() {
+		
+		List lojas = new ArrayList();
+		int i = 0;
+		while(i < indice) {	
+			lojas.add(array[i]);
+			 i++;
+			}
+		return lojas;
 	}
 
 }

@@ -1,5 +1,7 @@
 package negocio;
 
+import java.util.List;
+
 import excepitonRepositorioArray.LojaJaCadastradaException;
 import excepitonRepositorioArray.LojaNaoCadastradaException;
 import excepitonRepositorioArray.LojaVaziaException;
@@ -46,7 +48,7 @@ public class ControleLoja {
 
 	}
 
-	public Loja[] listar() {
+	public List listar() {
 		return lojas.listarLoja();
 	}
 }

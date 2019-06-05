@@ -8,8 +8,8 @@ import exception.CpfNaoCadastradoException;
 import exception.IdNaoCadastradoException;
 import exception.SenhaIncorretaException;
 import negocioClassesBasicas.Administrador;
+import negocioClassesBasicas.Cliente;
 import negocioClassesBasicas.Loja;
-import negocioClassesBasicas.Usuario;
 
 public class ControleLogin {
 
@@ -27,7 +27,7 @@ public class ControleLogin {
 
 	public void loginUsuario(String cpf, String senha)
 			throws UsuarioNaoCadastradoException, CpfNaoCadastradoException, SenhaIncorretaException {
-		Usuario usuario = ControleUsuario.getInstance().buscar(cpf);
+		Cliente usuario = (Cliente) ControleUsuario.getInstance().buscar(cpf);
 		if (usuario == null) {
 			CpfNaoCadastradoException e = new CpfNaoCadastradoException();
 			throw e;

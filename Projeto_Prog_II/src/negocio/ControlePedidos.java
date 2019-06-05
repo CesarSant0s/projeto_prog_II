@@ -1,5 +1,7 @@
 package negocio;
 
+import java.util.ArrayList;
+
 import excepitonRepositorioArray.LojaNaoCadastradaException;
 import excepitonRepositorioArray.PedidoJaInseridoException;
 import excepitonRepositorioArray.PedidoNaoCadastrado;
@@ -8,7 +10,6 @@ import excepitonRepositorioArray.PratoJaInseridoException;
 import excepitonRepositorioArray.PratoNaoEncontradoException;
 import excepitonRepositorioArray.PratoVazioException;
 import excepitonRepositorioArray.QuantidadeIndisponivelException;
-import negocioClassesBasicas.Loja;
 import negocioClassesBasicas.Pedido;
 import negocioClassesBasicas.Prato;
 import repositorio.RepositorioPedido;
@@ -32,10 +33,11 @@ public class ControlePedidos {
 
 	public void finalizarPedido(int codigo) throws PedidoNaoCadastrado, PratoNaoEncontradoException,
 			LojaNaoCadastradaException, QuantidadeIndisponivelException {
-		Prato[] array = pedidos.buscar(codigo).getPratosEscolhidos().listar();
+		ArrayList<Prato> array = pedidos.buscar(codigo).getPratosEscolhidos().listar();
 		String cnpjLoja = pedidos.buscar(codigo).getLoja().getCnpj();
-		for (int i = 0, j = array.length; i < j; i++) {
-			Fachada.getInstance().buscarLoja(cnpjLoja).getCardapio().buscar(array[i].getNome()).retirarStock(1);
+
+		for (int i = 0, j = array.size(); i < j; i++) {
+			Fachada.getInstance().buscarLoja(cnpjLoja).getCardapio().buscar(array.get(i).getNome()).retirarStock(1);
 		}
 		pedidos.remover(codigo);
 	}

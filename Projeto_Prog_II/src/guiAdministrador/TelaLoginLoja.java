@@ -1,4 +1,4 @@
-package guiLoja;
+package guiAdministrador;
 
 import java.awt.EventQueue;
 

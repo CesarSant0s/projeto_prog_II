@@ -1,5 +1,6 @@
 package repositorio;
 
+import java.util.ArrayList;
 import excepitonRepositorioArray.PratoJaInseridoException;
 import excepitonRepositorioArray.PratoNaoEncontradoException;
 import excepitonRepositorioArray.PratoVazioException;
@@ -15,6 +16,6 @@ public interface RepositorioPratos {
 
 	public void alterar(Prato novoPrato) throws PratoVazioException, PratoNaoEncontradoException;
 
-	public Prato[] listar();
+	public ArrayList<Prato> listar();
 
 }

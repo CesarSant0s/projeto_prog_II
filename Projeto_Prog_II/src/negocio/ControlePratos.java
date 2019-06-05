@@ -1,5 +1,7 @@
 package negocio;
 
+import java.util.List;
+
 import excepitonRepositorioArray.PratoJaInseridoException;
 import excepitonRepositorioArray.PratoNaoEncontradoException;
 import excepitonRepositorioArray.PratoVazioException;
@@ -32,7 +34,7 @@ public class ControlePratos {
 		pratos.alterar(prato);
 	}
 
-	public Prato[] listar() {
+	public List listar() {
 		return pratos.listar();
 	}
 }

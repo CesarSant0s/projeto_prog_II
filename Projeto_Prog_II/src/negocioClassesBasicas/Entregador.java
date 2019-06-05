@@ -3,10 +3,12 @@ package negocioClassesBasicas;
 public class Entregador extends Usuario {
 
 	private String placaVeiculo;
+	private String email;
 
-	public Entregador(String nomeUsuario, String senha, String nome, String telefone, String cpf, String placaVeiculo) {
-		super(nomeUsuario, senha, nome, telefone, cpf);
+	public Entregador(String nome, String telefone, String cpf, String placaVeiculo, String email) {
+		super(nome, telefone, cpf);
 		setplacaVeiculo(placaVeiculo);
+		setEmail(email);
 	}
 
 	public String getplacaVeiculo() {
@@ -14,8 +16,15 @@ public class Entregador extends Usuario {
 	}
 
 	public void setplacaVeiculo(String placaVeiculo) {
-		if (!(placaVeiculo == null) && !(placaVeiculo.equals("")))
-			this.placaVeiculo = placaVeiculo;
+		this.placaVeiculo = placaVeiculo;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

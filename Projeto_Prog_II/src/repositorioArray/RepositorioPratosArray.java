@@ -1,5 +1,6 @@
 package repositorioArray;
 
+import java.util.ArrayList;
 import excepitonRepositorioArray.PratoJaInseridoException;
 import excepitonRepositorioArray.PratoNaoEncontradoException;
 import excepitonRepositorioArray.PratoVazioException;
@@ -106,7 +107,14 @@ public class RepositorioPratosArray implements RepositorioPratos {
 
 	}
 
-	public Prato[] listar() {
-		return cardapio;
+	public ArrayList<Prato> listar() {
+
+		ArrayList<Prato> pratos = new ArrayList<Prato>();
+		int i = 0;
+		while (i < quantidadePratos) {
+			pratos.add(cardapio[i]);
+			i++;
+		}
+		return pratos;
 	}
 }
