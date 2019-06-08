@@ -11,6 +11,14 @@ public class RepositorioPratosArray implements RepositorioPratos {
 
 	private Prato[] cardapio;
 	private int quantidadePratos;
+	private static RepositorioPratosArray instance;
+
+	public static RepositorioPratosArray getInstance() {
+		if (instance == null) {
+			instance = new RepositorioPratosArray();
+		}
+		return instance;
+	}
 
 	public RepositorioPratosArray() {
 		cardapio = new Prato[100];

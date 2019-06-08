@@ -13,6 +13,14 @@ public class RepositorioUsuarioArray implements RepositorioUsuario {
 	private Usuario[] array;
 	private static int indice;
 	private final static int TAMANHO = 100;
+	private static RepositorioUsuarioArray instance;
+
+	public static RepositorioUsuarioArray getInstance() {
+		if (instance == null) {
+			instance = new RepositorioUsuarioArray();
+		}
+		return instance;
+	}
 
 	public RepositorioUsuarioArray() {
 		array = new Usuario[TAMANHO];
@@ -99,7 +107,7 @@ public class RepositorioUsuarioArray implements RepositorioUsuario {
 			if (cpf.equals(array[i].getCpf())) {
 
 				array[i] = array[indice - 1];
-				array[indice-1] = null;
+				array[indice - 1] = null;
 				indice--;
 			}
 

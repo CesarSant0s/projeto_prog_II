@@ -10,11 +10,6 @@ import repositorioArray.RepositorioUsuarioArray;
 public class ControleUsuario {
 
 	private static ControleUsuario instance;
-	private RepositorioUsuario usuarios;
-
-	public ControleUsuario() {
-		usuarios = new RepositorioUsuarioArray();
-	}
 
 	public static ControleUsuario getInstance() {
 		if (ControleUsuario.instance == null) {
@@ -24,23 +19,23 @@ public class ControleUsuario {
 	}
 
 	public void inserir(Usuario usuario) throws UsuarioVazioException, UsuarioAnteriormenteCadastradoException {
-		usuarios.inserir(usuario);
+		RepositorioUsuarioArray.getInstance().inserir(usuario);
 	}
 
 	public void remover(String cpf) throws UsuarioNaoCadastradoException {
-		usuarios.remover(cpf);
+		RepositorioUsuarioArray.getInstance().remover(cpf);
 	}
 
 	public Usuario buscar(String cpf) throws UsuarioNaoCadastradoException {
-		Usuario resultadoBusca = usuarios.buscar(cpf);
+		Usuario resultadoBusca = RepositorioUsuarioArray.getInstance().buscar(cpf);
 		return resultadoBusca;
 	}
 
 	public void atualizar(Usuario usuario) throws UsuarioVazioException, UsuarioNaoCadastradoException {
-		usuarios.atualizar(usuario);
+		RepositorioUsuarioArray.getInstance().atualizar(usuario);
 	}
 
 	public Usuario[] listar() {
-		return usuarios.listar();
+		return RepositorioUsuarioArray.getInstance().listar();
 	}
 }

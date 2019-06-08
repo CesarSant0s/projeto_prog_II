@@ -11,6 +11,7 @@ import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import exception.CnpjNaoCadastradoException;
 import exception.CpfNaoCadastradoException;
 import exception.SenhaIncorretaException;
+import guiAdministrador.TelaLoginAdministrador;
 import guiCliente.TelaCadastrarCliente;
 import negocio.Fachada;
 
@@ -175,7 +176,20 @@ public class TelaLoginUsuario extends JFrame {
 		lblNewLabel_1.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 12));
 		lblNewLabel_1.setForeground(new Color(255, 255, 255));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setBounds(81, 291, 260, 19);
+		lblNewLabel_1.setBounds(70, 254, 260, 19);
 		contentPane.add(lblNewLabel_1);
+
+		JButton btnLoginAdministrador = new JButton("Login Administrador");
+		btnLoginAdministrador.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				TelaLoginAdministrador tela = new TelaLoginAdministrador();
+				tela.setVisible(true);
+				dispose();
+			}
+		});
+		btnLoginAdministrador.setBackground(Color.WHITE);
+		btnLoginAdministrador.setForeground(new Color(128, 0, 0));
+		btnLoginAdministrador.setBounds(122, 285, 182, 25);
+		contentPane.add(btnLoginAdministrador);
 	}
 }

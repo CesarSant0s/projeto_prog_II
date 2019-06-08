@@ -16,43 +16,41 @@ import repositorio.RepositorioPedido;
 import repositorioArray.RepositorioPedidoArray;
 
 public class ControlePedidos {
-	private RepositorioPedido pedidos;
 
 	public ControlePedidos() {
-		pedidos = new RepositorioPedidoArray();
 	}
 
-	public void FazerPedido(Pedido pedido) throws PedidoJaInseridoException, PedidoVazioException {
-		pedidos.inserir(pedido);
+	public void FazPeredido(Pedido pedido) throws PedidoJaInseridoException, PedidoVazioException {
+		RepositorioPedidoArray.getInstance().inserir(pedido);
 	}
 
 	public void inserirPratoPedido(int codigoDoPedido, Prato prato)
 			throws PratoVazioException, PratoJaInseridoException, PedidoNaoCadastrado {
-		pedidos.buscar(codigoDoPedido).getPratosEscolhidos().inserir(prato);
+		RepositorioPedidoArray.getInstance().buscar(codigoDoPedido).getPratosEscolhidos().inserir(prato);
 	}
 
 	public void finalizarPedido(int codigo) throws PedidoNaoCadastrado, PratoNaoEncontradoException,
 			LojaNaoCadastradaException, QuantidadeIndisponivelException {
-		ArrayList<Prato> array = pedidos.buscar(codigo).getPratosEscolhidos().listar();
-		String cnpjLoja = pedidos.buscar(codigo).getLoja().getCnpj();
+		ArrayList<Prato> array = RepositorioPedidoArray.getInstance().buscar(codigo).getPratosEscolhidos().listar();
+		String cnpjLoja = RepositorioPedidoArray.getInstance().buscar(codigo).getLoja().getCnpj();
 
 		for (int i = 0, j = array.size(); i < j; i++) {
 			Fachada.getInstance().buscarLoja(cnpjLoja).getCardapio().buscar(array.get(i).getNome()).retirarStock(1);
 		}
-		pedidos.remover(codigo);
+		RepositorioPedidoArray.getInstance().remover(codigo);
 	}
 
 	public Pedido buscar(int codigo) throws PedidoNaoCadastrado {
-		Pedido resultadoBuscar = pedidos.buscar(codigo);
+		Pedido resultadoBuscar = RepositorioPedidoArray.getInstance().buscar(codigo);
 		return resultadoBuscar;
 	}
 
 	public void alterar(Pedido pedido) throws PedidoVazioException, PedidoNaoCadastrado {
-		pedidos.alterar(pedido);
+		RepositorioPedidoArray.getInstance().alterar(pedido);
 	}
 
 	public Pedido[] listar() {
-		return pedidos.listar();
+		return RepositorioPedidoArray.getInstance().listar();
 	}
 
 }

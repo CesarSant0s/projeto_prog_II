@@ -25,19 +25,19 @@ import java.awt.Color;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
-public class TelaLoginLoja extends JFrame {
+public class TelaLoginAdministrador extends JFrame {
 
-	private static TelaLoginLoja instance;
+	private static TelaLoginAdministrador instance;
 
 	private JPanel contentPane;
 	private JTextField textFieldLogin;
 	private JPasswordField passwordFieldSenha;
 
-	public static TelaLoginLoja getInstance() {
-		if (TelaLoginLoja.instance == null) {
-			TelaLoginLoja.instance = new TelaLoginLoja();
+	public static TelaLoginAdministrador getInstance() {
+		if (TelaLoginAdministrador.instance == null) {
+			TelaLoginAdministrador.instance = new TelaLoginAdministrador();
 		}
-		return TelaLoginLoja.instance;
+		return TelaLoginAdministrador.instance;
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class TelaLoginLoja extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaLoginLoja frame = new TelaLoginLoja();
+					TelaLoginAdministrador frame = new TelaLoginAdministrador();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -70,7 +70,7 @@ public class TelaLoginLoja extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaLoginLoja() {
+	public TelaLoginAdministrador() {
 		setTitle("Tô com fome - O aplicativo de comida mais próximo de você");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 400, 350);
@@ -165,7 +165,20 @@ public class TelaLoginLoja extends JFrame {
 		lblNewLabel_1.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 12));
 		lblNewLabel_1.setForeground(new Color(255, 255, 255));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setBounds(81, 291, 260, 19);
+		lblNewLabel_1.setBounds(83, 255, 260, 19);
 		contentPane.add(lblNewLabel_1);
+		
+		JButton btnVoltarLoginCliente = new JButton("Voltar");
+		btnVoltarLoginCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				TelaLoginAdministrador tela = new TelaLoginAdministrador();
+				tela.setVisible(true);
+				dispose();
+			}
+		});
+		btnVoltarLoginCliente.setBackground(Color.WHITE);
+		btnVoltarLoginCliente.setForeground(new Color(128, 0, 0));
+		btnVoltarLoginCliente.setBounds(162, 285, 94, 25);
+		contentPane.add(btnVoltarLoginCliente);
 	}
 }

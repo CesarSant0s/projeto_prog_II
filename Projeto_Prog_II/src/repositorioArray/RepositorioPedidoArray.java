@@ -11,6 +11,14 @@ public class RepositorioPedidoArray implements RepositorioPedido {
 	private Pedido[] array;
 	private int indice;
 	private static final int TAMANHO = 100;
+	private static RepositorioPedidoArray instance;
+
+	public static RepositorioPedidoArray getInstance() {
+		if (instance == null) {
+			instance = new RepositorioPedidoArray();
+		}
+		return instance;
+	}
 
 	public RepositorioPedidoArray() {
 		array = new Pedido[TAMANHO];

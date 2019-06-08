@@ -18,7 +18,6 @@ import excepitonRepositorioArray.QuantidadeIndisponivelException;
 import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import excepitonRepositorioArray.UsuarioVazioException;
-import exception.CnpjNaoCadastradoException;
 import exception.CpfNaoCadastradoException;
 import exception.IdNaoCadastradoException;
 import exception.SenhaIncorretaException;
@@ -58,14 +57,9 @@ public class Fachada {
 
 	// ControleLogin
 
-	public void loginUsuario(String cpf, String senha)
+	public void loginCliente(String cpf, String senha)
 			throws UsuarioNaoCadastradoException, CpfNaoCadastradoException, SenhaIncorretaException {
-		login.getInstance().loginUsuario(cpf, senha);
-	}
-
-	public void loginLoja(String cnpj, String senha)
-			throws LojaNaoCadastradaException, CnpjNaoCadastradoException, SenhaIncorretaException {
-		login.getInstance().lojaLogin(cnpj, senha);
+		login.getInstance().loginCliente(cpf, senha);
 	}
 
 	public void login(int id, String senha) throws AdministradorNaoEncotradoException, IdNaoCadastradoException {
@@ -115,7 +109,7 @@ public class Fachada {
 		pratos.alterar(new Prato(nome, peso, valorDoPrato, quantiadeDisponivel));
 	}
 
-	public List listar() {
+	public List<Prato> listar() {
 		return pratos.listar();
 	}
 
@@ -160,12 +154,12 @@ public class Fachada {
 		return lojas.buscar(cnpj);
 	}
 
-	public void alterarLoja(String nome, String telefone, String cnpj,
-			String endereco) throws LojaVaziaException, LojaNaoCadastradaException {
+	public void alterarLoja(String nome, String telefone, String cnpj, String endereco)
+			throws LojaVaziaException, LojaNaoCadastradaException {
 		lojas.alterar(new Loja(nome, telefone, cnpj, endereco));
 	}
 
-	public List listarLoja() {
+	public List<Loja> listarLoja() {
 		return lojas.listar();
 	}
 

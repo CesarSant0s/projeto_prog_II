@@ -17,7 +17,15 @@ public class RepositorioLojaArray implements RepositorioLoja {
 	private Loja[] array;
 	private int indice;
 	private static final int TAMANHO = 100;
-	
+
+	private static RepositorioLojaArray instance;
+
+	public static RepositorioLojaArray getInstance() {
+		if (instance == null) {
+			instance = new RepositorioLojaArray();
+		}
+		return instance;
+	}
 
 	public RepositorioLojaArray() {
 		array = new Loja[TAMANHO];
@@ -112,14 +120,14 @@ public class RepositorioLojaArray implements RepositorioLoja {
 
 	}
 
-public List listarLoja() {
-		
+	public List listarLoja() {
+
 		List lojas = new ArrayList();
 		int i = 0;
-		while(i < indice) {	
+		while (i < indice) {
 			lojas.add(array[i]);
-			 i++;
-			}
+			i++;
+		}
 		return lojas;
 	}
 

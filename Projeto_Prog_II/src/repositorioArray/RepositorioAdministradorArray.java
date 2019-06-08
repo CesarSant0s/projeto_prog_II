@@ -14,8 +14,13 @@ public class RepositorioAdministradorArray implements RepositorioAdministrador {
 	private Administrador[] array;
 	private int indice;
 	private static final int TAMANHO = 100;
+	private static RepositorioAdministradorArray instance;
 
-	public RepositorioAdministradorArray() {
+	public static RepositorioAdministradorArray getInstance() {
+		if (instance == null) {
+			instance = new RepositorioAdministradorArray();
+		}
+		return instance;
 	}
 
 	@Override

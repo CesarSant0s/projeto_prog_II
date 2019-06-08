@@ -58,6 +58,13 @@ public class TelaAdministrador extends JFrame {
 		contentPane.add(btnCadastrarEntregador);
 
 		JButton btnCadatrarLoja = new JButton("Loja");
+		btnCadatrarLoja.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				TelaAdministradorEntregador tela = new TelaAdministradorEntregador();
+				tela.setVisible(true);
+				dispose();
+			}
+		});
 		btnCadatrarLoja.setBounds(26, 112, 183, 25);
 		contentPane.add(btnCadatrarLoja);
 
