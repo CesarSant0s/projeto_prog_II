@@ -14,9 +14,12 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import excepitonRepositorioArray.AdministradorJaCadastradoException;
+import excepitonRepositorioArray.AdministradorVazioException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import excepitonRepositorioArray.UsuarioVazioException;
 import negocio.Fachada;
+import negocioClassesBasicas.Administrador;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -128,6 +131,10 @@ public class TelaCadastrarAdministrador extends JFrame {
 		textCpf.setColumns(10);
 
 		btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnVoltar.setBackground(new Color(255, 255, 255));
 		btnVoltar.setForeground(new Color(128, 0, 0));
 		btnVoltar.setBounds(250, 272, 114, 25);
@@ -136,6 +143,19 @@ public class TelaCadastrarAdministrador extends JFrame {
 		btnAtualizar = new JButton("Atualizar");
 		btnAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				Administrador adm = new Administrador(textNomeDeLogin.getText(), new String(pwdSenha.getPassword()),
+						Integer.parseInt(textCpf.getText()));
+
+				try {
+					Fachada.getInstance().inserirAdmnistrador(adm);
+				} catch (AdministradorVazioException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (AdministradorJaCadastradoException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
 			}
 		});

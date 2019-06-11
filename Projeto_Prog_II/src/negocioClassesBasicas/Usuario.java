@@ -1,7 +1,7 @@
 package negocioClassesBasicas;
 
 public abstract class Usuario {
-
+	
 	private String nome;
 	private String telefone;
 	private String cpf;

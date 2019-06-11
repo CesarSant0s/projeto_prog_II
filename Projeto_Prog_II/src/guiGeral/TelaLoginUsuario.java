@@ -107,29 +107,13 @@ public class TelaLoginUsuario extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				try {
-					Fachada.getInstance().loginLoja(textFieldLogin.getText(),
+					Fachada.getInstance().loginCliente(textFieldLogin.getText(),
 							new String(passwordFieldSenha.getPassword()));
-				} catch (LojaNaoCadastradaException e1) {
-					// e1.printStackTrace();
-				} catch (CnpjNaoCadastradoException e1) {
-					// e1.printStackTrace();
-				} catch (SenhaIncorretaException e1) {
-					// e1.printStackTrace();
+				} catch (UsuarioNaoCadastradoException | CpfNaoCadastradoException | SenhaIncorretaException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 
-				try {
-					Fachada.getInstance().loginUsuario(textFieldLogin.getText(),
-							new String(passwordFieldSenha.getPassword()));
-				} catch (UsuarioNaoCadastradoException e) {
-					JOptionPane.showMessageDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
-					// e.printStackTrace();
-				} catch (CpfNaoCadastradoException e) {
-					JOptionPane.showMessageDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
-					// e.printStackTrace();
-				} catch (SenhaIncorretaException e) {
-					JOptionPane.showMessageDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
-					// e.printStackTrace();
-				}
 			}
 		});
 		contentPane.add(btnEntrar);

@@ -6,13 +6,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import excepitonRepositorioArray.AdministradorNaoEncotradoException;
 import excepitonRepositorioArray.LojaNaoCadastradaException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import exception.CnpjNaoCadastradoException;
 import exception.CpfNaoCadastradoException;
+import exception.IdNaoCadastradoException;
 import exception.SenhaIncorretaException;
 import guiCliente.TelaCadastrarCliente;
 import negocio.Fachada;
+import negocioClassesBasicas.Administrador;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -106,17 +109,14 @@ public class TelaLoginAdministrador extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				try {
-					Fachada.getInstance().loginLoja(textFieldLogin.getText(),
+					Fachada.getInstance().login(Integer.parseInt(textFieldLogin.getText()),
 							new String(passwordFieldSenha.getPassword()));
-				} catch (LojaNaoCadastradaException e) {
-					JOptionPane.showMessageDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
-					// e1.printStackTrace();
-				} catch (CnpjNaoCadastradoException e) {
-					JOptionPane.showMessageDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
-					// e1.printStackTrace();
-				} catch (SenhaIncorretaException e) {
-					JOptionPane.showMessageDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
-					// e1.printStackTrace();
+					TelaAdministrador tela =  new TelaAdministrador();
+					tela.setVisible(true);
+					dispose();
+				} catch (NumberFormatException | AdministradorNaoEncotradoException | IdNaoCadastradoException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 
 			}
@@ -130,8 +130,8 @@ public class TelaLoginAdministrador extends JFrame {
 		btnCadastrar.setBounds(210, 158, 101, 25);
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				TelaCadastrarCliente telaCadastro = new TelaCadastrarCliente();
-				telaCadastro.Cadastro.setVisible(true);
+				TelaCadastrarAdministrador telaCadastro = new TelaCadastrarAdministrador();
+				telaCadastro.setVisible(true);
 				dispose();
 
 			}
@@ -167,7 +167,7 @@ public class TelaLoginAdministrador extends JFrame {
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setBounds(83, 255, 260, 19);
 		contentPane.add(lblNewLabel_1);
-		
+
 		JButton btnVoltarLoginCliente = new JButton("Voltar");
 		btnVoltarLoginCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

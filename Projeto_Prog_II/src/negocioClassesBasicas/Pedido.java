@@ -17,12 +17,14 @@ public class Pedido {
 	private RepositorioPratos pratosEscolhidos;
 	private float valorTotal;
 
-	public Pedido(Cliente cliente, Loja loja, Entregador entregador) {
+	public Pedido(int codigo) {
+		this.codigo = codigo;
+	}
+
+	public Pedido(Cliente cliente, Loja loja) {
 		super();
 		this.cliente = cliente;
 		this.loja = loja;
-		this.entregador = entregador;
-		setPratosEscolhidos(new RepositorioPratosArray());
 	}
 
 	/* O pedido tem que retirar os pratos escolhidos do repositório loja */

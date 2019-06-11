@@ -1,6 +1,7 @@
 package negocio;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import excepitonRepositorioArray.LojaNaoCadastradaException;
 import excepitonRepositorioArray.PedidoJaInseridoException;
@@ -12,7 +13,6 @@ import excepitonRepositorioArray.PratoVazioException;
 import excepitonRepositorioArray.QuantidadeIndisponivelException;
 import negocioClassesBasicas.Pedido;
 import negocioClassesBasicas.Prato;
-import repositorio.RepositorioPedido;
 import repositorioArray.RepositorioPedidoArray;
 
 public class ControlePedidos {
@@ -27,6 +27,22 @@ public class ControlePedidos {
 	public void inserirPratoPedido(int codigoDoPedido, Prato prato)
 			throws PratoVazioException, PratoJaInseridoException, PedidoNaoCadastrado {
 		RepositorioPedidoArray.getInstance().buscar(codigoDoPedido).getPratosEscolhidos().inserir(prato);
+	}
+
+	public Pedido abrirPedido() {
+
+		Random gerador = new Random();
+		int numeroPedido = gerador.nextInt(100);
+		Pedido novo = null;
+		while (novo == null) {
+			try {
+				Fachada.getInstance().buscarPedido(numeroPedido);
+			} catch (PedidoNaoCadastrado e) {
+				novo = new Pedido(numeroPedido);
+			}
+		}
+
+		return novo;
 	}
 
 	public void finalizarPedido(int codigo) throws PedidoNaoCadastrado, PratoNaoEncontradoException,

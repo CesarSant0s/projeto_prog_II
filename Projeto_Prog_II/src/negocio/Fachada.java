@@ -114,12 +114,8 @@ public class Fachada {
 	}
 
 	// Controle Pedido
-	public void FazerPedido(String cpfCliente, String cpfEntregador, String cnpjLoja) throws PedidoJaInseridoException,
-			PedidoVazioException, UsuarioNaoCadastradoException, LojaNaoCadastradaException {
-		Cliente cliente = (Cliente) getInstance().buscarUsuario(cpfCliente);
-		Entregador entregador = (Entregador) getInstance().buscarUsuario(cpfEntregador);
-		Loja loja = getInstance().buscarLoja(cnpjLoja);
-		pedidos.FazerPedido(new Pedido(cliente, loja, entregador));
+	public Pedido abrirPedido() {
+		return pedidos.abrirPedido();
 	}
 
 	public void FinalizarPedido(int codigo) throws PedidoNaoCadastrado, PratoNaoEncontradoException,

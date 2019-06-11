@@ -20,6 +20,7 @@ import excepitonRepositorioArray.UsuarioVazioException;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JComboBox;
 
 public class TelaCliente extends JFrame {
 
@@ -147,6 +148,7 @@ public class TelaCliente extends JFrame {
 		btnAtualizar = new JButton("Atualizar");
 		btnAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				try {
 					Fachada.getInstance().atualizarUsuarioCliente(textNomeDeLogin.getText(),
 							new String(pwdSenha.getPassword()), textNomeCompleto.getText(), textTelefone.getText(),
@@ -180,6 +182,10 @@ public class TelaCliente extends JFrame {
 		btnLimpar.setBackground(Color.WHITE);
 		btnLimpar.setBounds(124, 272, 114, 25);
 		contentPane.add(btnLimpar);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(35, 223, 104, 24);
+		contentPane.add(comboBox);
 
 	}
 }

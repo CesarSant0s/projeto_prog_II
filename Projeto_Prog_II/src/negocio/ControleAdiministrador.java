@@ -4,11 +4,17 @@ import excepitonRepositorioArray.AdministradorJaCadastradoException;
 import excepitonRepositorioArray.AdministradorNaoEncotradoException;
 import excepitonRepositorioArray.AdministradorVazioException;
 import negocioClassesBasicas.Administrador;
+import repositorio.RepositorioAdministrador;
 import repositorioArray.RepositorioAdministradorArray;
 
 public class ControleAdiministrador {
 
 	private static ControleAdiministrador instance;
+	private RepositorioAdministrador repositorio;
+
+	public ControleAdiministrador() {
+		repositorio = RepositorioAdministradorArray.getInstance();
+	}
 
 	public static ControleAdiministrador getInsance() {
 		if (ControleAdiministrador.instance == null) {
@@ -19,24 +25,27 @@ public class ControleAdiministrador {
 
 	public void inserirAdmnistrador(Administrador adm)
 			throws AdministradorVazioException, AdministradorJaCadastradoException {
-		RepositorioAdministradorArray.getInstance().inserir(adm);
+		repositorio.inserir(adm);
+		RepositorioAdministradorArray.salvarArquivo();
 	}
 
 	public void removerAdmnistrador(int id) throws AdministradorNaoEncotradoException {
-		RepositorioAdministradorArray.getInstance().remover(id);
+		repositorio.remover(id);
+		RepositorioAdministradorArray.salvarArquivo();
 	}
 
 	public Administrador buscarAdmnistrador(int id) throws AdministradorNaoEncotradoException {
-		return RepositorioAdministradorArray.getInstance().buscar(id);
+		return repositorio.buscar(id);
 	}
 
 	public void alterarAdministrador(Administrador adm)
 			throws AdministradorVazioException, AdministradorNaoEncotradoException {
-		RepositorioAdministradorArray.getInstance().alterar(adm);
+		repositorio.alterar(adm);
+		RepositorioAdministradorArray.salvarArquivo();
 	}
 
 	public Administrador[] listarAdministrador() {
-		return RepositorioAdministradorArray.getInstance().listarAdministrador();
+		return repositorio.listarAdministrador();
 	}
 
 }

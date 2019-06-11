@@ -1,6 +1,8 @@
 package negocioClassesBasicas;
 
-public class Administrador {
+import java.io.Serializable;
+
+public class Administrador implements Serializable {
 
 	private String login;
 	private String senha;

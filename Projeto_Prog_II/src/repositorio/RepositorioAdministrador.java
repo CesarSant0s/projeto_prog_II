@@ -7,6 +7,7 @@ import negocioClassesBasicas.Administrador;
 import negocioClassesBasicas.Loja;
 
 public interface RepositorioAdministrador {
+	
 	public void inserir(Administrador administrador)
 			throws AdministradorVazioException, AdministradorJaCadastradoException;
 
