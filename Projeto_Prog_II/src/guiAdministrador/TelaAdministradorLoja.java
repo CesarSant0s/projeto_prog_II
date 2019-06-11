@@ -2,10 +2,13 @@ package guiAdministrador;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -27,6 +30,8 @@ import negocioClassesBasicas.Loja;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import java.awt.GridLayout;
 
 public class TelaAdministradorLoja extends JFrame {
 
@@ -47,6 +52,7 @@ public class TelaAdministradorLoja extends JFrame {
 	private JLabel lblAdministrarEntregador;
 	private JButton btnCardapio;
 	private JLabel lblCardapio;
+	private JPanel panelListar;
 
 	public static TelaAdministradorLoja getInstance() {
 		if (TelaAdministradorLoja.instance == null) {
@@ -77,7 +83,7 @@ public class TelaAdministradorLoja extends JFrame {
 	public TelaAdministradorLoja() {
 		setTitle("To com fome - O aplicativo de comida mais proximo de voce");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 500, 310);
+		setBounds(100, 100, 799, 310);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(128, 0, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -281,6 +287,44 @@ public class TelaAdministradorLoja extends JFrame {
 		btnVoltar.setForeground(new Color(128, 0, 0));
 		btnVoltar.setBounds(12, 237, 101, 25);
 		contentPane.add(btnVoltar);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(487, 25, 280, 231);
+		contentPane.add(scrollPane);
+
+		panelListar = new JPanel();
+		panelListar.setLayout(new FlowLayout());
+		panelListar.add(new JLabel("teste123"));
+		scrollPane.setViewportView(panelListar);
+
+		JButton btnListar = new JButton("Listar");
+		btnListar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				ArrayList<Loja> arrayLoja = new ArrayList<>();
+
+				arrayLoja = (ArrayList<Loja>) Fachada.getInstance().listarLoja();
+
+				for (Loja loja : arrayLoja) {
+
+					JPanel linha = new JPanel();
+					scrollPane.setViewportView(linha);
+					linha.setLayout(new GridLayout(1, 2));
+					panelListar.add(linha);
+
+					linha.setBounds(0, 0, 250, 30);
+					linha.setBackground(Color.BLUE);
+
+					JLabel id = new JLabel(loja.getCnpj());
+					JLabel nome = new JLabel(loja.getNome());
+					linha.add(id);
+					linha.add(nome);
+				}
+
+			}
+		});
+		btnListar.setBounds(361, 7, 114, 25);
+		contentPane.add(btnListar);
 
 	}
 }

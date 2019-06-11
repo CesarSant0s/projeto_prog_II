@@ -25,6 +25,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.JComboBox;
 
 public class TelaClientePratosLoja extends JFrame {
 
@@ -37,13 +38,13 @@ public class TelaClientePratosLoja extends JFrame {
 	private JLabel lblInidice;
 	private JTextField textIndice;
 	private JButton button;
-	private JTable table;
-	private RepositorioPratosArray pratosEscolhidos;
+	private JTable tabelaPrato;
+	private ArrayList<Prato> pratosEscolhidos;
 
 	/**
 	 * Launch the application.
 	 */
-	
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -65,7 +66,7 @@ public class TelaClientePratosLoja extends JFrame {
 	 */
 	public TelaClientePratosLoja(String cnpj, String cpf) {
 
-		pratosEscolhidos = new RepositorioPratosArray();
+		pratosEscolhidos = new ArrayList<Prato>();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 706, 450);
@@ -105,16 +106,7 @@ public class TelaClientePratosLoja extends JFrame {
 					modeloPratoPratoEscolhido.removePratoAt(0);
 				}
 
-				ArrayList<Prato> tabelaPrato;
-
-				try {
-					pratosEscolhidos
-							.inserir(Fachada.getInstance().listar().get(Integer.parseInt(textIndice.getText())));
-				} catch (NumberFormatException | PratoVazioException | PratoJaInseridoException e1) {
-				}
-
-				tabelaPrato = (ArrayList<Prato>) pratosEscolhidos.listar();
-				modeloPratoPratoEscolhido.addPratoList(tabelaPrato);
+				pratosEscolhidos.add(Fachada.getInstance().listar().get(Integer.parseInt(textIndice.getText())));
 
 			}
 		});
@@ -192,18 +184,18 @@ public class TelaClientePratosLoja extends JFrame {
 		contentPane.add(btnFinalizarPedido);
 
 		modeloPratoPratoEscolhido = new ModeloTabelaPratos();
-		table = new JTable(modeloPratoPratoEscolhido);
-		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		table.setBounds(68, 163, 100, 30);
-		table.setPreferredScrollableViewportSize(new Dimension(500, 100));
-		table.setFillsViewportHeight(true);
+		tabelaPrato = new JTable(modeloPratoPratoEscolhido);
+		tabelaPrato.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		tabelaPrato.setBounds(68, 163, 100, 30);
+		tabelaPrato.setPreferredScrollableViewportSize(new Dimension(500, 100));
+		tabelaPrato.setFillsViewportHeight(true);
+		;
+		;
+		;
 
-		JScrollPane scrollPane = new JScrollPane(table);
+		JScrollPane scrollPane = new JScrollPane(tabelaPrato);
 		scrollPane.setBounds(12, 245, 426, 165);
 		contentPane.add(scrollPane);
-
-		table = new JTable(modeloPratoPratoEscolhido);
-		scrollPane.setViewportView(table);
 
 		JLabel lblCardapio = new JLabel("Cardapio:");
 		lblCardapio.setForeground(Color.WHITE);
