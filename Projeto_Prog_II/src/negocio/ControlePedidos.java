@@ -1,7 +1,6 @@
 package negocio;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import excepitonRepositorioArray.LojaNaoCadastradaException;
 import excepitonRepositorioArray.PedidoJaInseridoException;
@@ -10,49 +9,81 @@ import excepitonRepositorioArray.PedidoVazioException;
 import excepitonRepositorioArray.PratoJaInseridoException;
 import excepitonRepositorioArray.PratoNaoEncontradoException;
 import excepitonRepositorioArray.PratoVazioException;
-import excepitonRepositorioArray.QuantidadeIndisponivelException;
+import negocioClassesBasicas.Cliente;
+import negocioClassesBasicas.Entregador;
+import negocioClassesBasicas.Loja;
 import negocioClassesBasicas.Pedido;
 import negocioClassesBasicas.Prato;
+import negocioClassesBasicas.Usuario;
 import repositorioArray.RepositorioPedidoArray;
 
 public class ControlePedidos {
 
-	public ControlePedidos() {
+	public void finalizarPedido(Pedido pedido)
+			throws LojaNaoCadastradaException, PratoNaoEncontradoException, PratoVazioException {
+
+		for (Prato p : pedido.getPratosEscolhidos().listar()) {
+			p.setQuantiadeDisponivel(p.getQuantiadeDisponivel() - 1);
+			Fachada.getInstance().buscarLoja(pedido.getLoja().getCnpj()).alterar(p);
+		}
+
 	}
 
-	public void FazPeredido(Pedido pedido) throws PedidoJaInseridoException, PedidoVazioException {
-		RepositorioPedidoArray.getInstance().inserir(pedido);
-	}
+	public void fazerPedido(Cliente cliente, Loja loja, ArrayList<Prato> pratosEscolhidos)
+			throws PedidoJaInseridoException, PedidoVazioException {
 
-	public void inserirPratoPedido(int codigoDoPedido, Prato prato)
-			throws PratoVazioException, PratoJaInseridoException, PedidoNaoCadastrado {
-		RepositorioPedidoArray.getInstance().buscar(codigoDoPedido).getPratosEscolhidos().inserir(prato);
-	}
+		Pedido novoPedido = novoPedido();
 
-	public Pedido abrirPedido() {
+		Entregador entregadorPedido = null;
 
-		Random gerador = new Random();
-		int numeroPedido = gerador.nextInt(100);
-		Pedido novo = null;
-		while (novo == null) {
-			try {
-				Fachada.getInstance().buscarPedido(numeroPedido);
-			} catch (PedidoNaoCadastrado e) {
-				novo = new Pedido(numeroPedido);
+		for (Usuario e : Fachada.getInstance().listarUsuario()) {
+			if (e instanceof Entregador) {
+				entregadorPedido = (Entregador) e;
+				break;
 			}
 		}
 
-		return novo;
+		for (Prato p : pratosEscolhidos) {
+			try {
+				novoPedido.getPratosEscolhidos().inserir(p);
+			} catch (PratoVazioException | PratoJaInseridoException e) {
+			}
+		}
+
+		novoPedido.setCliente(cliente);
+		novoPedido.setLoja(loja);
+		novoPedido.setEntregador(entregadorPedido);
+
+		RepositorioPedidoArray.getInstance().inserir(novoPedido);
+
 	}
 
-	public void finalizarPedido(int codigo) throws PedidoNaoCadastrado, PratoNaoEncontradoException,
-			LojaNaoCadastradaException, QuantidadeIndisponivelException {
-		ArrayList<Prato> array = RepositorioPedidoArray.getInstance().buscar(codigo).getPratosEscolhidos().listar();
-		String cnpjLoja = RepositorioPedidoArray.getInstance().buscar(codigo).getLoja().getCnpj();
+	public int gerarCodigo() {
+		return ((int) (10000 + Math.random() * 89999));
+	}
 
-		for (int i = 0, j = array.size(); i < j; i++) {
-			Fachada.getInstance().buscarLoja(cnpjLoja).getCardapio().buscar(array.get(i).getNome()).retirarStock(1);
+	public Pedido novoPedido() {
+
+		Pedido resultado = null;
+
+		while (resultado == null) {
+
+			int i = gerarCodigo();
+			try {
+				RepositorioPedidoArray.getInstance().buscar(i);
+			} catch (PedidoNaoCadastrado e) {
+				resultado = new Pedido(i);
+			}
 		}
+		return resultado;
+
+	}
+
+	public void inserirPedido(Pedido pedido) throws PedidoJaInseridoException, PedidoVazioException {
+		RepositorioPedidoArray.getInstance().inserir(pedido);
+	}
+
+	public void removerPedido(int codigo) throws PedidoNaoCadastrado {
 		RepositorioPedidoArray.getInstance().remover(codigo);
 	}
 

@@ -1,56 +1,58 @@
 package guiCliente;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import excepitonRepositorioArray.UsuarioVazioException;
-import guiGeral.TelaLoginUsuario;
 import negocio.Fachada;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Color;
-import javax.swing.SwingConstants;
-import java.awt.Font;
 
-public class TelaCadastrarCliente {
+public class TelaCadastrarCliente extends JFrame {
 
-	public JFrame Cadastro;
-	private JTextField textNomeDeLogin;
-	private JPasswordField pwdSenha;
+	private static TelaCadastrarCliente instance;
+
+	private JPanel contentPane;
 	private JTextField textNomeCompleto;
 	private JTextField textTelefone;
 	private JTextField textCpf;
+	private JTextField textNomeLogin;
+	private JButton btnVoltar;
+	private JButton btnLimpar;
+	private JTextField textSenha;
+	private JLabel lblCadastrarCliente;
 	private JTextField textEndereco;
+	private JLabel label;
+	private JTextField textField;
+
+	public static TelaCadastrarCliente getInstance() {
+		if (TelaCadastrarCliente.instance == null) {
+			TelaCadastrarCliente.instance = new TelaCadastrarCliente();
+		}
+		return TelaCadastrarCliente.instance;
+	}
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		try {
-			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					javax.swing.UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| javax.swing.UnsupportedLookAndFeelException ex) {
-			System.err.println(ex);
-		}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaCadastrarCliente window = new TelaCadastrarCliente();
-					window.Cadastro.setVisible(true);
+					TelaCadastrarCliente frame = new TelaCadastrarCliente();
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -59,148 +61,148 @@ public class TelaCadastrarCliente {
 	}
 
 	/**
-	 * Create the application.
+	 * Create the frame.
 	 */
 	public TelaCadastrarCliente() {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		Cadastro = new JFrame();
-		Cadastro.getContentPane().setBackground(new Color(128, 0, 0));
-		Cadastro.setTitle("Tô com fome - O aplicativo de comida mais próximo de você");
-		Cadastro.setBounds(100, 100, 400, 350);
-		Cadastro.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		Cadastro.getContentPane().setLayout(null);
-
-		textNomeDeLogin = new JTextField();
-		textNomeDeLogin.setBounds(151, 12, 160, 25);
-		Cadastro.getContentPane().add(textNomeDeLogin);
-		textNomeDeLogin.setColumns(10);
-
-		JLabel lblNomeDeLogin = new JLabel("Nome de Login:");
-		lblNomeDeLogin.setFont(new Font("Dialog", Font.BOLD, 13));
-		lblNomeDeLogin.setForeground(new Color(255, 255, 255));
-		lblNomeDeLogin.setBounds(50, 16, 99, 15);
-		Cadastro.getContentPane().add(lblNomeDeLogin);
-
-		JLabel lblSenha = new JLabel("Senha:");
-		lblSenha.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSenha.setFont(new Font("Dialog", Font.BOLD, 13));
-		lblSenha.setForeground(new Color(255, 255, 255));
-		lblSenha.setBounds(94, 53, 55, 15);
-		Cadastro.getContentPane().add(lblSenha);
-
-		pwdSenha = new JPasswordField();
-		pwdSenha.setBounds(151, 49, 160, 25);
-		Cadastro.getContentPane().add(pwdSenha);
+		setTitle("To com fome - O aplicativo de comida mais proximo de voce");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 477, 286);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(128, 0, 0));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 
 		JLabel lblNomeCompleto = new JLabel("Nome Completo:");
 		lblNomeCompleto.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblNomeCompleto.setForeground(new Color(255, 255, 255));
-		lblNomeCompleto.setBounds(45, 93, 104, 15);
-		Cadastro.getContentPane().add(lblNomeCompleto);
+		lblNomeCompleto.setBounds(15, 44, 123, 15);
+		getContentPane().add(lblNomeCompleto);
 
 		textNomeCompleto = new JTextField();
-		textNomeCompleto.setBounds(151, 89, 160, 25);
-		Cadastro.getContentPane().add(textNomeCompleto);
+		textNomeCompleto.setBounds(144, 40, 160, 25);
+		getContentPane().add(textNomeCompleto);
 		textNomeCompleto.setColumns(10);
 
 		JLabel lblTelefone = new JLabel("Telefone:");
 		lblTelefone.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblTelefone.setForeground(new Color(255, 255, 255));
-		lblTelefone.setBounds(92, 130, 57, 15);
-		Cadastro.getContentPane().add(lblTelefone);
+		lblTelefone.setBounds(69, 80, 69, 15);
+		getContentPane().add(lblTelefone);
 
 		textTelefone = new JTextField();
-		textTelefone.setBounds(151, 126, 160, 25);
-		Cadastro.getContentPane().add(textTelefone);
+		textTelefone.setBounds(144, 75, 160, 25);
+		getContentPane().add(textTelefone);
 		textTelefone.setColumns(10);
 
 		JLabel lblNewLabel = new JLabel("Cpf:");
 		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setBounds(122, 167, 25, 15);
-		Cadastro.getContentPane().add(lblNewLabel);
+		lblNewLabel.setBounds(108, 118, 30, 15);
+		getContentPane().add(lblNewLabel);
 
-		JLabel lblNewLabel_2 = new JLabel("Endereco:");
-		lblNewLabel_2.setFont(new Font("Dialog", Font.BOLD, 13));
-		lblNewLabel_2.setForeground(new Color(255, 255, 255));
-		lblNewLabel_2.setBounds(83, 204, 66, 15);
-		Cadastro.getContentPane().add(lblNewLabel_2);
+		JLabel lblNomeLogin = new JLabel("Nome de Login:");
+		lblNomeLogin.setFont(new Font("Dialog", Font.BOLD, 13));
+		lblNomeLogin.setForeground(new Color(255, 255, 255));
+		lblNomeLogin.setBounds(21, 155, 117, 15);
+		getContentPane().add(lblNomeLogin);
 
 		textCpf = new JTextField();
-		textCpf.setBounds(151, 163, 160, 25);
-		Cadastro.getContentPane().add(textCpf);
+		textCpf.setBounds(144, 110, 160, 25);
+		getContentPane().add(textCpf);
 		textCpf.setColumns(10);
 
-		textEndereco = new JTextField();
-		textEndereco.setBounds(151, 200, 160, 25);
-		Cadastro.getContentPane().add(textEndereco);
-		textEndereco.setColumns(10);
+		textNomeLogin = new JTextField();
+		textNomeLogin.setBounds(144, 145, 160, 25);
+		getContentPane().add(textNomeLogin);
+		textNomeLogin.setColumns(10);
 
-		JButton btnLimpar = new JButton("Limpar");
-		btnLimpar.setBackground(new Color(255, 255, 255));
-		btnLimpar.setForeground(new Color(128, 0, 0));
-		btnLimpar.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				textCpf.setText("");
-				textEndereco.setText("");
-				textNomeCompleto.setText("");
-				textNomeDeLogin.setText("");
-				textTelefone.setText("");
-				pwdSenha.setText("");
+		btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaLoginCliente tela = new TelaLoginCliente();
+				tela.setVisible(true);
+				dispose();
 			}
 		});
+		btnVoltar.setBackground(new Color(255, 255, 255));
+		btnVoltar.setForeground(new Color(128, 0, 0));
+		btnVoltar.setBounds(343, 211, 101, 25);
+		contentPane.add(btnVoltar);
 
-		btnLimpar.setBounds(238, 248, 114, 25);
-		Cadastro.getContentPane().add(btnLimpar);
+		btnLimpar = new JButton("Limpar");
+		btnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textCpf.setText("");
+				textNomeLogin.setText("");
+				textNomeCompleto.setText("");
+				textTelefone.setText("");
+				textSenha.setText("");
+				textEndereco.setText("");
 
-		JButton btnCadastrarCliente = new JButton("Cadastrar");
-		btnCadastrarCliente.setForeground(new Color(128, 0, 0));
-		btnCadastrarCliente.setBackground(new Color(255, 255, 255));
-		btnCadastrarCliente.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnLimpar.setForeground(new Color(128, 0, 0));
+		btnLimpar.setBackground(Color.WHITE);
+		btnLimpar.setBounds(343, 176, 101, 25);
+		contentPane.add(btnLimpar);
+
+		JButton btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.setBackground(Color.WHITE);
+		btnCadastrar.setForeground(new Color(128, 0, 0));
+		btnCadastrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 
 				String cpf = textCpf.getText();
-				String senha = new String(pwdSenha.getPassword());
-				String telefone = textTelefone.getText();
-				String nomeUsuario = textNomeDeLogin.getText();
+				String nomeUsuario = textNomeLogin.getText();
 				String nome = textNomeCompleto.getText();
+				String telefone = textTelefone.getText();
+				String senha = textSenha.getText();
 				String endereco = textEndereco.getText();
 
 				try {
 					Fachada.getInstance().inserirUsuarioCliente(nomeUsuario, senha, nome, telefone, cpf, endereco);
-					JOptionPane.showMessageDialog(Cadastro, "Cadastrado com Sucesso.", "",
+					JOptionPane.showMessageDialog(contentPane, "Entregador cadastrado com sucesso!!", "",
 							JOptionPane.INFORMATION_MESSAGE);
+					TelaCompraClienteLojas tela = new TelaCompraClienteLojas(cpf);
+					tela.setVisible(true);
+					dispose();
 				} catch (UsuarioVazioException | UsuarioAnteriormenteCadastradoException
-						| UsuarioNaoCadastradoException e) {
-					// TODO Auto-generated catch block
-					JOptionPane.showMessageDialog(Cadastro, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+						| UsuarioNaoCadastradoException e1) {
+					JOptionPane.showMessageDialog(contentPane, e1.getMessage(), "", JOptionPane.ERROR_MESSAGE);
 				}
 
 			}
 		});
+		btnCadastrar.setBounds(343, 141, 101, 25);
+		contentPane.add(btnCadastrar);
 
-		btnCadastrarCliente.setBounds(112, 248, 114, 25);
-		Cadastro.getContentPane().add(btnCadastrarCliente);
+		textSenha = new JTextField();
+		textSenha.setColumns(10);
+		textSenha.setBounds(144, 180, 160, 25);
+		contentPane.add(textSenha);
 
-		JButton btnVoltar = new JButton("Voltar");
-		btnVoltar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				TelaLoginUsuario.getInstance().setVisible(true);
-				Cadastro.dispose();
-			}
-		});
-		btnVoltar.setForeground(new Color(128, 0, 0));
-		btnVoltar.setBackground(Color.WHITE);
-		btnVoltar.setBounds(238, 285, 114, 25);
-		Cadastro.getContentPane().add(btnVoltar);
+		JLabel labelEmail = new JLabel("Senha:");
+		labelEmail.setForeground(Color.WHITE);
+		labelEmail.setFont(new Font("Dialog", Font.BOLD, 13));
+		labelEmail.setBounds(88, 192, 50, 15);
+		contentPane.add(labelEmail);
+
+		lblCadastrarCliente = new JLabel("Cadastrar Cliente");
+		lblCadastrarCliente.setForeground(Color.WHITE);
+		lblCadastrarCliente.setBounds(148, 12, 123, 15);
+		contentPane.add(lblCadastrarCliente);
+
+		label = new JLabel("Endereco:");
+		label.setForeground(Color.WHITE);
+		label.setFont(new Font("Dialog", Font.BOLD, 13));
+		label.setBounds(69, 221, 73, 15);
+		contentPane.add(label);
+
+		textField = new JTextField();
+		textField.setColumns(10);
+		textField.setBounds(144, 215, 160, 25);
+		contentPane.add(textField);
+
 	}
 }

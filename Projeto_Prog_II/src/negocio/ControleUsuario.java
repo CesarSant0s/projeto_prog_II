@@ -1,5 +1,7 @@
 package negocio;
 
+import java.util.ArrayList;
+
 import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import excepitonRepositorioArray.UsuarioVazioException;
@@ -35,7 +37,7 @@ public class ControleUsuario {
 		RepositorioUsuarioArray.getInstance().atualizar(usuario);
 	}
 
-	public Usuario[] listar() {
+	public ArrayList<Usuario> listar() {
 		return RepositorioUsuarioArray.getInstance().listar();
 	}
 }

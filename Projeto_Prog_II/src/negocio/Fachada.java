@@ -1,5 +1,6 @@
 package negocio;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import excepitonRepositorioArray.AdministradorJaCadastradoException;
@@ -11,10 +12,8 @@ import excepitonRepositorioArray.LojaVaziaException;
 import excepitonRepositorioArray.PedidoJaInseridoException;
 import excepitonRepositorioArray.PedidoNaoCadastrado;
 import excepitonRepositorioArray.PedidoVazioException;
-import excepitonRepositorioArray.PratoJaInseridoException;
 import excepitonRepositorioArray.PratoNaoEncontradoException;
 import excepitonRepositorioArray.PratoVazioException;
-import excepitonRepositorioArray.QuantidadeIndisponivelException;
 import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import excepitonRepositorioArray.UsuarioVazioException;
@@ -35,7 +34,6 @@ public class Fachada {
 	private ControleUsuario usuarios;
 	private ControleLoja lojas;
 	private ControlePedidos pedidos;
-	private ControlePratos pratos;
 	private ControleLogin login;
 	private ControleAdiministrador adiministrador;
 
@@ -43,7 +41,6 @@ public class Fachada {
 		usuarios = new ControleUsuario();
 		lojas = new ControleLoja();
 		pedidos = new ControlePedidos();
-		pratos = new ControlePratos();
 		login = new ControleLogin();
 		adiministrador = new ControleAdiministrador();
 	}
@@ -57,13 +54,13 @@ public class Fachada {
 
 	// ControleLogin
 
-	public void loginCliente(String cpf, String senha)
+	public String loginCliente(String cpf, String senha)
 			throws UsuarioNaoCadastradoException, CpfNaoCadastradoException, SenhaIncorretaException {
-		login.getInstance().loginCliente(cpf, senha);
+		return login.getInstance().loginCliente(cpf, senha);
 	}
 
-	public void login(int id, String senha) throws AdministradorNaoEncotradoException, IdNaoCadastradoException {
-		login.getInstance().loginAdministrador(id, senha);
+	public int login(int id, String senha) throws AdministradorNaoEncotradoException, IdNaoCadastradoException {
+		return login.getInstance().loginAdministrador(id, senha);
 	}
 
 	// ControleAdministrador
@@ -90,37 +87,28 @@ public class Fachada {
 		return adiministrador.listarAdministrador();
 	}
 
-	// Controle Pratos
-	public void inserirPrato(String nome, float peso, float valorDoPrato, int quantiadeDisponivel)
-			throws PratoVazioException, PratoJaInseridoException {
-		pratos.inserir(new Prato(nome, peso, valorDoPrato, quantiadeDisponivel));
-	}
-
-	public void removerPrato(String nome) throws PratoNaoEncontradoException {
-		pratos.remover(nome);
-	}
-
-	public Prato buscarPrato(String nome) throws PratoNaoEncontradoException {
-		return pratos.buscar(nome);
-	}
-
-	public void alterarPrato(String nome, float peso, float valorDoPrato, int quantiadeDisponivel)
-			throws PratoVazioException, PratoNaoEncontradoException {
-		pratos.alterar(new Prato(nome, peso, valorDoPrato, quantiadeDisponivel));
-	}
-
-	public List<Prato> listar() {
-		return pratos.listar();
-	}
-
 	// Controle Pedido
-	public Pedido abrirPedido() {
-		return pedidos.abrirPedido();
+
+	public void finalizarPedido(Pedido pedido)
+			throws LojaNaoCadastradaException, PratoNaoEncontradoException, PratoVazioException {
+		pedidos.finalizarPedido(pedido);
 	}
 
-	public void FinalizarPedido(int codigo) throws PedidoNaoCadastrado, PratoNaoEncontradoException,
-			LojaNaoCadastradaException, QuantidadeIndisponivelException {
-		pedidos.finalizarPedido(codigo);
+	public void fazerPedido(Cliente cliente, Loja loja, ArrayList<Prato> pratosEscolhidos)
+			throws PedidoJaInseridoException, PedidoVazioException {
+		pedidos.fazerPedido(cliente, loja, pratosEscolhidos);
+	}
+
+	public Pedido novoPedido() {
+		return pedidos.novoPedido();
+	}
+
+	public void inserirPedido(Pedido pedido) throws PedidoJaInseridoException, PedidoVazioException {
+		pedidos.inserirPedido(pedido);
+	}
+
+	public void removerPedido(int codigo) throws PedidoNaoCadastrado {
+		pedidos.removerPedido(codigo);
 	}
 
 	public Pedido buscarPedido(int codigo) throws PedidoNaoCadastrado {
@@ -190,7 +178,7 @@ public class Fachada {
 		usuarios.atualizar(new Cliente(nomeUsuario, senha, nome, telefone, cpf, endereco));
 	}
 
-	public Usuario[] listarUsuario() {
+	public ArrayList<Usuario> listarUsuario() {
 		return usuarios.listar();
 	}
 

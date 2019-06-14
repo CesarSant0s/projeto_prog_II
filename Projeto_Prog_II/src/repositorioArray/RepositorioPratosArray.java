@@ -11,18 +11,9 @@ public class RepositorioPratosArray implements RepositorioPratos {
 
 	private Prato[] cardapio;
 	private int quantidadePratos;
-	private static RepositorioPratosArray instance;
-
-	public static RepositorioPratosArray getInstance() {
-		if (instance == null) {
-			instance = new RepositorioPratosArray();
-		}
-		return instance;
-	}
 
 	public RepositorioPratosArray() {
 		cardapio = new Prato[100];
-		quantidadePratos = 0;
 	}
 
 	public void inserir(Prato prato) throws PratoVazioException, PratoJaInseridoException {
@@ -39,18 +30,19 @@ public class RepositorioPratosArray implements RepositorioPratos {
 			for (int i = 0; i < quantidadePratos; i++) {
 				if (prato.getNome().equals(cardapio[i].getNome())) {
 					resultadoPrato = cardapio[i];
+
 				}
-
-				if (resultadoPrato != null) {
-
-					PratoJaInseridoException e = new PratoJaInseridoException(prato.getNome());
-					throw e;
-				} else {
-					cardapio[quantidadePratos] = prato;
-					quantidadePratos++;
-				}
-
 			}
+
+			if (resultadoPrato != null) {
+
+				PratoJaInseridoException e = new PratoJaInseridoException(prato.getNome());
+				throw e;
+			} else {
+				cardapio[quantidadePratos] = prato;
+				quantidadePratos++;
+			}
+
 		}
 
 	}

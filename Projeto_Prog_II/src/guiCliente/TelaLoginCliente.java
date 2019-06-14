@@ -1,45 +1,32 @@
-package guiGeral;
+package guiCliente;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import excepitonRepositorioArray.LojaNaoCadastradaException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
-import exception.CnpjNaoCadastradoException;
 import exception.CpfNaoCadastradoException;
 import exception.SenhaIncorretaException;
 import guiAdministrador.TelaLoginAdministrador;
-import guiCliente.TelaCadastrarCliente;
 import negocio.Fachada;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JPasswordField;
-import java.awt.Color;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-
-public class TelaLoginUsuario extends JFrame {
-
-	private static TelaLoginUsuario instance;
+public class TelaLoginCliente extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textFieldLogin;
 	private JPasswordField passwordFieldSenha;
-
-	public static TelaLoginUsuario getInstance() {
-		if (TelaLoginUsuario.instance == null) {
-			TelaLoginUsuario.instance = new TelaLoginUsuario();
-		}
-		return TelaLoginUsuario.instance;
-	}
 
 	/**
 	 * Launch the application.
@@ -59,7 +46,7 @@ public class TelaLoginUsuario extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaLoginUsuario frame = new TelaLoginUsuario();
+					TelaLoginCliente frame = new TelaLoginCliente();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -71,7 +58,7 @@ public class TelaLoginUsuario extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaLoginUsuario() {
+	public TelaLoginCliente() {
 		setTitle("Tô com fome - O aplicativo de comida mais próximo de você");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 400, 350);
@@ -107,11 +94,14 @@ public class TelaLoginUsuario extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				try {
-					Fachada.getInstance().loginCliente(textFieldLogin.getText(),
+					String cpf = Fachada.getInstance().loginCliente(textFieldLogin.getText(),
 							new String(passwordFieldSenha.getPassword()));
+					TelaCompraClienteLojas tela = new TelaCompraClienteLojas(cpf);
+					tela.setVisible(true);
+					dispose();
 				} catch (UsuarioNaoCadastradoException | CpfNaoCadastradoException | SenhaIncorretaException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					JOptionPane.showMessageDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+					// e.printStackTrace();
 				}
 
 			}
@@ -126,7 +116,7 @@ public class TelaLoginUsuario extends JFrame {
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				TelaCadastrarCliente telaCadastro = new TelaCadastrarCliente();
-				telaCadastro.Cadastro.setVisible(true);
+				telaCadastro.setVisible(true);
 				dispose();
 
 			}

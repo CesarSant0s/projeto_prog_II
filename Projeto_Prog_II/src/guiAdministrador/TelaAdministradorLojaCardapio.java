@@ -1,21 +1,28 @@
 package guiAdministrador;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import excepitonRepositorioArray.LojaJaCadastradaException;
 import excepitonRepositorioArray.LojaNaoCadastradaException;
 import excepitonRepositorioArray.LojaVaziaException;
 import excepitonRepositorioArray.PratoJaInseridoException;
+import excepitonRepositorioArray.PratoNaoEncontradoException;
 import excepitonRepositorioArray.PratoVazioException;
 import negocio.Fachada;
 import negocioClassesBasicas.Loja;
@@ -37,16 +44,15 @@ public class TelaAdministradorLojaCardapio extends JFrame {
 	private JButton btnAtualizar;
 	private JButton btnLimpar;
 	private JButton btnRemover;
-	private JTextField textFieldCpefBusca;
+	private JTextField textNomeBusca;
 	private JButton buttonBuscar;
 	private JLabel labelCnpjBusca;
 	private JLabel lblCardapioLoja;
-	private JButton btnCardapio;
-	private String cnpjLojaAtual;
+	private JPanel panelListar;
 
 	public static TelaAdministradorLojaCardapio getInstance() {
 		if (TelaAdministradorLojaCardapio.instance == null) {
-			TelaAdministradorLojaCardapio.instance = new TelaAdministradorLojaCardapio();
+			TelaAdministradorLojaCardapio.instance = new TelaAdministradorLojaCardapio("");
 		}
 		return TelaAdministradorLojaCardapio.instance;
 	}
@@ -58,7 +64,7 @@ public class TelaAdministradorLojaCardapio extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaAdministradorLojaCardapio frame = new TelaAdministradorLojaCardapio();
+					TelaAdministradorLojaCardapio frame = new TelaAdministradorLojaCardapio("");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -71,14 +77,10 @@ public class TelaAdministradorLojaCardapio extends JFrame {
 	 * Create the frame.
 	 */
 
-	public TelaAdministradorLojaCardapio(String cnpj) {
-		cnpjLojaAtual = cnpj;
-	}
-
-	public TelaAdministradorLojaCardapio() {
+	public TelaAdministradorLojaCardapio(String cnpjLojaAtual) {
 		setTitle("To com fome - O aplicativo de comida mais proximo de voce");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 500, 310);
+		setBounds(100, 100, 799, 310);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(128, 0, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -117,7 +119,7 @@ public class TelaAdministradorLojaCardapio extends JFrame {
 
 		lblCardapioLoja = new JLabel("Cardapio da Loja");
 		lblCardapioLoja.setForeground(Color.WHITE);
-		lblCardapioLoja.setBounds(138, 12, 301, 15);
+		lblCardapioLoja.setBounds(138, 12, 140, 15);
 		contentPane.add(lblCardapioLoja);
 
 		textNomePrato = new JTextField();
@@ -140,10 +142,10 @@ public class TelaAdministradorLojaCardapio extends JFrame {
 		getContentPane().add(textNumeroStock);
 		textNumeroStock.setColumns(10);
 
-		textFieldCpefBusca = new JTextField();
-		textFieldCpefBusca.setColumns(10);
-		textFieldCpefBusca.setBounds(299, 237, 160, 25);
-		contentPane.add(textFieldCpefBusca);
+		textNomeBusca = new JTextField();
+		textNomeBusca.setColumns(10);
+		textNomeBusca.setBounds(299, 237, 160, 25);
+		contentPane.add(textNomeBusca);
 
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.setBackground(Color.WHITE);
@@ -152,15 +154,13 @@ public class TelaAdministradorLojaCardapio extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				float peso = Float.parseFloat(textPeso.getText());
-
 				int numeroStock = Integer.parseInt(textNumeroStock.getText());
 				String nome = textNomePrato.getText();
 				float valor = Float.parseFloat(textValor.getText());
 
 				try {
-					Fachada.getInstance().buscarLoja(cnpjLojaAtual).getCardapio()
-							.inserir(new Prato(nome, peso, valor, numeroStock));
-					JOptionPane.showMessageDialog(contentPane, "Loja Inserida com sucesso!!", "",
+					Fachada.getInstance().buscarLoja(cnpjLojaAtual).inserir(new Prato(nome, peso, valor, numeroStock));
+					JOptionPane.showMessageDialog(contentPane, "Prato Inserido com sucesso!!", "",
 							JOptionPane.INFORMATION_MESSAGE);
 				} catch (PratoVazioException | PratoJaInseridoException | LojaNaoCadastradaException e1) {
 					JOptionPane.showMessageDialog(contentPane, e1.getMessage(), "", JOptionPane.ERROR_MESSAGE);
@@ -177,15 +177,14 @@ public class TelaAdministradorLojaCardapio extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				try {
-					Fachada.getInstance().removerLoja(textFieldCpefBusca.getText());
-					JOptionPane.showMessageDialog(contentPane, "Loja Inserida com sucesso!!", "",
+					Fachada.getInstance().buscarLoja(cnpjLojaAtual).remover(textNomeBusca.getText());
+					JOptionPane.showMessageDialog(contentPane, "Prato Removido Com Sucesso", "",
 							JOptionPane.INFORMATION_MESSAGE);
-				} catch (LojaNaoCadastradaException e) {
+				} catch (PratoNaoEncontradoException | LojaNaoCadastradaException e) {
 					JOptionPane.showMessageDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
-					// TODO Auto-generated catch block
 					// e.printStackTrace();
 				}
-				
+
 			}
 		});
 		btnRemover.setForeground(new Color(128, 0, 0));
@@ -197,16 +196,16 @@ public class TelaAdministradorLojaCardapio extends JFrame {
 		btnAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				String cnpj = textPeso.getText();
-				String endereco = textNumeroStock.getText();
+				float peso = Float.parseFloat(textPeso.getText());
+				int numeroStock = Integer.parseInt(textNumeroStock.getText());
 				String nome = textNomePrato.getText();
-				String telefone = textValor.getText();
+				float valor = Float.parseFloat(textValor.getText());
 
 				try {
-					Fachada.getInstance().alterarLoja(nome, telefone, cnpj, endereco);
-					JOptionPane.showMessageDialog(contentPane, "Loja Inserida com sucesso!!", "",
+					Fachada.getInstance().buscarLoja(cnpjLojaAtual).inserir(new Prato(nome, peso, valor, numeroStock));
+					JOptionPane.showMessageDialog(contentPane, "Prato Atualizado com sucesso!!", "",
 							JOptionPane.INFORMATION_MESSAGE);
-				} catch (LojaVaziaException | LojaNaoCadastradaException e1) {
+				} catch (PratoVazioException | PratoJaInseridoException | LojaNaoCadastradaException e1) {
 					JOptionPane.showMessageDialog(contentPane, e1.getMessage(), "", JOptionPane.ERROR_MESSAGE);
 					// e1.printStackTrace();
 				}
@@ -237,18 +236,18 @@ public class TelaAdministradorLojaCardapio extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				try {
-					Loja loja = Fachada.getInstance().buscarLoja(textFieldCpefBusca.getText());
+					Prato pratoBuscado = Fachada.getInstance().buscarLoja(cnpjLojaAtual)
+							.buscar(textNomeBusca.getText());
 
-					textPeso.setText(loja.getCnpj());
-					textNumeroStock.setText(loja.getEndereco());
-					textNomePrato.setText(loja.getNome());
-					textValor.setText(loja.getTelefone());
-
-				} catch (LojaNaoCadastradaException e) {
-					JOptionPane.showMessageDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
-					// e.printStackTrace();
+					textPeso.setText(Float.toString(pratoBuscado.getPeso()));
+					textNumeroStock.setText(Integer.toString(pratoBuscado.getQuantiadeDisponivel()));
+					textNomePrato.setText(pratoBuscado.getNome());
+					textValor.setText(Float.toString(pratoBuscado.getValorDoPrato()));
+					
+				} catch (PratoNaoEncontradoException | LojaNaoCadastradaException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-
 			}
 		});
 		buttonBuscar.setForeground(new Color(128, 0, 0));
@@ -256,21 +255,10 @@ public class TelaAdministradorLojaCardapio extends JFrame {
 		buttonBuscar.setBounds(358, 187, 101, 25);
 		contentPane.add(buttonBuscar);
 
-		btnCardapio = new JButton("Ver Cardapio");
-		btnCardapio.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-
-			}
-		});
-		btnCardapio.setForeground(new Color(128, 0, 0));
-		btnCardapio.setBackground(Color.WHITE);
-		btnCardapio.setBounds(170, 187, 160, 25);
-		contentPane.add(btnCardapio);
-
 		btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaAdministrador tela = new TelaAdministrador();
+				TelaAdministradorLoja tela = new TelaAdministradorLoja();
 				tela.setVisible(true);
 				dispose();
 			}
@@ -279,6 +267,80 @@ public class TelaAdministradorLojaCardapio extends JFrame {
 		btnVoltar.setForeground(new Color(128, 0, 0));
 		btnVoltar.setBounds(12, 237, 101, 25);
 		contentPane.add(btnVoltar);
+
+		panelListar = new JPanel();
+		panelListar.setLayout(new BoxLayout(panelListar, BoxLayout.PAGE_AXIS));
+		panelListar.setVisible(true);
+
+		cabecalhoListagem();
+
+		JScrollPane scrollPane = new JScrollPane(panelListar);
+		scrollPane.setBounds(487, 25, 280, 231);
+		contentPane.add(scrollPane);
+
+		JButton btnListarCardapio = new JButton("Ver Cardapio");
+		btnListarCardapio.setForeground(new Color(128, 0, 0));
+		btnListarCardapio.setBackground(Color.WHITE);
+		btnListarCardapio.addActionListener(new ActionListener() { // Aqui dentro e fora do construtor da
+																	// TelaAdministrador
+			public void actionPerformed(ActionEvent arg0) {
+				panelListar.removeAll(); // Remove todos os elementos para nao ficarem duplicados
+				cabecalhoListagem();
+
+				ArrayList<Prato> arrayPratos = new ArrayList<Prato>();
+				try {
+					arrayPratos = Fachada.getInstance().buscarLoja(cnpjLojaAtual).listar();
+				} catch (LojaNaoCadastradaException e) {
+					JOptionPane.showMessageDialog(contentPane, e.getMessage());
+					// e.printStackTrace();
+				}
+
+				for (Prato prato : arrayPratos) { /* Insere os elementos que estao no repositorio */
+					panelListar.revalidate(); // Tem que revalidar a tela quando adicionar fora do construtor
+					JPanel linha = new JPanel();
+					linha.setLayout(new GridLayout(1, 2));
+					JLabel nome = new JLabel(prato.getNome());
+					JLabel valor = new JLabel(new String("" + prato.getValorDoPrato()));
+					nome.setHorizontalAlignment(JLabel.CENTER);
+					valor.setHorizontalAlignment(JLabel.CENTER);
+					linha.add(nome);
+					linha.add(valor);
+					panelListar.add(linha);
+					panelListar.add(Box.createRigidArea(new Dimension(0, 5)));
+					panelListar.repaint(); // Repintar por garantia
+				}
+
+			}
+		});
+		btnListarCardapio.setBounds(170, 187, 160, 25);
+		contentPane.add(btnListarCardapio);
+
+	}
+
+	public void cabecalhoListagem() { // Coloca o cabe\E7alho CNPJ e NOME no topo da listagem
+		panelListar.revalidate();
+		panelListar.add(Box.createRigidArea(new Dimension(0, 5)));
+		JPanel titulo = new JPanel() { // Classe an\F4nima
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void paintComponent(Graphics g) { // M\E9todo para desenhar no painel
+				super.paintComponent(g);
+				g.drawLine(0, 0, 280, 0);
+				g.drawLine(0, 16, 280, 16);
+			}
+		};
+		titulo.setLayout(new GridLayout(1, 2));
+		JLabel nome = new JLabel("NOME");
+		JLabel valor = new JLabel("VALOR");
+		nome.setVerticalAlignment(JLabel.TOP);
+		nome.setHorizontalAlignment(JLabel.CENTER);
+		valor.setVerticalAlignment(JLabel.TOP);
+		valor.setHorizontalAlignment(JLabel.CENTER);
+		titulo.add(nome);
+		titulo.add(valor);
+		panelListar.add(titulo);
+		panelListar.repaint();
 
 	}
 }

@@ -8,11 +8,18 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import excepitonRepositorioArray.LojaNaoCadastradaException;
+import excepitonRepositorioArray.PedidoJaInseridoException;
+import excepitonRepositorioArray.PedidoVazioException;
 import excepitonRepositorioArray.PratoJaInseridoException;
 import excepitonRepositorioArray.PratoVazioException;
+import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import guiGeral.Programa;
+import negocioClassesBasicas.Cliente;
+import negocioClassesBasicas.Entregador;
+import negocioClassesBasicas.Loja;
+import negocioClassesBasicas.Pedido;
 import negocioClassesBasicas.Prato;
-import repositorioArray.RepositorioPratosArray;
+import negocioClassesBasicas.Usuario;
 import negocio.Fachada;
 
 import javax.swing.JScrollPane;
@@ -24,10 +31,10 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.JComboBox;
 
-public class TelaClientePratosLoja extends JFrame {
+public class TelaCompraClienteLojaPratos extends JFrame {
 
 	private JPanel contentPane;
 	private JTable tableLojas;
@@ -39,6 +46,8 @@ public class TelaClientePratosLoja extends JFrame {
 	private JTextField textIndice;
 	private JButton button;
 	private JTable tabelaPrato;
+	private Pedido pedidoAtual;
+
 	private ArrayList<Prato> pratosEscolhidos;
 
 	/**
@@ -49,7 +58,7 @@ public class TelaClientePratosLoja extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaClientePratosLoja frame = new TelaClientePratosLoja("", "");
+					TelaCompraClienteLojaPratos frame = new TelaCompraClienteLojaPratos("", "");
 					frame.setVisible(true);
 
 					Programa.inserirLoja();
@@ -64,7 +73,10 @@ public class TelaClientePratosLoja extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaClientePratosLoja(String cnpj, String cpf) {
+
+	public TelaCompraClienteLojaPratos(String cnpj, String cpf) {
+
+		pedidoAtual = Fachada.getInstance().novoPedido();
 
 		pratosEscolhidos = new ArrayList<Prato>();
 
@@ -102,17 +114,22 @@ public class TelaClientePratosLoja extends JFrame {
 		buttonIndice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				while (modeloPratoPratoEscolhido.getRowCount() > 0) {
-					modeloPratoPratoEscolhido.removePratoAt(0);
+				try {
+					Prato pratoNovo = Fachada.getInstance().buscarLoja(cnpj).listar()
+							.get(Integer.parseInt(textIndice.getText()));
+					pratosEscolhidos.add(pratoNovo);
+				} catch (NumberFormatException | LojaNaoCadastradaException e) {
+
+					// e.printStackTrace();
 				}
 
-				pratosEscolhidos.add(Fachada.getInstance().listar().get(Integer.parseInt(textIndice.getText())));
+				exibirPratosEscolhidos();
 
 			}
 		});
 		buttonIndice.setForeground(new Color(128, 0, 0));
 		buttonIndice.setBackground(Color.WHITE);
-		buttonIndice.setBounds(450, 241, 147, 25);
+		buttonIndice.setBounds(450, 244, 147, 25);
 		contentPane.add(buttonIndice);
 
 		btnExibir = new JButton("Exibir");
@@ -122,9 +139,10 @@ public class TelaClientePratosLoja extends JFrame {
 				while (modeloPratoCardapio.getRowCount() > 0) {
 					modeloPratoCardapio.removePratoAt(0);
 				}
-				ArrayList<Prato> cardapio = new ArrayList<Prato>();
+
 				try {
-					cardapio = (ArrayList<Prato>) Fachada.getInstance().buscarLoja(cnpj).getCardapio().listar();
+					ArrayList<Prato> cardapio = new ArrayList<Prato>();
+					cardapio = (ArrayList<Prato>) Fachada.getInstance().buscarLoja(cnpj).listar();
 					modeloPratoCardapio.addPratoList(cardapio);
 				} catch (LojaNaoCadastradaException e) {
 					// TODO Auto-generated catch block
@@ -135,7 +153,7 @@ public class TelaClientePratosLoja extends JFrame {
 		});
 		btnExibir.setForeground(new Color(128, 0, 0));
 		btnExibir.setBackground(Color.WHITE);
-		btnExibir.setBounds(450, 29, 134, 25);
+		btnExibir.setBounds(450, 33, 134, 25);
 		contentPane.add(btnExibir);
 
 		lblInidice = new JLabel("Inidice:");
@@ -153,23 +171,15 @@ public class TelaClientePratosLoja extends JFrame {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				while (modeloPratoCardapio.getRowCount() > 0) {
-					modeloPratoCardapio.removePratoAt(0);
-				}
-				ArrayList<Prato> cardapio = new ArrayList<Prato>();
-				try {
-					cardapio = (ArrayList<Prato>) Fachada.getInstance().buscarLoja(cnpj).getCardapio().listar();
-					modeloPratoCardapio.addPratoList(cardapio);
-				} catch (LojaNaoCadastradaException e) {
-					// TODO Auto-generated catch block
-					// e.printStackTrace();
-				}
+				pratosEscolhidos.remove(Integer.parseInt(textIndice.getText()));
+
+				exibirPratosEscolhidos();
 
 			}
 		});
 		button.setForeground(new Color(128, 0, 0));
 		button.setBackground(Color.WHITE);
-		button.setBounds(450, 278, 147, 25);
+		button.setBounds(450, 281, 147, 25);
 		contentPane.add(button);
 
 		JButton btnFinalizarPedido = new JButton("Finalizar Pedido");
@@ -177,6 +187,28 @@ public class TelaClientePratosLoja extends JFrame {
 		btnFinalizarPedido.setBackground(Color.WHITE);
 		btnFinalizarPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+
+				Cliente clientePedido = null;
+				Loja lojaPedido = null;
+				try {
+					clientePedido = (Cliente) Fachada.getInstance().buscarUsuario(cpf);
+				} catch (UsuarioNaoCadastradoException e) {
+					// e.printStackTrace();
+				}
+
+				try {
+					lojaPedido = Fachada.getInstance().buscarLoja(cnpj);
+				} catch (LojaNaoCadastradaException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				try {
+					Fachada.getInstance().fazerPedido(clientePedido, lojaPedido, pratosEscolhidos);
+				} catch (PedidoJaInseridoException | PedidoVazioException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			}
 		});
@@ -189,8 +221,6 @@ public class TelaClientePratosLoja extends JFrame {
 		tabelaPrato.setBounds(68, 163, 100, 30);
 		tabelaPrato.setPreferredScrollableViewportSize(new Dimension(500, 100));
 		tabelaPrato.setFillsViewportHeight(true);
-		;
-		;
 		;
 
 		JScrollPane scrollPane = new JScrollPane(tabelaPrato);
@@ -208,5 +238,13 @@ public class TelaClientePratosLoja extends JFrame {
 		lblNewLabel.setBounds(12, 218, 124, 15);
 		contentPane.add(lblNewLabel);
 
+	}
+
+	public void exibirPratosEscolhidos() {
+
+		while (modeloPratoPratoEscolhido.getRowCount() > 0) {
+			modeloPratoPratoEscolhido.removePratoAt(0);
+		}
+		modeloPratoPratoEscolhido.addPratoList(pratosEscolhidos);
 	}
 }

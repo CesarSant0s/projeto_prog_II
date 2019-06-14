@@ -11,24 +11,30 @@ import repositorioArray.RepositorioPratosArray;
 
 public class ControlePratos {
 
+	private RepositorioPratos pratos;
+
+	public ControlePratos() {
+		pratos = new RepositorioPratosArray();
+	}
+
 	public void inserir(Prato prato) throws PratoVazioException, PratoJaInseridoException {
-		RepositorioPratosArray.getInstance().inserir(prato);
+		pratos.inserir(prato);
 	}
 
 	public void remover(String nome) throws PratoNaoEncontradoException {
-		RepositorioPratosArray.getInstance().remover(nome);
+		pratos.remover(nome);
 	}
 
 	public Prato buscar(String nome) throws PratoNaoEncontradoException {
-		Prato resultadoBusca = RepositorioPratosArray.getInstance().buscar(nome);
+		Prato resultadoBusca = pratos.buscar(nome);
 		return resultadoBusca;
 	}
 
 	public void alterar(Prato prato) throws PratoVazioException, PratoNaoEncontradoException {
-		RepositorioPratosArray.getInstance().alterar(prato);
+		pratos.alterar(prato);
 	}
 
 	public List<Prato> listar() {
-		return RepositorioPratosArray.getInstance().listar();
+		return pratos.listar();
 	}
 }

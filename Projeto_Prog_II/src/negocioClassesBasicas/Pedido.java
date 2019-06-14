@@ -1,10 +1,6 @@
 package negocioClassesBasicas;
 
-import excepitonRepositorioArray.PratoJaInseridoException;
-import excepitonRepositorioArray.PratoNaoEncontradoException;
-import excepitonRepositorioArray.PratoVazioException;
 import repositorio.RepositorioPratos;
-import repositorioArray.RepositorioPratosArray;
 
 public class Pedido {
 
@@ -26,8 +22,6 @@ public class Pedido {
 		this.cliente = cliente;
 		this.loja = loja;
 	}
-
-	/* O pedido tem que retirar os pratos escolhidos do repositório loja */
 
 	public Cliente getCliente() {
 		return cliente;
@@ -63,23 +57,6 @@ public class Pedido {
 	public void setCodigo(int codigo) {
 		if (codigo > 0)
 			this.codigo = codigo;
-	}
-
-	// duvida sobre o projeto
-	public void inserirPratoPedido(Prato prato) throws PratoVazioException, PratoJaInseridoException {
-
-		valorTotal += prato.getValorDoPrato();
-
-		pratosEscolhidos.inserir(prato);
-
-	}
-
-	public void RemoverPratoPedido(Prato prato) throws PratoNaoEncontradoException {
-
-		valorTotal -= prato.getValorDoPrato();
-
-		pratosEscolhidos.remover(prato.getNome());
-
 	}
 
 	public RepositorioPratos getPratosEscolhidos() {

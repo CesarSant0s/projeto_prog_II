@@ -1,10 +1,12 @@
 package repositorioArray;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import excepitonRepositorioArray.UsuarioVazioException;
+import negocio.Fachada;
 import negocioClassesBasicas.Usuario;
 import repositorio.RepositorioUsuario;
 
@@ -116,9 +118,15 @@ public class RepositorioUsuarioArray implements RepositorioUsuario {
 	}
 
 	@Override
-	public Usuario[] listar() {
+	public ArrayList<Usuario> listar() {
 
-		return array;
+		ArrayList<Usuario> resultado = new ArrayList<Usuario>();
+
+		for (Usuario u : array) {
+			resultado.add(u);
+		}
+
+		return resultado;
 	}
 
 }

@@ -1,6 +1,5 @@
 package guiCliente;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -10,15 +9,12 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
-import guiGeral.Programa;
-import guiGeral.TelaLoginUsuario;
 import negocio.Fachada;
 import negocioClassesBasicas.Loja;
-import negocioClassesBasicas.Pedido;
 
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.JTextField;
@@ -54,7 +50,7 @@ public class TelaCompraClienteLojas extends JFrame {
 	 */
 	public TelaCompraClienteLojas(String cpfCliente) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 458, 300);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(128, 0, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -72,7 +68,7 @@ public class TelaCompraClienteLojas extends JFrame {
 		scrollPane.setBounds(12, 12, 426, 187);
 		contentPane.add(scrollPane);
 
-		JButton btnExibir = new JButton("Exibir loja");
+		JButton btnExibir = new JButton("Exibir lojas");
 		btnExibir.setForeground(new Color(128, 0, 0));
 		btnExibir.setBackground(Color.WHITE);
 		btnExibir.addActionListener(new ActionListener() {
@@ -95,11 +91,12 @@ public class TelaCompraClienteLojas extends JFrame {
 		btnNewButton.setForeground(new Color(128, 0, 0));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 				ArrayList<Loja> lista = new ArrayList<Loja>();
 				lista = (ArrayList<Loja>) Fachada.getInstance().listarLoja();
 				String cnpj = lista.get(Integer.parseInt(textIndice.getText())).getCnpj();
 
-				TelaClientePratosLoja tela = new TelaClientePratosLoja(cnpj, cpfCliente);
+				TelaCompraClienteLojaPratos tela = new TelaCompraClienteLojaPratos(cnpj, cpfCliente);
 				tela.setVisible(true);
 				dispose();
 
@@ -123,7 +120,7 @@ public class TelaCompraClienteLojas extends JFrame {
 		btnVoltar.setForeground(new Color(128, 0, 0));
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				TelaLoginUsuario tela = new TelaLoginUsuario();
+				TelaLoginCliente tela = new TelaLoginCliente();
 				tela.setVisible(true);
 				dispose();
 			}

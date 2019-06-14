@@ -1,5 +1,7 @@
 package repositorio;
 
+import java.util.ArrayList;
+
 import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import excepitonRepositorioArray.UsuarioVazioException;
@@ -14,5 +16,5 @@ public interface RepositorioUsuario {
 
 	public void remover(String cpf) throws UsuarioNaoCadastradoException;
 
-	public Usuario[] listar();
+	public ArrayList<Usuario> listar();
 }

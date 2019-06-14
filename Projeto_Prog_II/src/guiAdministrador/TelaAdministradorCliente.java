@@ -23,37 +23,39 @@ import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import excepitonRepositorioArray.UsuarioVazioException;
 import negocio.Fachada;
+import negocioClassesBasicas.Cliente;
 import negocioClassesBasicas.Entregador;
 import negocioClassesBasicas.Usuario;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-public class TelaAdministradorEntregador extends JFrame {
+public class TelaAdministradorCliente extends JFrame {
 
-	private static TelaAdministradorEntregador instance;
+	private static TelaAdministradorCliente instance;
 
 	private JPanel contentPane;
 	private JTextField textNomeCompleto;
 	private JTextField textTelefone;
 	private JTextField textCpf;
-	private JTextField textPlacaVeiculo;
+	private JTextField textNomeLogin;
 	private JButton btnVoltar;
 	private JButton btnAtualizar;
 	private JButton btnLimpar;
 	private JButton btnRemover;
-	private JTextField textEmail;
-	private JTextField textFieldCpefBusca;
+	private JTextField textSenha;
+	private JTextField textFieldCpfBusca;
 	private JButton buttonBuscar;
 	private JLabel labelCpfBusca;
-	private JLabel lblAdministrarEntregador;
+	private JLabel lblAdministrarCliente;
 	private JPanel panelListar;
+	private JTextField textEndereco;
 
-	public static TelaAdministradorEntregador getInstance() {
-		if (TelaAdministradorEntregador.instance == null) {
-			TelaAdministradorEntregador.instance = new TelaAdministradorEntregador();
+	public static TelaAdministradorCliente getInstance() {
+		if (TelaAdministradorCliente.instance == null) {
+			TelaAdministradorCliente.instance = new TelaAdministradorCliente();
 		}
-		return TelaAdministradorEntregador.instance;
+		return TelaAdministradorCliente.instance;
 	}
 
 	/**
@@ -63,7 +65,7 @@ public class TelaAdministradorEntregador extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaAdministradorEntregador frame = new TelaAdministradorEntregador();
+					TelaAdministradorCliente frame = new TelaAdministradorCliente();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -75,11 +77,10 @@ public class TelaAdministradorEntregador extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaAdministradorEntregador() {
-		
+	public TelaAdministradorCliente() {
 		setTitle("To com fome - O aplicativo de comida mais proximo de voce");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 310);
+		setBounds(100, 100, 800, 340);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(128, 0, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -114,21 +115,21 @@ public class TelaAdministradorEntregador extends JFrame {
 		lblNewLabel.setBounds(108, 118, 30, 15);
 		getContentPane().add(lblNewLabel);
 
-		JLabel lblPlacaVeiculo = new JLabel("Placa do Veiculo:");
-		lblPlacaVeiculo.setFont(new Font("Dialog", Font.BOLD, 13));
-		lblPlacaVeiculo.setForeground(new Color(255, 255, 255));
-		lblPlacaVeiculo.setBounds(12, 155, 126, 15);
-		getContentPane().add(lblPlacaVeiculo);
+		JLabel lblNomeLogin = new JLabel("Nome de Login:");
+		lblNomeLogin.setFont(new Font("Dialog", Font.BOLD, 13));
+		lblNomeLogin.setForeground(new Color(255, 255, 255));
+		lblNomeLogin.setBounds(21, 155, 117, 15);
+		getContentPane().add(lblNomeLogin);
 
 		textCpf = new JTextField();
 		textCpf.setBounds(144, 113, 160, 25);
 		getContentPane().add(textCpf);
 		textCpf.setColumns(10);
 
-		textPlacaVeiculo = new JTextField();
-		textPlacaVeiculo.setBounds(144, 150, 160, 25);
-		getContentPane().add(textPlacaVeiculo);
-		textPlacaVeiculo.setColumns(10);
+		textNomeLogin = new JTextField();
+		textNomeLogin.setBounds(144, 150, 160, 25);
+		getContentPane().add(textNomeLogin);
+		textNomeLogin.setColumns(10);
 
 		btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
@@ -140,7 +141,7 @@ public class TelaAdministradorEntregador extends JFrame {
 		});
 		btnVoltar.setBackground(new Color(255, 255, 255));
 		btnVoltar.setForeground(new Color(128, 0, 0));
-		btnVoltar.setBounds(12, 237, 101, 25);
+		btnVoltar.setBounds(12, 275, 101, 25);
 		contentPane.add(btnVoltar);
 
 		btnAtualizar = new JButton("Atualizar");
@@ -148,15 +149,17 @@ public class TelaAdministradorEntregador extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				String cpf = textCpf.getText();
-				String placaVeiculo = textPlacaVeiculo.getText();
+				String nomeUsuario = textNomeLogin.getText();
 				String nome = textNomeCompleto.getText();
 				String telefone = textTelefone.getText();
-				String email = textEmail.getText();
+				String senha = textSenha.getText();
+				String endereco = textEndereco.getText();
 
 				try {
-					Fachada.getInstance().atualizarUsuarioEntregador(nome, telefone, cpf, placaVeiculo, email);
+					Fachada.getInstance().atualizarUsuarioCliente(nomeUsuario, senha, nome, telefone, cpf, endereco);
+					JOptionPane.showMessageDialog(contentPane, "Cliente atualizado com sucesso!!", "",
+							JOptionPane.INFORMATION_MESSAGE);
 				} catch (UsuarioVazioException | UsuarioNaoCadastradoException e1) {
-					// e1.printStackTrace();
 					JOptionPane.showMessageDialog(contentPane, e1.getMessage(), "", JOptionPane.ERROR_MESSAGE);
 				}
 
@@ -164,23 +167,24 @@ public class TelaAdministradorEntregador extends JFrame {
 		});
 		btnAtualizar.setForeground(new Color(128, 0, 0));
 		btnAtualizar.setBackground(Color.WHITE);
-		btnAtualizar.setBounds(358, 116, 101, 25);
+		btnAtualizar.setBounds(358, 148, 101, 25);
 		contentPane.add(btnAtualizar);
 
 		btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textCpf.setText("");
-				textPlacaVeiculo.setText("");
+				textNomeLogin.setText("");
 				textNomeCompleto.setText("");
 				textTelefone.setText("");
-				textEmail.setText("");
+				textSenha.setText("");
+				textEndereco.setText("");
 
 			}
 		});
 		btnLimpar.setForeground(new Color(128, 0, 0));
 		btnLimpar.setBackground(Color.WHITE);
-		btnLimpar.setBounds(358, 150, 101, 25);
+		btnLimpar.setBounds(358, 182, 101, 25);
 		contentPane.add(btnLimpar);
 
 		JButton btnCadastrar = new JButton("Cadastrar");
@@ -190,24 +194,24 @@ public class TelaAdministradorEntregador extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				String cpf = textCpf.getText();
-				String placaVeiculo = textPlacaVeiculo.getText();
+				String nomeUsuario = textNomeLogin.getText();
 				String nome = textNomeCompleto.getText();
 				String telefone = textTelefone.getText();
-				String email = textEmail.getText();
+				String senha = textSenha.getText();
+				String endereco = textEndereco.getText();
 
 				try {
-					Fachada.getInstance().inserirUsuarioEntregador(nome, telefone, cpf, placaVeiculo, email);
+					Fachada.getInstance().inserirUsuarioCliente(nomeUsuario, senha, nome, telefone, cpf, endereco);
 					JOptionPane.showMessageDialog(contentPane, "Entregador cadastrado com sucesso!!", "",
 							JOptionPane.INFORMATION_MESSAGE);
 				} catch (UsuarioVazioException | UsuarioAnteriormenteCadastradoException
 						| UsuarioNaoCadastradoException e1) {
-					// e1.printStackTrace();
 					JOptionPane.showMessageDialog(contentPane, e1.getMessage(), "", JOptionPane.ERROR_MESSAGE);
 				}
 
 			}
 		});
-		btnCadastrar.setBounds(358, 39, 101, 25);
+		btnCadastrar.setBounds(358, 71, 101, 25);
 		contentPane.add(btnCadastrar);
 
 		btnRemover = new JButton("Remover");
@@ -215,8 +219,8 @@ public class TelaAdministradorEntregador extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				try {
-					Fachada.getInstance().removerUsuario(textFieldCpefBusca.getText());
-					JOptionPane.showMessageDialog(contentPane, "Entregador removido com sucesso!!", "",
+					Fachada.getInstance().removerUsuario(textFieldCpfBusca.getText());
+					JOptionPane.showMessageDialog(contentPane, "Cliente removido com sucesso!!", "",
 							JOptionPane.INFORMATION_MESSAGE);
 				} catch (UsuarioNaoCadastradoException e) {
 					JOptionPane.showMessageDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
@@ -226,59 +230,59 @@ public class TelaAdministradorEntregador extends JFrame {
 		});
 		btnRemover.setForeground(new Color(128, 0, 0));
 		btnRemover.setBackground(Color.WHITE);
-		btnRemover.setBounds(358, 76, 101, 25);
+		btnRemover.setBounds(358, 108, 101, 25);
 		contentPane.add(btnRemover);
 
-		textEmail = new JTextField();
-		textEmail.setColumns(10);
-		textEmail.setBounds(144, 190, 160, 25);
-		contentPane.add(textEmail);
+		textSenha = new JTextField();
+		textSenha.setColumns(10);
+		textSenha.setBounds(144, 190, 160, 25);
+		contentPane.add(textSenha);
 
-		JLabel labelEmail = new JLabel("Email:");
+		JLabel labelEmail = new JLabel("Senha:");
 		labelEmail.setForeground(Color.WHITE);
 		labelEmail.setFont(new Font("Dialog", Font.BOLD, 13));
-		labelEmail.setBounds(93, 192, 45, 15);
+		labelEmail.setBounds(88, 192, 50, 15);
 		contentPane.add(labelEmail);
 
-		textFieldCpefBusca = new JTextField();
-		textFieldCpefBusca.setColumns(10);
-		textFieldCpefBusca.setBounds(299, 237, 160, 25);
-		contentPane.add(textFieldCpefBusca);
+		textFieldCpfBusca = new JTextField();
+		textFieldCpfBusca.setColumns(10);
+		textFieldCpfBusca.setBounds(299, 275, 160, 25);
+		contentPane.add(textFieldCpfBusca);
 
 		buttonBuscar = new JButton("Buscar");
 		buttonBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
 				try {
-					Entregador entregador = (Entregador) Fachada.getInstance()
-							.buscarUsuario(textFieldCpefBusca.getText());
-					textCpf.setText(entregador.getCpf());
-					textPlacaVeiculo.setText(entregador.getplacaVeiculo());
-					textNomeCompleto.setText(entregador.getNome());
-					textTelefone.setText(entregador.getTelefone());
-					textEmail.setText(entregador.getEmail());
+					Cliente cliente = (Cliente) Fachada.getInstance().buscarUsuario(textFieldCpfBusca.getText());
+					textCpf.setText(cliente.getCpf());
+					textNomeLogin.setText(cliente.getNomeUsuario());
+					textNomeCompleto.setText(cliente.getNome());
+					textTelefone.setText(cliente.getTelefone());
+					textSenha.setText(cliente.getSenha());
+					textEndereco.setText(cliente.getEndereco());
 
 				} catch (UsuarioNaoCadastradoException e) {
 					JOptionPane.showMessageDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
-					// e.printStackTrace();
 				}
 			}
 		});
+
 		buttonBuscar.setForeground(new Color(128, 0, 0));
 		buttonBuscar.setBackground(Color.WHITE);
-		buttonBuscar.setBounds(358, 187, 101, 25);
+		buttonBuscar.setBounds(358, 219, 101, 25);
 		contentPane.add(buttonBuscar);
 
 		labelCpfBusca = new JLabel("Cpf para busca:");
 		labelCpfBusca.setForeground(Color.WHITE);
 		labelCpfBusca.setFont(new Font("Dialog", Font.BOLD, 13));
-		labelCpfBusca.setBounds(182, 242, 117, 15);
+		labelCpfBusca.setBounds(182, 280, 117, 15);
 		contentPane.add(labelCpfBusca);
 
-		lblAdministrarEntregador = new JLabel("Administrar Entregador");
-		lblAdministrarEntregador.setForeground(Color.WHITE);
-		lblAdministrarEntregador.setBounds(138, 12, 192, 15);
-		contentPane.add(lblAdministrarEntregador);
+		lblAdministrarCliente = new JLabel("Administrar Cliente");
+		lblAdministrarCliente.setForeground(Color.WHITE);
+		lblAdministrarCliente.setBounds(148, 12, 192, 15);
+		contentPane.add(lblAdministrarCliente);
 
 		panelListar = new JPanel();
 		panelListar.setLayout(new BoxLayout(panelListar, BoxLayout.PAGE_AXIS));
@@ -305,7 +309,7 @@ public class TelaAdministradorEntregador extends JFrame {
 
 				for (Usuario usuario : arrayEntregador) { /* Insere os elementos que estao no repositorio */
 
-					if (usuario instanceof Entregador) {
+					if (usuario instanceof Cliente) {
 						panelListar.revalidate(); // Tem que revalidar a tela quando adicionar fora do construtor
 						JPanel linha = new JPanel();
 						linha.setLayout(new GridLayout(1, 2));
@@ -324,8 +328,19 @@ public class TelaAdministradorEntregador extends JFrame {
 
 			}
 		});
-		btnListarCardapio.setBounds(358, 7, 101, 25);
+		btnListarCardapio.setBounds(358, 39, 101, 25);
 		contentPane.add(btnListarCardapio);
+
+		textEndereco = new JTextField();
+		textEndereco.setColumns(10);
+		textEndereco.setBounds(144, 227, 160, 25);
+		contentPane.add(textEndereco);
+
+		JLabel lblEndereco = new JLabel("Endereco:");
+		lblEndereco.setForeground(Color.WHITE);
+		lblEndereco.setFont(new Font("Dialog", Font.BOLD, 13));
+		lblEndereco.setBounds(69, 229, 73, 15);
+		contentPane.add(lblEndereco);
 
 	}
 

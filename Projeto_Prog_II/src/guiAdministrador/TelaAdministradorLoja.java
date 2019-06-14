@@ -1,39 +1,36 @@
+
 package guiAdministrador;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import excepitonRepositorioArray.LojaJaCadastradaException;
 import excepitonRepositorioArray.LojaNaoCadastradaException;
 import excepitonRepositorioArray.LojaVaziaException;
-import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
-import excepitonRepositorioArray.UsuarioNaoCadastradoException;
-import excepitonRepositorioArray.UsuarioVazioException;
 import negocio.Fachada;
-import negocioClassesBasicas.Entregador;
 import negocioClassesBasicas.Loja;
 
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
-import java.awt.GridLayout;
 
 public class TelaAdministradorLoja extends JFrame {
+
+	private static final long serialVersionUID = 1L;
 
 	private static TelaAdministradorLoja instance;
 
@@ -268,6 +265,23 @@ public class TelaAdministradorLoja extends JFrame {
 		btnCardapio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
+				if (textFieldCpefBusca.getText().equals("")) {
+					JOptionPane.showMessageDialog(contentPane, "Insira o cnpj da loja que voce deseja entrar.", "",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+					try {
+						Fachada.getInstance().buscarLoja(textFieldCpefBusca.getText());
+					} catch (LojaNaoCadastradaException e) {
+						JOptionPane.showMessageDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+						// e.printStackTrace();
+					}
+					TelaAdministradorLojaCardapio tela = new TelaAdministradorLojaCardapio(
+							textFieldCpefBusca.getText());
+					tela.setVisible(true);
+					dispose();
+
+				}
+
 			}
 		});
 		btnCardapio.setForeground(new Color(128, 0, 0));
@@ -288,43 +302,69 @@ public class TelaAdministradorLoja extends JFrame {
 		btnVoltar.setBounds(12, 237, 101, 25);
 		contentPane.add(btnVoltar);
 
-		JScrollPane scrollPane = new JScrollPane();
+		panelListar = new JPanel();
+		panelListar.setLayout(new BoxLayout(panelListar, BoxLayout.PAGE_AXIS));
+		panelListar.setVisible(true);
+
+		cabecalhoListagem();
+
+		JScrollPane scrollPane = new JScrollPane(panelListar);
 		scrollPane.setBounds(487, 25, 280, 231);
 		contentPane.add(scrollPane);
 
-		panelListar = new JPanel();
-		panelListar.setLayout(new FlowLayout());
-		panelListar.add(new JLabel("teste123"));
-		scrollPane.setViewportView(panelListar);
-
 		JButton btnListar = new JButton("Listar");
-		btnListar.addActionListener(new ActionListener() {
+		btnListar.setForeground(new Color(128, 0, 0));
+		btnListar.setBackground(Color.WHITE);
+		btnListar.addActionListener(new ActionListener() { // Aqui dentro \E9 fora do construtor da TelaAdministrador
 			public void actionPerformed(ActionEvent arg0) {
-
-				ArrayList<Loja> arrayLoja = new ArrayList<>();
-
-				arrayLoja = (ArrayList<Loja>) Fachada.getInstance().listarLoja();
-
-				for (Loja loja : arrayLoja) {
-
+				panelListar.removeAll(); // Remove todos os elementos para n\E3o ficarem duplicados
+				cabecalhoListagem();
+				for (Loja loja : Fachada.getInstance().listarLoja()) { // Insere os elementos que est\E3o no repositorio
+					panelListar.revalidate(); // Tem que revalidar a tela quando adicionar fora do construtor
 					JPanel linha = new JPanel();
-					scrollPane.setViewportView(linha);
 					linha.setLayout(new GridLayout(1, 2));
-					panelListar.add(linha);
-
-					linha.setBounds(0, 0, 250, 30);
-					linha.setBackground(Color.BLUE);
-
-					JLabel id = new JLabel(loja.getCnpj());
+					JLabel cnpj = new JLabel(loja.getCnpj());
 					JLabel nome = new JLabel(loja.getNome());
-					linha.add(id);
+					cnpj.setHorizontalAlignment(JLabel.CENTER);
+					nome.setHorizontalAlignment(JLabel.CENTER);
+					linha.add(cnpj);
 					linha.add(nome);
+					panelListar.add(linha);
+					panelListar.add(Box.createRigidArea(new Dimension(0, 5)));
+					panelListar.repaint(); // Repintar por garantia
 				}
 
 			}
 		});
-		btnListar.setBounds(361, 7, 114, 25);
+		btnListar.setBounds(358, 7, 101, 25);
 		contentPane.add(btnListar);
 
 	}
+
+	public void cabecalhoListagem() { // Coloca o cabe\E7alho CNPJ e NOME no topo da listagem
+		panelListar.revalidate();
+		panelListar.add(Box.createRigidArea(new Dimension(0, 5)));
+		JPanel titulo = new JPanel() { // Classe an\F4nima
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void paintComponent(Graphics g) { // M\E9todo para desenhar no painel
+				super.paintComponent(g);
+				g.drawLine(0, 0, 280, 0);
+				g.drawLine(0, 16, 280, 16);
+			}
+		};
+		titulo.setLayout(new GridLayout(1, 2));
+		JLabel cnpj = new JLabel("CNPJ");
+		JLabel nome = new JLabel("NOME");
+		cnpj.setVerticalAlignment(JLabel.TOP);
+		cnpj.setHorizontalAlignment(JLabel.CENTER);
+		nome.setVerticalAlignment(JLabel.TOP);
+		nome.setHorizontalAlignment(JLabel.CENTER);
+		titulo.add(cnpj);
+		titulo.add(nome);
+		panelListar.add(titulo);
+		panelListar.repaint();
+	}
+
 }

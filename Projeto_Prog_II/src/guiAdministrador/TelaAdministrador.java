@@ -49,7 +49,7 @@ public class TelaAdministrador extends JFrame {
 		JButton btnCadastrarEntregador = new JButton("Entregador");
 		btnCadastrarEntregador.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				TelaAdministradorEntregador tela = new TelaAdministradorEntregador();
+				TelaAdministradorCliente tela = new TelaAdministradorCliente();
 				tela.setVisible(true);
 				dispose();
 			}
@@ -60,7 +60,7 @@ public class TelaAdministrador extends JFrame {
 		JButton btnCadatrarLoja = new JButton("Loja");
 		btnCadatrarLoja.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				TelaAdministradorEntregador tela = new TelaAdministradorEntregador();
+				TelaAdministradorCliente tela = new TelaAdministradorCliente();
 				tela.setVisible(true);
 				dispose();
 			}

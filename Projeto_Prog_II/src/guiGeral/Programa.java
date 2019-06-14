@@ -29,10 +29,10 @@ public class Programa {
 		}
 
 		try {
-			Fachada.getInstance().buscarLoja("001").getCardapio().inserir(new Prato("lasanha", 2, 40, 10));
-			Fachada.getInstance().buscarLoja("001").getCardapio().inserir(new Prato("cachorro-quente", 50, 40, 10));
-			Fachada.getInstance().buscarLoja("001").getCardapio().inserir(new Prato("pizza", 50, 40, 10));
-			Fachada.getInstance().buscarLoja("001").getCardapio().inserir(new Prato("coxinha", 50, 40, 10));
+			Fachada.getInstance().buscarLoja("001").inserir(new Prato("lasanha", 2, 40, 10));
+			Fachada.getInstance().buscarLoja("001").inserir(new Prato("cachorro-quente", 50, 40, 10));
+			Fachada.getInstance().buscarLoja("001").inserir(new Prato("pizza", 50, 40, 10));
+			Fachada.getInstance().buscarLoja("001").inserir(new Prato("coxinha", 50, 40, 10));
 		} catch (PratoVazioException | PratoJaInseridoException | LojaNaoCadastradaException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

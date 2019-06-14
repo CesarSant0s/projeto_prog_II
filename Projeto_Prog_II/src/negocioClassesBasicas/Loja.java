@@ -1,15 +1,19 @@
 package negocioClassesBasicas;
 
+import java.util.ArrayList;
+
+import excepitonRepositorioArray.PratoJaInseridoException;
+import excepitonRepositorioArray.PratoNaoEncontradoException;
+import excepitonRepositorioArray.PratoVazioException;
 import repositorio.RepositorioPratos;
 import repositorioArray.RepositorioPratosArray;
 
-public class Loja {
+public class Loja implements RepositorioPratos {
 
 	private String nome;
 	private String telefone;
 	private String cnpj;
 	private String endereco;
-
 	private RepositorioPratos cardapio;
 
 	public Loja(String nome, String telefone, String cnpj, String endereco) {
@@ -38,14 +42,6 @@ public class Loja {
 			this.endereco = endereco;
 	}
 
-	public RepositorioPratos getCardapio() {
-		return cardapio;
-	}
-
-	public void setCardapio(RepositorioPratos cardapio) {
-		this.cardapio = cardapio;
-	}
-
 	public String getNome() {
 		return nome;
 	}
@@ -60,6 +56,35 @@ public class Loja {
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+
+	@Override
+	public void inserir(Prato prato) throws PratoVazioException, PratoJaInseridoException {
+		cardapio.inserir(prato);
+	}
+
+	@Override
+	public void remover(String nomePrato) throws PratoNaoEncontradoException {
+
+		cardapio.remover(nomePrato);
+	}
+
+	@Override
+	public Prato buscar(String nomePrato) throws PratoNaoEncontradoException {
+
+		return cardapio.buscar(nomePrato);
+	}
+
+	@Override
+	public void alterar(Prato novoPrato) throws PratoVazioException, PratoNaoEncontradoException {
+
+		cardapio.alterar(novoPrato);
+
+	}
+
+	@Override
+	public ArrayList<Prato> listar() {
+		return cardapio.listar();
 	}
 
 }
