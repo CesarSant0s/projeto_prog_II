@@ -32,11 +32,9 @@ public class TelaCadastrarAdministrador extends JFrame {
 	private JPanel contentPane;
 	private JTextField textNomeDeLogin;
 	private JPasswordField pwdSenha;
-	private JTextField textNomeCompleto;
-	private JTextField textTelefone;
-	private JTextField textCpf;
+	private JTextField textId;
 	private JButton btnVoltar;
-	private JButton btnAtualizar;
+	private JButton btnCadastrar;
 	private JButton btnLimpar;
 
 	public static TelaCadastrarAdministrador getInstance() {
@@ -76,59 +74,37 @@ public class TelaCadastrarAdministrador extends JFrame {
 		contentPane.setLayout(null);
 
 		textNomeDeLogin = new JTextField();
-		textNomeDeLogin.setBounds(151, 12, 160, 25);
+		textNomeDeLogin.setBounds(204, 92, 160, 25);
 		getContentPane().add(textNomeDeLogin);
 		textNomeDeLogin.setColumns(10);
 
 		JLabel lblNomeDeLogin = new JLabel("Nome de Login:");
 		lblNomeDeLogin.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblNomeDeLogin.setForeground(new Color(255, 255, 255));
-		lblNomeDeLogin.setBounds(50, 16, 151, 15);
+		lblNomeDeLogin.setBounds(81, 97, 120, 15);
 		getContentPane().add(lblNomeDeLogin);
 
 		JLabel lblSenha = new JLabel("Senha:");
 		lblSenha.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSenha.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblSenha.setForeground(new Color(255, 255, 255));
-		lblSenha.setBounds(100, 53, 49, 15);
+		lblSenha.setBounds(146, 134, 50, 15);
 		getContentPane().add(lblSenha);
 
 		pwdSenha = new JPasswordField();
-		pwdSenha.setBounds(151, 49, 160, 25);
+		pwdSenha.setBounds(204, 129, 160, 25);
 		getContentPane().add(pwdSenha);
 
-		JLabel lblNomeCompleto = new JLabel("Nome Completo:");
-		lblNomeCompleto.setFont(new Font("Dialog", Font.BOLD, 13));
-		lblNomeCompleto.setForeground(new Color(255, 255, 255));
-		lblNomeCompleto.setBounds(45, 93, 104, 15);
-		getContentPane().add(lblNomeCompleto);
+		JLabel lblId = new JLabel("Id:");
+		lblId.setFont(new Font("Dialog", Font.BOLD, 13));
+		lblId.setForeground(new Color(255, 255, 255));
+		lblId.setBounds(177, 173, 25, 15);
+		getContentPane().add(lblId);
 
-		textNomeCompleto = new JTextField();
-		textNomeCompleto.setBounds(151, 89, 160, 25);
-		getContentPane().add(textNomeCompleto);
-		textNomeCompleto.setColumns(10);
-
-		JLabel lblTelefone = new JLabel("Telefone:");
-		lblTelefone.setFont(new Font("Dialog", Font.BOLD, 13));
-		lblTelefone.setForeground(new Color(255, 255, 255));
-		lblTelefone.setBounds(92, 127, 57, 20);
-		getContentPane().add(lblTelefone);
-
-		textTelefone = new JTextField();
-		textTelefone.setBounds(151, 126, 160, 25);
-		getContentPane().add(textTelefone);
-		textTelefone.setColumns(10);
-
-		JLabel lblNewLabel = new JLabel("Cpf:");
-		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 13));
-		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setBounds(124, 167, 25, 15);
-		getContentPane().add(lblNewLabel);
-
-		textCpf = new JTextField();
-		textCpf.setBounds(151, 163, 160, 25);
-		getContentPane().add(textCpf);
-		textCpf.setColumns(10);
+		textId = new JTextField();
+		textId.setBounds(204, 168, 160, 25);
+		getContentPane().add(textId);
+		textId.setColumns(10);
 
 		btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
@@ -140,37 +116,39 @@ public class TelaCadastrarAdministrador extends JFrame {
 		btnVoltar.setBounds(250, 272, 114, 25);
 		contentPane.add(btnVoltar);
 
-		btnAtualizar = new JButton("Atualizar");
-		btnAtualizar.addActionListener(new ActionListener() {
+		btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				Administrador adm = new Administrador(textNomeDeLogin.getText(), new String(pwdSenha.getPassword()),
-						Integer.parseInt(textCpf.getText()));
+				String login = textNomeDeLogin.getText();
+				String senha = new String(pwdSenha.getPassword());
+				int id = Integer.parseInt(textId.getText());
 
 				try {
-					Fachada.getInstance().inserirAdmnistrador(adm);
+					Fachada.getInstance().inserirAdmnistrador(new Administrador(login, senha, id));
+					JOptionPane.showMessageDialog(contentPane, "Administrador cadastrado com sucesso!!", "",
+							JOptionPane.ERROR_MESSAGE);
+					TelaLoginAdministrador tela = new TelaLoginAdministrador();
+					tela.setVisible(true);
+					dispose();
 				} catch (AdministradorVazioException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(contentPane, e1.getMessage(), "", JOptionPane.ERROR_MESSAGE);
 				} catch (AdministradorJaCadastradoException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(contentPane, e1.getMessage(), "", JOptionPane.ERROR_MESSAGE);
 				}
 
 			}
 		});
-		btnAtualizar.setForeground(new Color(128, 0, 0));
-		btnAtualizar.setBackground(Color.WHITE);
-		btnAtualizar.setBounds(250, 236, 114, 25);
-		contentPane.add(btnAtualizar);
+		btnCadastrar.setForeground(new Color(128, 0, 0));
+		btnCadastrar.setBackground(Color.WHITE);
+		btnCadastrar.setBounds(250, 235, 114, 25);
+		contentPane.add(btnCadastrar);
 
 		btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				textCpf.setText("");
-				textNomeCompleto.setText("");
+				textId.setText("");
 				textNomeDeLogin.setText("");
-				textTelefone.setText("");
 				pwdSenha.setText("");
 
 			}

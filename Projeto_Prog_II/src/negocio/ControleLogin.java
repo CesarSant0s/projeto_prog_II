@@ -24,7 +24,7 @@ public class ControleLogin {
 
 	public String loginCliente(String cpf, String senha)
 			throws UsuarioNaoCadastradoException, CpfNaoCadastradoException, SenhaIncorretaException {
-		Cliente usuario = (Cliente) ControleUsuario.getInstance().buscar(cpf);
+		Cliente usuario = (Cliente) Fachada.getInstance().buscarUsuario(cpf);
 		if (usuario == null) {
 			CpfNaoCadastradoException e = new CpfNaoCadastradoException();
 			throw e;
@@ -39,12 +39,12 @@ public class ControleLogin {
 
 	public int loginAdministrador(int id, String senha)
 			throws AdministradorNaoEncotradoException, IdNaoCadastradoException {
-		Administrador adm = ControleAdiministrador.getInsance().buscarAdmnistrador(id);
+		Administrador adm = Fachada.getInstance().buscarAdmnistrador(id);
 		if (adm == null) {
 			IdNaoCadastradoException e = new IdNaoCadastradoException();
 			throw e;
 		} else {
-			if (!(adm.getSenha().contentEquals(senha))) {
+			if (!(adm.getSenha().equals(senha))) {
 				IdNaoCadastradoException e = new IdNaoCadastradoException();
 				throw e;
 			}

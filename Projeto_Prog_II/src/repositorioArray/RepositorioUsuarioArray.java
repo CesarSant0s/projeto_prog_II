@@ -1,5 +1,12 @@
 package repositorioArray;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -10,7 +17,7 @@ import negocio.Fachada;
 import negocioClassesBasicas.Usuario;
 import repositorio.RepositorioUsuario;
 
-public class RepositorioUsuarioArray implements RepositorioUsuario {
+public class RepositorioUsuarioArray implements RepositorioUsuario, Serializable {
 
 	private Usuario[] array;
 	private static int indice;
@@ -19,12 +26,61 @@ public class RepositorioUsuarioArray implements RepositorioUsuario {
 
 	public static RepositorioUsuarioArray getInstance() {
 		if (instance == null) {
-			instance = new RepositorioUsuarioArray();
+			instance = lerDoArquivo();
 		}
 		return instance;
 	}
 
+	public static RepositorioUsuarioArray lerDoArquivo() {
+		RepositorioUsuarioArray instanciaLocal = null;
+		// Criando um arquivo e passando o nome dele
+		File in = new File("Usuario.dat");// criando um arquivo .dat na pasta do projeto
+
+		FileInputStream fis = null;
+		ObjectInputStream ois = null;
+		try {
+			fis = new FileInputStream(in);
+			ois = new ObjectInputStream(fis);
+			Object o = ois.readObject();
+			instanciaLocal = (RepositorioUsuarioArray) o;
+		} catch (Exception e) {
+			instanciaLocal = new RepositorioUsuarioArray();
+		} finally {
+			if (ois != null) {
+				try {
+					ois.close();
+				} catch (IOException e) {
+				}
+			}
+		}
+		return instanciaLocal;
+	}
+
+	public static void salvarArquivo() {
+		if (!(instance == null)) {
+
+			File out = new File("Usuario.dat");
+			FileOutputStream fos = null;
+			ObjectOutputStream oos = null;
+			try {
+				fos = new FileOutputStream(out);
+				oos = new ObjectOutputStream(fos);
+				oos.writeObject(instance);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (oos != null) {
+					try {
+						oos.close();
+					} catch (IOException e) {
+					}
+				}
+			}
+		}
+	}
+
 	public RepositorioUsuarioArray() {
+		indice = 0;
 		array = new Usuario[TAMANHO];
 	}
 

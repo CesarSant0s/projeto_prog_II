@@ -43,13 +43,20 @@ public class TelaAdministrador extends JFrame {
 		contentPane.setLayout(null);
 
 		JButton btnCadastrarcliente = new JButton("Cliente");
+		btnCadastrarcliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				TelaAdministradorCliente tela = new TelaAdministradorCliente();
+				tela.setVisible(true);
+				dispose();
+			}
+		});
 		btnCadastrarcliente.setBounds(26, 12, 183, 25);
 		contentPane.add(btnCadastrarcliente);
 
 		JButton btnCadastrarEntregador = new JButton("Entregador");
 		btnCadastrarEntregador.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				TelaAdministradorCliente tela = new TelaAdministradorCliente();
+				TelaAdministradorEntregador tela = new TelaAdministradorEntregador();
 				tela.setVisible(true);
 				dispose();
 			}
@@ -60,13 +67,24 @@ public class TelaAdministrador extends JFrame {
 		JButton btnCadatrarLoja = new JButton("Loja");
 		btnCadatrarLoja.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				TelaAdministradorCliente tela = new TelaAdministradorCliente();
+				TelaAdministradorLoja tela = new TelaAdministradorLoja();
 				tela.setVisible(true);
 				dispose();
 			}
 		});
 		btnCadatrarLoja.setBounds(26, 112, 183, 25);
 		contentPane.add(btnCadatrarLoja);
+
+		JButton btnPedido = new JButton("Pedido");
+		btnPedido.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				TelaAdministradorPedido tela = new TelaAdministradorPedido();
+				tela.setVisible(true);
+				dispose();
+			}
+		});
+		btnPedido.setBounds(26, 149, 183, 25);
+		contentPane.add(btnPedido);
 
 	}
 }

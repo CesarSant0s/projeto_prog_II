@@ -33,9 +33,8 @@ public class TelaCadastrarCliente extends JFrame {
 	private JButton btnLimpar;
 	private JTextField textSenha;
 	private JLabel lblCadastrarCliente;
-	private JTextField textEndereco;
 	private JLabel label;
-	private JTextField textField;
+	private JTextField textEndereco;
 
 	public static TelaCadastrarCliente getInstance() {
 		if (TelaCadastrarCliente.instance == null) {
@@ -162,7 +161,7 @@ public class TelaCadastrarCliente extends JFrame {
 
 				try {
 					Fachada.getInstance().inserirUsuarioCliente(nomeUsuario, senha, nome, telefone, cpf, endereco);
-					JOptionPane.showMessageDialog(contentPane, "Entregador cadastrado com sucesso!!", "",
+					JOptionPane.showMessageDialog(contentPane, "Cliente cadastrado com sucesso!!", "",
 							JOptionPane.INFORMATION_MESSAGE);
 					TelaCompraClienteLojas tela = new TelaCompraClienteLojas(cpf);
 					tela.setVisible(true);
@@ -199,10 +198,10 @@ public class TelaCadastrarCliente extends JFrame {
 		label.setBounds(69, 221, 73, 15);
 		contentPane.add(label);
 
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(144, 215, 160, 25);
-		contentPane.add(textField);
+		textEndereco = new JTextField();
+		textEndereco.setColumns(10);
+		textEndereco.setBounds(144, 215, 160, 25);
+		contentPane.add(textEndereco);
 
 	}
 }

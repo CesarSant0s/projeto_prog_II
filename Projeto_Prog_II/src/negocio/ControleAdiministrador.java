@@ -15,13 +15,11 @@ public class ControleAdiministrador {
 	public ControleAdiministrador() {
 		repositorio = RepositorioAdministradorArray.getInstance();
 	}
-
-	public static ControleAdiministrador getInsance() {
-		if (ControleAdiministrador.instance == null) {
-			ControleAdiministrador.instance = new ControleAdiministrador();
-		}
-		return ControleAdiministrador.instance;
-	}
+	/*
+	 * public static ControleAdiministrador getInsance() { if (instance == null) {
+	 * instance = new ControleAdiministrador(); } return
+	 * ControleAdiministrador.instance; }
+	 */
 
 	public void inserirAdmnistrador(Administrador adm)
 			throws AdministradorVazioException, AdministradorJaCadastradoException {

@@ -111,12 +111,11 @@ public class TelaLoginAdministrador extends JFrame {
 				try {
 					Fachada.getInstance().login(Integer.parseInt(textFieldLogin.getText()),
 							new String(passwordFieldSenha.getPassword()));
-					TelaAdministrador tela =  new TelaAdministrador();
+					TelaAdministrador tela = new TelaAdministrador();
 					tela.setVisible(true);
 					dispose();
 				} catch (NumberFormatException | AdministradorNaoEncotradoException | IdNaoCadastradoException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					JOptionPane.showMessageDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
 				}
 
 			}

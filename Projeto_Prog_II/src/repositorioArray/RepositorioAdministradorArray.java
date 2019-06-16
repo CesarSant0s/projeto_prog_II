@@ -16,8 +16,8 @@ import repositorio.RepositorioAdministrador;
 
 public class RepositorioAdministradorArray implements RepositorioAdministrador, Serializable {
 	private Administrador[] array;
-	private static int indice;
-	private static final int TAMANHO = 100;
+	private int indice;
+	private int TAMANHO = 100;
 	private static RepositorioAdministradorArray instance;
 
 	public RepositorioAdministradorArray() {
@@ -122,33 +122,21 @@ public class RepositorioAdministradorArray implements RepositorioAdministrador, 
 	@Override
 	public Administrador buscar(int id) throws AdministradorNaoEncotradoException {
 		Administrador resultadoBusca = null;
-		int cont = 0;
-		for (int i = 0; i < array.length; i++) {
-			if (!(array[i] == null)) {
-				cont++;
+
+		for (int i = 0, j = indice; i < j; i++) {
+			if (id == array[i].getId()) {
+				resultadoBusca = array[i];
 			}
-
 		}
-		indice = cont;
+		return resultadoBusca;
 
-		if (indice > 0) {
-			for (int i = 0, j = indice; i < j; i++) {
-				if (id == array[i].getId()) {
-					resultadoBusca = array[i];
-				}
-			}
-
-		} else {
-			resultadoBusca = null;
-		}
-
-		if (resultadoBusca == null) {
-			AdministradorNaoEncotradoException e = new AdministradorNaoEncotradoException();
-			throw e;
-		} else {
-			return resultadoBusca;
-		}
-
+		/*
+		 * } else { resultadoBusca = null; }
+		 * 
+		 * if (resultadoBusca == null) { AdministradorNaoEncotradoException e = new
+		 * AdministradorNaoEncotradoException(); throw e; } else { return
+		 * resultadoBusca; }
+		 */
 	}
 
 	@Override

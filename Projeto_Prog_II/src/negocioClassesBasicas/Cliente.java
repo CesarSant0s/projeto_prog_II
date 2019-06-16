@@ -1,6 +1,8 @@
 package negocioClassesBasicas;
 
-public class Cliente extends Usuario {
+import java.io.Serializable;
+
+public class Cliente extends Usuario implements Serializable {
 
 	private String endereco;
 	private String nomeUsuario;

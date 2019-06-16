@@ -1,6 +1,8 @@
 package negocioClassesBasicas;
 
-public class Entregador extends Usuario {
+import java.io.Serializable;
+
+public class Entregador extends Usuario implements Serializable {
 
 	private String placaVeiculo;
 	private String email;
