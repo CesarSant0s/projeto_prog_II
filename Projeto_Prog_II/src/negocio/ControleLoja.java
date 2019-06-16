@@ -6,31 +6,31 @@ import excepitonRepositorioArray.LojaJaCadastradaException;
 import excepitonRepositorioArray.LojaNaoCadastradaException;
 import excepitonRepositorioArray.LojaVaziaException;
 import negocioClassesBasicas.Loja;
+import repositorio.RepositorioLoja;
 import repositorioArray.RepositorioLojaArray;
 
 public class ControleLoja {
 
-	private static ControleLoja instance;
+	private RepositorioLoja lojas;
 
-	public static ControleLoja getInstance() {
-		if (ControleLoja.instance == null) {
-			ControleLoja.instance = new ControleLoja();
-		}
-		return ControleLoja.instance;
+	public ControleLoja() {
+		lojas = RepositorioLojaArray.getInstance();
 	}
 
 	public void inserir(Loja loja) throws LojaVaziaException, LojaJaCadastradaException {
 
-		RepositorioLojaArray.getInstance().inserir(loja);
+		lojas.inserir(loja);
+		RepositorioLojaArray.salvarArquivo();
 
 	}
 
 	public void remover(String cnpj) throws LojaNaoCadastradaException {
-		RepositorioLojaArray.getInstance().remover(cnpj);
+		lojas.remover(cnpj);
+		RepositorioLojaArray.salvarArquivo();
 	}
 
 	public Loja buscar(String cnpj) throws LojaNaoCadastradaException {
-		Loja resultadoBusca = RepositorioLojaArray.getInstance().buscar(cnpj);
+		Loja resultadoBusca = lojas.buscar(cnpj);
 
 		return resultadoBusca;
 
@@ -38,11 +38,12 @@ public class ControleLoja {
 
 	public void alterar(Loja loja) throws LojaVaziaException, LojaNaoCadastradaException {
 
-		RepositorioLojaArray.getInstance().alterar(loja);
+		lojas.alterar(loja);
+		RepositorioLojaArray.salvarArquivo();
 
 	}
 
 	public List<Loja> listar() {
-		return RepositorioLojaArray.getInstance().listarLoja();
+		return lojas.listarLoja();
 	}
 }

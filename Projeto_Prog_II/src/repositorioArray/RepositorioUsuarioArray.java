@@ -8,21 +8,24 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.UUID;
 
 import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import excepitonRepositorioArray.UsuarioVazioException;
-import negocio.Fachada;
 import negocioClassesBasicas.Usuario;
 import repositorio.RepositorioUsuario;
 
 public class RepositorioUsuarioArray implements RepositorioUsuario, Serializable {
 
 	private Usuario[] array;
-	private static int indice;
-	private final static int TAMANHO = 100;
+	private int indice;
+	private int TAMANHO = 100;
 	private static RepositorioUsuarioArray instance;
+
+	public RepositorioUsuarioArray() {
+		array = new Usuario[TAMANHO];
+		indice = 0;
+	}
 
 	public static RepositorioUsuarioArray getInstance() {
 		if (instance == null) {
@@ -34,7 +37,8 @@ public class RepositorioUsuarioArray implements RepositorioUsuario, Serializable
 	public static RepositorioUsuarioArray lerDoArquivo() {
 		RepositorioUsuarioArray instanciaLocal = null;
 		// Criando um arquivo e passando o nome dele
-		File in = new File("Usuario.dat");// criando um arquivo .dat na pasta do projeto
+		File in = new File("Usuario.dat");
+		// criando um arquivo .dat na pasta do projeto
 
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
@@ -77,11 +81,6 @@ public class RepositorioUsuarioArray implements RepositorioUsuario, Serializable
 				}
 			}
 		}
-	}
-
-	public RepositorioUsuarioArray() {
-		indice = 0;
-		array = new Usuario[TAMANHO];
 	}
 
 	@Override

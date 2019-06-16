@@ -1,191 +1,172 @@
 package negocio;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
-import excepitonRepositorioArray.UsuarioNaoCadastradoException;
-import excepitonRepositorioArray.UsuarioVazioException;
-import negocioClassesBasicas.Entregador;
+import excepitonRepositorioArray.AdministradorJaCadastradoException;
+import excepitonRepositorioArray.AdministradorNaoEncotradoException;
+import excepitonRepositorioArray.AdministradorVazioException;
+import negocioClassesBasicas.Administrador;
 
 class TesteFachada {
 
 	@Test
-	void testFachada() {
+	final void testFachada() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	void testGetInstance() {
-		fail("Not yet implemented");
+	final void testGetInstance() {
+		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	void testLoginCliente() {
-		fail("Not yet implemented");
+	final void testLoginCliente() {
+		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	void testLogin() {
-		fail("Not yet implemented");
+	final void testLoginAdministrador() {
+		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	void testInserirAdmnistrador() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testRemoverAdmnistrador() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testBuscarAdmnistrador() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testAlterarAdministrador() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testListarAdiministrador() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testInserirPrato() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testRemoverPrato() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testBuscarPrato() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testAlterarPrato() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testListar() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testAbrirPedido() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testFinalizarPedido() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testBuscarPedido() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testAlterarPedido() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testListarPedido() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testInserirLoja() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testRemoverLoja() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testBuscarLoja() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testAlterarLoja() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testListarLoja() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testInserirUsuarioCliente() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testInserirUsuarioEntregador() {
-
-		Entregador expecteds, actuals = null;
-
-		expecteds = new Entregador("Paulo", "995544", "15378565430", "pcr-5544", "paulo@gmail.com");
+	final void testInserirAdmnistrador() {
 		try {
-			Fachada.getInstance().inserirUsuarioEntregador("Paulo", "995544", "15378565430", "pcr-5544",
-					"paulo@gmail.com");
-		} catch (UsuarioVazioException | UsuarioAnteriormenteCadastradoException | UsuarioNaoCadastradoException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		try {
-			actuals = (Entregador) Fachada.getInstance().buscarUsuario("15378565430");
-		} catch (UsuarioNaoCadastradoException e) {
-			// TODO Auto-generated catch block
+			Fachada.getInstance().inserirAdmnistrador(new Administrador("nome", "123", 354));
+		} catch (AdministradorVazioException | AdministradorJaCadastradoException e) {
 			e.printStackTrace();
 		}
+		Administrador adm = null;
+		try {
+			adm = Fachada.getInstance().buscarAdmnistrador(354);
+		} catch (AdministradorNaoEncotradoException e) {
+			e.printStackTrace();
+		}
+		assertEquals(new Administrador("nome", "123", 354), adm);
 
-		assertEquals(expecteds, actuals);
-
-		fail("Not yet implemented");
+		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	void testRemoverUsuario() {
-		fail("Not yet implemented");
+	final void testRemoverAdmnistrador() {
+		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	void testBuscarUsuario() {
-		fail("Not yet implemented");
+	final void testBuscarAdmnistrador() {
+		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	void testAtualizarUsuarioEntregador() {
-		fail("Not yet implemented");
+	final void testAlterarAdministrador() {
+		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	void testAtualizarUsuarioCliente() {
-		fail("Not yet implemented");
+	final void testListarAdiministrador() {
+		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	void testListarUsuario() {
-		fail("Not yet implemented");
+	final void testFinalizarPedido() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testFazerPedido() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testNovoPedido() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testInserirPedido() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testRemoverPedido() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testBuscarPedido() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testAlterarPedido() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testListarPedido() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testInserirLoja() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testRemoverLoja() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testBuscarLoja() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testAlterarLoja() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testListarLoja() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testInserirUsuarioCliente() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testInserirUsuarioEntregador() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testRemoverUsuario() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testBuscarUsuario() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testAtualizarUsuarioEntregador() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testAtualizarUsuarioCliente() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testListarUsuario() {
+		fail("Not yet implemented"); // TODO
 	}
 
 }

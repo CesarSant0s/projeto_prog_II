@@ -1,12 +1,14 @@
 package negocio;
 
+import java.util.ArrayList;
+
 import excepitonRepositorioArray.AdministradorNaoEncotradoException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
-import exception.CpfNaoCadastradoException;
-import exception.IdNaoCadastradoException;
-import exception.SenhaIncorretaException;
 import negocioClassesBasicas.Administrador;
 import negocioClassesBasicas.Cliente;
+import negocioClassesBasicas.Usuario;
+import repositorioArray.RepositorioAdministradorArray;
+import repositorioArray.RepositorioUsuarioArray;
 
 public class ControleLogin {
 
@@ -16,40 +18,46 @@ public class ControleLogin {
 	}
 
 	public ControleLogin getInstance() {
-		if (ControleLogin.instance == null) {
-			ControleLogin.instance = new ControleLogin();
+		if (instance == null) {
+			instance = new ControleLogin();
 		}
 		return ControleLogin.instance;
 	}
 
-	public String loginCliente(String cpf, String senha)
-			throws UsuarioNaoCadastradoException, CpfNaoCadastradoException, SenhaIncorretaException {
-		Cliente usuario = (Cliente) Fachada.getInstance().buscarUsuario(cpf);
-		if (usuario == null) {
-			CpfNaoCadastradoException e = new CpfNaoCadastradoException();
-			throw e;
-		} else {
-			if (!(usuario.getSenha().equals(senha))) {
-				SenhaIncorretaException e = new SenhaIncorretaException();
-				throw e;
+	public String loginCliente(String cpf, String senha) throws UsuarioNaoCadastradoException {
+
+		ArrayList<Usuario> lista = RepositorioUsuarioArray.getInstance().listar();
+
+		for (Usuario u : lista) {
+			if (u instanceof Cliente) {
+				if (((Cliente) u).getCpf().equals(cpf) && ((Cliente) u).getSenha().equals(senha)) {
+					return u.getCpf();
+				}
 			}
+
 		}
-		return usuario.getCpf();
+		UsuarioNaoCadastradoException e = new UsuarioNaoCadastradoException(cpf);
+		throw e;
+
 	}
 
-	public int loginAdministrador(int id, String senha)
-			throws AdministradorNaoEncotradoException, IdNaoCadastradoException {
-		Administrador adm = Fachada.getInstance().buscarAdmnistrador(id);
-		if (adm == null) {
-			IdNaoCadastradoException e = new IdNaoCadastradoException();
-			throw e;
-		} else {
-			if (!(adm.getSenha().equals(senha))) {
-				IdNaoCadastradoException e = new IdNaoCadastradoException();
-				throw e;
+	public int loginAdministrador(int id, String senha) throws AdministradorNaoEncotradoException {
+
+		RepositorioAdministradorArray rep = RepositorioAdministradorArray.getInstance();
+
+		Administrador[] adms = rep.listarAdministrador();
+
+		for (int i = 0; i < adms.length; i++) {
+			if (adms[i] != null && adms[i].getId() == (id)) {
+				return adms[i].getId();
+			} else {
+
 			}
 		}
-		return adm.getId();
+
+		AdministradorNaoEncotradoException e = new AdministradorNaoEncotradoException();
+		throw e;
+
 	}
 
 }

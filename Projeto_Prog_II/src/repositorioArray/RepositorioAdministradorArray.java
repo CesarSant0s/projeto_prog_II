@@ -30,7 +30,6 @@ public class RepositorioAdministradorArray implements RepositorioAdministrador, 
 			instance = lerDoArquivo();
 		}
 		return instance;
-
 	}
 
 	public static RepositorioAdministradorArray lerDoArquivo() {
@@ -124,10 +123,16 @@ public class RepositorioAdministradorArray implements RepositorioAdministrador, 
 		Administrador resultadoBusca = null;
 
 		for (int i = 0, j = indice; i < j; i++) {
-			if (id == array[i].getId()) {
+			if (array[i] != null && id == array[i].getId()) {
 				resultadoBusca = array[i];
 			}
 		}
+
+		if (resultadoBusca == null) {
+			AdministradorNaoEncotradoException e = new AdministradorNaoEncotradoException();
+			throw e;
+		}
+
 		return resultadoBusca;
 
 		/*

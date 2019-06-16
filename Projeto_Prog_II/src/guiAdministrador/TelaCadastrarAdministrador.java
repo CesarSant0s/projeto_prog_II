@@ -24,6 +24,8 @@ import negocioClassesBasicas.Administrador;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class TelaCadastrarAdministrador extends JFrame {
 
@@ -78,11 +80,11 @@ public class TelaCadastrarAdministrador extends JFrame {
 		getContentPane().add(textNomeDeLogin);
 		textNomeDeLogin.setColumns(10);
 
-		JLabel lblNomeDeLogin = new JLabel("Nome de Login:");
-		lblNomeDeLogin.setFont(new Font("Dialog", Font.BOLD, 13));
-		lblNomeDeLogin.setForeground(new Color(255, 255, 255));
-		lblNomeDeLogin.setBounds(81, 97, 120, 15);
-		getContentPane().add(lblNomeDeLogin);
+		JLabel lblNome = new JLabel("Nome:");
+		lblNome.setFont(new Font("Dialog", Font.BOLD, 13));
+		lblNome.setForeground(new Color(255, 255, 255));
+		lblNome.setBounds(146, 97, 50, 15);
+		getContentPane().add(lblNome);
 
 		JLabel lblSenha = new JLabel("Senha:");
 		lblSenha.setHorizontalAlignment(SwingConstants.CENTER);
@@ -102,6 +104,17 @@ public class TelaCadastrarAdministrador extends JFrame {
 		getContentPane().add(lblId);
 
 		textId = new JTextField();
+		textId.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+
+				if (!(Character.isDigit(c))) {
+					e.consume();
+				}
+
+			}
+		});
 		textId.setBounds(204, 168, 160, 25);
 		getContentPane().add(textId);
 		textId.setColumns(10);

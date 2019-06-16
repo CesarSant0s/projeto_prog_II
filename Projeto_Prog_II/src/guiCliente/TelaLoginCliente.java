@@ -1,6 +1,7 @@
 package guiCliente;
 
 import java.awt.Color;
+
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -17,8 +18,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
-import exception.CpfNaoCadastradoException;
-import exception.SenhaIncorretaException;
 import guiAdministrador.TelaLoginAdministrador;
 import negocio.Fachada;
 
@@ -99,7 +98,7 @@ public class TelaLoginCliente extends JFrame {
 					TelaCompraClienteLojas tela = new TelaCompraClienteLojas(cpf);
 					tela.setVisible(true);
 					dispose();
-				} catch (UsuarioNaoCadastradoException | CpfNaoCadastradoException | SenhaIncorretaException e) {
+				} catch (UsuarioNaoCadastradoException e) {
 					JOptionPane.showMessageDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
 					// e.printStackTrace();
 				}

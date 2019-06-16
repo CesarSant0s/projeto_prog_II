@@ -1,34 +1,84 @@
 package repositorioArray;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 import excepitonRepositorioArray.LojaJaCadastradaException;
 import excepitonRepositorioArray.LojaNaoCadastradaException;
 import excepitonRepositorioArray.LojaVaziaException;
-import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
-import excepitonRepositorioArray.UsuarioNaoCadastradoException;
-import excepitonRepositorioArray.UsuarioVazioException;
 import negocioClassesBasicas.Loja;
-import negocioClassesBasicas.Usuario;
 import repositorio.RepositorioLoja;
 
-public class RepositorioLojaArray implements RepositorioLoja {
+public class RepositorioLojaArray implements RepositorioLoja, Serializable {
 	private Loja[] array;
 	private int indice;
-	private static final int TAMANHO = 100;
-
+	private int TAMANHO = 100;
 	private static RepositorioLojaArray instance;
+
+	public RepositorioLojaArray() {
+		array = new Loja[TAMANHO];
+		indice = 0;
+	}
 
 	public static RepositorioLojaArray getInstance() {
 		if (instance == null) {
-			instance = new RepositorioLojaArray();
+			instance = lerDoArquivo();
 		}
 		return instance;
 	}
 
-	public RepositorioLojaArray() {
-		array = new Loja[TAMANHO];
+	public static RepositorioLojaArray lerDoArquivo() {
+		RepositorioLojaArray instanciaLocal = null;
+		// Criando um arquivo e passando o nome dele
+		File in = new File("lojas.dat");// criando um arquivo .dat na pasta do projeto
+
+		FileInputStream fis = null;
+		ObjectInputStream ois = null;
+		try {
+			fis = new FileInputStream(in);
+			ois = new ObjectInputStream(fis);
+			Object o = ois.readObject();
+			instanciaLocal = (RepositorioLojaArray) o;
+		} catch (Exception e) {
+			instanciaLocal = new RepositorioLojaArray();
+		} finally {
+			if (ois != null) {
+				try {
+					ois.close();
+				} catch (IOException e) {
+				}
+			}
+		}
+		return instanciaLocal;
+	}
+
+	public static void salvarArquivo() {
+		if (!(instance == null)) {
+
+			File out = new File("lojas.dat");
+			FileOutputStream fos = null;
+			ObjectOutputStream oos = null;
+			try {
+				fos = new FileOutputStream(out);
+				oos = new ObjectOutputStream(fos);
+				oos.writeObject(instance);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (oos != null) {
+					try {
+						oos.close();
+					} catch (IOException e) {
+					}
+				}
+			}
+		}
 	}
 
 	@Override
@@ -43,6 +93,7 @@ public class RepositorioLojaArray implements RepositorioLoja {
 		} else {
 
 			Loja resultadoBusca = null;
+
 			for (int i = 0; i < indice; i++) {
 				if (loja.getCnpj().equals(array[i].getCnpj())) {
 					resultadoBusca = array[i];
@@ -79,23 +130,17 @@ public class RepositorioLojaArray implements RepositorioLoja {
 
 		Loja resultadoBusca = null;
 
-		if (indice > 0) {
-			for (int i = 0, j = indice; i < j; i++) {
-				if (cnpj.equals(array[i].getCnpj())) {
-					resultadoBusca = array[i];
-				}
+		for (int i = 0, j = indice; i < j; i++) {
+			if (array[i] != null && cnpj.equals(array[i].getCnpj())) {
+				resultadoBusca = array[i];
 			}
-
-		} else {
-			resultadoBusca = null;
 		}
 
 		if (resultadoBusca == null) {
 			LojaNaoCadastradaException e = new LojaNaoCadastradaException();
 			throw e;
-		} else {
-			return resultadoBusca;
 		}
+		return resultadoBusca;
 
 	}
 
@@ -120,9 +165,9 @@ public class RepositorioLojaArray implements RepositorioLoja {
 
 	}
 
-	public List listarLoja() {
+	public ArrayList<Loja> listarLoja() {
 
-		List lojas = new ArrayList();
+		ArrayList<Loja> lojas = new ArrayList<Loja>();
 		int i = 0;
 		while (i < indice) {
 			lojas.add(array[i]);

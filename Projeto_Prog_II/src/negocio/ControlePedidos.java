@@ -15,9 +15,16 @@ import negocioClassesBasicas.Loja;
 import negocioClassesBasicas.Pedido;
 import negocioClassesBasicas.Prato;
 import negocioClassesBasicas.Usuario;
+import repositorio.RepositorioPedido;
 import repositorioArray.RepositorioPedidoArray;
 
 public class ControlePedidos {
+
+	private RepositorioPedido pedidos;
+
+	public ControlePedidos() {
+		pedidos = RepositorioPedidoArray.getInstance();
+	}
 
 	public void finalizarPedido(Pedido pedido)
 			throws LojaNaoCadastradaException, PratoNaoEncontradoException, PratoVazioException {
@@ -54,7 +61,8 @@ public class ControlePedidos {
 		novoPedido.setLoja(loja);
 		novoPedido.setEntregador(entregadorPedido);
 
-		RepositorioPedidoArray.getInstance().inserir(novoPedido);
+		pedidos.inserir(novoPedido);
+		RepositorioPedidoArray.salvarArquivo();
 
 	}
 
@@ -70,7 +78,7 @@ public class ControlePedidos {
 
 			int i = gerarCodigo();
 			try {
-				RepositorioPedidoArray.getInstance().buscar(i);
+				pedidos.buscar(i);
 			} catch (PedidoNaoCadastrado e) {
 				resultado = new Pedido(i);
 			}
@@ -80,24 +88,27 @@ public class ControlePedidos {
 	}
 
 	public void inserirPedido(Pedido pedido) throws PedidoJaInseridoException, PedidoVazioException {
-		RepositorioPedidoArray.getInstance().inserir(pedido);
+		pedidos.inserir(pedido);
+		RepositorioPedidoArray.salvarArquivo();
 	}
 
 	public void removerPedido(int codigo) throws PedidoNaoCadastrado {
-		RepositorioPedidoArray.getInstance().remover(codigo);
+		pedidos.remover(codigo);
+		RepositorioPedidoArray.salvarArquivo();
 	}
 
 	public Pedido buscar(int codigo) throws PedidoNaoCadastrado {
-		Pedido resultadoBuscar = RepositorioPedidoArray.getInstance().buscar(codigo);
+		Pedido resultadoBuscar = pedidos.buscar(codigo);
 		return resultadoBuscar;
 	}
 
 	public void alterar(Pedido pedido) throws PedidoVazioException, PedidoNaoCadastrado {
-		RepositorioPedidoArray.getInstance().alterar(pedido);
+		pedidos.alterar(pedido);
+		RepositorioPedidoArray.salvarArquivo();
 	}
 
 	public Pedido[] listar() {
-		return RepositorioPedidoArray.getInstance().listar();
+		return pedidos.listar();
 	}
 
 }

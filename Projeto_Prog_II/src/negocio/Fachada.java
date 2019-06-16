@@ -17,9 +17,6 @@ import excepitonRepositorioArray.PratoVazioException;
 import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import excepitonRepositorioArray.UsuarioVazioException;
-import exception.CpfNaoCadastradoException;
-import exception.IdNaoCadastradoException;
-import exception.SenhaIncorretaException;
 import negocioClassesBasicas.Administrador;
 import negocioClassesBasicas.Cliente;
 import negocioClassesBasicas.Entregador;
@@ -54,12 +51,11 @@ public class Fachada {
 
 	// ControleLogin
 
-	public String loginCliente(String cpf, String senha)
-			throws UsuarioNaoCadastradoException, CpfNaoCadastradoException, SenhaIncorretaException {
+	public String loginCliente(String cpf, String senha) throws UsuarioNaoCadastradoException {
 		return login.getInstance().loginCliente(cpf, senha);
 	}
 
-	public int login(int id, String senha) throws AdministradorNaoEncotradoException, IdNaoCadastradoException {
+	public int loginAdministrador(int id, String senha) throws AdministradorNaoEncotradoException {
 		return login.getInstance().loginAdministrador(id, senha);
 	}
 

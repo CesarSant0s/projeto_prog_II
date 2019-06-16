@@ -1,5 +1,6 @@
 package repositorioArray;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import excepitonRepositorioArray.PratoJaInseridoException;
 import excepitonRepositorioArray.PratoNaoEncontradoException;
@@ -7,13 +8,14 @@ import excepitonRepositorioArray.PratoVazioException;
 import negocioClassesBasicas.Prato;
 import repositorio.RepositorioPratos;
 
-public class RepositorioPratosArray implements RepositorioPratos {
+public class RepositorioPratosArray implements RepositorioPratos, Serializable {
 
 	private Prato[] cardapio;
 	private int quantidadePratos;
 
 	public RepositorioPratosArray() {
 		cardapio = new Prato[100];
+		quantidadePratos = 0;
 	}
 
 	public void inserir(Prato prato) throws PratoVazioException, PratoJaInseridoException {

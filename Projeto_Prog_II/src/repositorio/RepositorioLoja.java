@@ -1,5 +1,6 @@
 package repositorio;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import excepitonRepositorioArray.LojaJaCadastradaException;
@@ -17,5 +18,5 @@ public interface RepositorioLoja {
 
 	public void alterar(Loja novoLoja) throws LojaVaziaException, LojaNaoCadastradaException;
 
-	public List listarLoja();
+	public ArrayList<Loja> listarLoja();
 }

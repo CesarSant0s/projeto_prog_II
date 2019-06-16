@@ -19,6 +19,8 @@ import negocio.Fachada;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class TelaCadastrarCliente extends JFrame {
 
@@ -107,6 +109,17 @@ public class TelaCadastrarCliente extends JFrame {
 		getContentPane().add(lblNomeLogin);
 
 		textCpf = new JTextField();
+		textCpf.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+
+				if (!(Character.isDigit(c))) {
+					e.consume();
+				}
+
+			}
+		});
 		textCpf.setBounds(144, 110, 160, 25);
 		getContentPane().add(textCpf);
 		textCpf.setColumns(10);

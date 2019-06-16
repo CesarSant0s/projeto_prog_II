@@ -10,16 +10,11 @@ import javax.swing.border.EmptyBorder;
 import excepitonRepositorioArray.LojaNaoCadastradaException;
 import excepitonRepositorioArray.PedidoJaInseridoException;
 import excepitonRepositorioArray.PedidoVazioException;
-import excepitonRepositorioArray.PratoJaInseridoException;
-import excepitonRepositorioArray.PratoVazioException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
-import guiGeral.Programa;
 import negocioClassesBasicas.Cliente;
-import negocioClassesBasicas.Entregador;
 import negocioClassesBasicas.Loja;
 import negocioClassesBasicas.Pedido;
 import negocioClassesBasicas.Prato;
-import negocioClassesBasicas.Usuario;
 import negocio.Fachada;
 
 import javax.swing.JScrollPane;
@@ -60,8 +55,6 @@ public class TelaCompraClienteLojaPratos extends JFrame {
 				try {
 					TelaCompraClienteLojaPratos frame = new TelaCompraClienteLojaPratos("", "");
 					frame.setVisible(true);
-
-					Programa.inserirLoja();
 
 				} catch (Exception e) {
 					e.printStackTrace();

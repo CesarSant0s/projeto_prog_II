@@ -9,17 +9,11 @@ import repositorioArray.RepositorioAdministradorArray;
 
 public class ControleAdiministrador {
 
-	private static ControleAdiministrador instance;
 	private RepositorioAdministrador repositorio;
 
 	public ControleAdiministrador() {
 		repositorio = RepositorioAdministradorArray.getInstance();
 	}
-	/*
-	 * public static ControleAdiministrador getInsance() { if (instance == null) {
-	 * instance = new ControleAdiministrador(); } return
-	 * ControleAdiministrador.instance; }
-	 */
 
 	public void inserirAdmnistrador(Administrador adm)
 			throws AdministradorVazioException, AdministradorJaCadastradoException {

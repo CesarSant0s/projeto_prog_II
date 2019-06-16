@@ -1,8 +1,10 @@
 package negocioClassesBasicas;
 
+import java.io.Serializable;
+
 import excepitonRepositorioArray.QuantidadeIndisponivelException;
 
-public class Prato {
+public class Prato implements Serializable {
 	private String nome;
 	private float peso;
 	private float valorDoPrato;
@@ -47,7 +49,7 @@ public class Prato {
 	public void setQuantiadeDisponivel(int quantiadeDisponivel) {
 		this.quantiadeDisponivel = quantiadeDisponivel;
 	}
-	
+
 	public void retirarStock(int quantidade) throws QuantidadeIndisponivelException {
 		if (quantidade > quantiadeDisponivel) {
 			QuantidadeIndisponivelException e = new QuantidadeIndisponivelException();

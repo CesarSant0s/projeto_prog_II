@@ -1,14 +1,16 @@
 package negocioClassesBasicas;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import excepitonRepositorioArray.PratoJaInseridoException;
 import excepitonRepositorioArray.PratoNaoEncontradoException;
 import excepitonRepositorioArray.PratoVazioException;
 import repositorio.RepositorioPratos;
+import repositorioArray.RepositorioLojaArray;
 import repositorioArray.RepositorioPratosArray;
 
-public class Loja implements RepositorioPratos {
+public class Loja implements RepositorioPratos, Serializable {
 
 	private String nome;
 	private String telefone;
@@ -61,25 +63,24 @@ public class Loja implements RepositorioPratos {
 	@Override
 	public void inserir(Prato prato) throws PratoVazioException, PratoJaInseridoException {
 		cardapio.inserir(prato);
+		RepositorioLojaArray.salvarArquivo();
 	}
 
 	@Override
 	public void remover(String nomePrato) throws PratoNaoEncontradoException {
-
 		cardapio.remover(nomePrato);
+		RepositorioLojaArray.salvarArquivo();
 	}
 
 	@Override
 	public Prato buscar(String nomePrato) throws PratoNaoEncontradoException {
-
 		return cardapio.buscar(nomePrato);
 	}
 
 	@Override
 	public void alterar(Prato novoPrato) throws PratoVazioException, PratoNaoEncontradoException {
-
 		cardapio.alterar(novoPrato);
-
+		RepositorioLojaArray.salvarArquivo();
 	}
 
 	@Override

@@ -20,6 +20,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class TelaCompraClienteLojas extends JFrame {
 
@@ -106,6 +108,16 @@ public class TelaCompraClienteLojas extends JFrame {
 		contentPane.add(btnNewButton);
 
 		textIndice = new JTextField();
+		textIndice.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				
+				if (!(Character.isDigit(c))) {
+					
+				}
+			}
+		});
 		textIndice.setBounds(215, 248, 76, 19);
 		contentPane.add(textIndice);
 		textIndice.setColumns(10);

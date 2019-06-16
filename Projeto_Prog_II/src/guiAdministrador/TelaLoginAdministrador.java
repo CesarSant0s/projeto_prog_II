@@ -7,15 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import excepitonRepositorioArray.AdministradorNaoEncotradoException;
-import excepitonRepositorioArray.LojaNaoCadastradaException;
-import excepitonRepositorioArray.UsuarioNaoCadastradoException;
-import exception.CnpjNaoCadastradoException;
-import exception.CpfNaoCadastradoException;
-import exception.IdNaoCadastradoException;
-import exception.SenhaIncorretaException;
-import guiCliente.TelaCadastrarCliente;
 import negocio.Fachada;
-import negocioClassesBasicas.Administrador;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -27,6 +19,8 @@ import javax.swing.JPasswordField;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class TelaLoginAdministrador extends JFrame {
 
@@ -83,13 +77,23 @@ public class TelaLoginAdministrador extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblLogin = new JLabel("Login:");
-		lblLogin.setFont(new Font("Dialog", Font.BOLD, 14));
-		lblLogin.setBounds(70, 84, 65, 23);
-		lblLogin.setForeground(Color.WHITE);
-		contentPane.add(lblLogin);
+		JLabel lblId = new JLabel("ID:");
+		lblId.setFont(new Font("Dialog", Font.BOLD, 14));
+		lblId.setBounds(102, 84, 23, 23);
+		lblId.setForeground(Color.WHITE);
+		contentPane.add(lblId);
 
 		textFieldLogin = new JTextField();
+		textFieldLogin.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+
+				if (!(Character.isDigit(c))) {
+					e.consume();
+				}
+			}
+		});
 		textFieldLogin.setBounds(127, 83, 160, 25);
 		contentPane.add(textFieldLogin);
 		textFieldLogin.setColumns(10);
@@ -109,12 +113,12 @@ public class TelaLoginAdministrador extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				try {
-					Fachada.getInstance().login(Integer.parseInt(textFieldLogin.getText()),
+					Fachada.getInstance().loginAdministrador(Integer.parseInt(textFieldLogin.getText()),
 							new String(passwordFieldSenha.getPassword()));
 					TelaAdministrador tela = new TelaAdministrador();
 					tela.setVisible(true);
 					dispose();
-				} catch (NumberFormatException | AdministradorNaoEncotradoException | IdNaoCadastradoException e) {
+				} catch (NumberFormatException | AdministradorNaoEncotradoException e) {
 					JOptionPane.showMessageDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
 				}
 
