@@ -10,6 +10,9 @@ public class Pedido {
 	private Loja loja;
 	private Entregador entregador;
 
+	// Define se o pedido esta aberto ou fechadao.
+	private boolean status;
+
 	private RepositorioPratos pratosEscolhidos;
 	private float valorTotal;
 
@@ -39,8 +42,7 @@ public class Pedido {
 	}
 
 	public void setCliente(Cliente cliente) {
-		if (!(cliente == null))
-			this.cliente = cliente;
+		this.cliente = cliente;
 	}
 
 	public Loja getLoja() {
@@ -48,8 +50,7 @@ public class Pedido {
 	}
 
 	public void setLoja(Loja loja) {
-		if (!(loja == null))
-			this.loja = loja;
+		this.loja = loja;
 	}
 
 	public Entregador getEntregador() {
@@ -57,8 +58,7 @@ public class Pedido {
 	}
 
 	public void setEntregador(Entregador entregador) {
-		if (!(entregador == null))
-			this.entregador = entregador;
+		this.entregador = entregador;
 	}
 
 	public int getCodigo() {
@@ -66,16 +66,11 @@ public class Pedido {
 	}
 
 	public void setCodigo(int codigo) {
-		if (codigo > 0)
-			this.codigo = codigo;
+		this.codigo = codigo;
 	}
 
 	public RepositorioPratos getPratosEscolhidos() {
 		return pratosEscolhidos;
-	}
-
-	public void setPratosEscolhidos(RepositorioPratos pratosEscolhidos) {
-		this.pratosEscolhidos = pratosEscolhidos;
 	}
 
 	public float getValorTotal() {
@@ -85,6 +80,14 @@ public class Pedido {
 		}
 
 		return valorTotal;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 
 }

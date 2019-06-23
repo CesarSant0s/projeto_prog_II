@@ -101,6 +101,7 @@ public class RepositorioPedidoArray implements RepositorioPedido {
 				PedidoJaInseridoException e = new PedidoJaInseridoException();
 				throw e;
 			} else {
+				pedido.setStatus(true);
 				array[indice] = pedido;
 				indice++;
 			}
@@ -114,12 +115,8 @@ public class RepositorioPedidoArray implements RepositorioPedido {
 		buscar(codigo);
 
 		for (int i = 0, j = indice; i < j; i++) {
-			if (codigo == array[i].getCodigo()) {
-				array[i] = null;
-				for (int k = i; k < j; k++) {
-					array[k] = array[++k];
-				}
-				indice--;
+			if (codigo == array[i].getCodigo() && array[i].isStatus() == true) {
+				array[i].setStatus(false);
 			}
 		}
 	}
