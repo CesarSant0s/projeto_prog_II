@@ -90,7 +90,7 @@ public class RepositorioAdministradorArray implements RepositorioAdministrador, 
 			Administrador resultadoBusca = null;
 
 			for (int i = 0; i < indice; i++) {
-				if (administrador.getId() == array[i].getId()) {
+				if (!(array[i] == null) && administrador.getId() == array[i].getId()) {
 					resultadoBusca = array[i];
 				}
 			}
@@ -109,7 +109,7 @@ public class RepositorioAdministradorArray implements RepositorioAdministrador, 
 		buscar(id);
 
 		for (int i = 0, j = indice; i < j; i++) {
-			if (id == array[i].getId()) {
+			if (!(array[i] == null) && id == array[i].getId()) {
 				array[i] = array[indice];
 				array[--indice] = null;
 				indice--;
@@ -135,13 +135,6 @@ public class RepositorioAdministradorArray implements RepositorioAdministrador, 
 
 		return resultadoBusca;
 
-		/*
-		 * } else { resultadoBusca = null; }
-		 * 
-		 * if (resultadoBusca == null) { AdministradorNaoEncotradoException e = new
-		 * AdministradorNaoEncotradoException(); throw e; } else { return
-		 * resultadoBusca; }
-		 */
 	}
 
 	@Override
@@ -157,7 +150,7 @@ public class RepositorioAdministradorArray implements RepositorioAdministrador, 
 			buscar(novoAdministrador.getId());
 
 			for (int i = 0, j = indice; i < j; i++) {
-				if (novoAdministrador.getId() == array[i].getId()) {
+				if (array[i] != null && novoAdministrador.getId() == array[i].getId()) {
 					array[i] = novoAdministrador;
 				}
 			}

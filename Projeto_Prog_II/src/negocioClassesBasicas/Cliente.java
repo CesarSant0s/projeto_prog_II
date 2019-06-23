@@ -15,6 +15,18 @@ public class Cliente extends Usuario implements Serializable {
 		setSenha(senha);
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		Cliente cliente = (Cliente) obj;
+		if (cliente.getCpf().equals(this.getCpf()) && cliente.getEndereco().equals(this.endereco)
+				&& cliente.getNome().equals(this.getNome()) && cliente.getNomeUsuario().equals(this.nomeUsuario)
+				&& cliente.getSenha().equals(this.senha) && cliente.getTelefone().equals(this.getTelefone())) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public String getNomeUsuario() {
 		return nomeUsuario;
 	}

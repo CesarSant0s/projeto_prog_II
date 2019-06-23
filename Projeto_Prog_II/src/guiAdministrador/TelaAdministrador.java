@@ -50,7 +50,7 @@ public class TelaAdministrador extends JFrame {
 				dispose();
 			}
 		});
-		btnCadastrarcliente.setBounds(26, 12, 183, 25);
+		btnCadastrarcliente.setBounds(92, 45, 183, 25);
 		contentPane.add(btnCadastrarcliente);
 
 		JButton btnCadastrarEntregador = new JButton("Entregador");
@@ -61,7 +61,7 @@ public class TelaAdministrador extends JFrame {
 				dispose();
 			}
 		});
-		btnCadastrarEntregador.setBounds(26, 62, 183, 25);
+		btnCadastrarEntregador.setBounds(92, 95, 183, 25);
 		contentPane.add(btnCadastrarEntregador);
 
 		JButton btnCadatrarLoja = new JButton("Loja");
@@ -72,7 +72,7 @@ public class TelaAdministrador extends JFrame {
 				dispose();
 			}
 		});
-		btnCadatrarLoja.setBounds(26, 112, 183, 25);
+		btnCadatrarLoja.setBounds(92, 145, 183, 25);
 		contentPane.add(btnCadatrarLoja);
 
 		JButton btnPedido = new JButton("Pedido");
@@ -83,7 +83,7 @@ public class TelaAdministrador extends JFrame {
 				dispose();
 			}
 		});
-		btnPedido.setBounds(26, 149, 183, 25);
+		btnPedido.setBounds(92, 196, 183, 25);
 		contentPane.add(btnPedido);
 
 	}

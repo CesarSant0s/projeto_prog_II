@@ -13,6 +13,17 @@ public class Pedido {
 	private RepositorioPratos pratosEscolhidos;
 	private float valorTotal;
 
+	@Override
+	public boolean equals(Object obj) {
+		Pedido pedido = (Pedido) obj;
+		if ((pedido.getCodigo() == this.codigo) && pedido.getCliente().equals(this.cliente)
+				&& pedido.getLoja().equals(this.loja) && pedido.getEntregador().equals(this.entregador)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public Pedido(int codigo) {
 		this.codigo = codigo;
 	}
@@ -68,11 +79,12 @@ public class Pedido {
 	}
 
 	public float getValorTotal() {
-		return valorTotal;
-	}
 
-	public void setValorTotal(float valorTotal) {
-		this.valorTotal = valorTotal;
+		for (Prato p : pratosEscolhidos.listar()) {
+			valorTotal += p.getValorDoPrato();
+		}
+
+		return valorTotal;
 	}
 
 }

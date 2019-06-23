@@ -14,6 +14,17 @@ public class Administrador implements Serializable {
 		this.id = id;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		Administrador adm = (Administrador) obj;
+		if (adm.getId() == this.id && adm.getLogin().equals(this.getLogin()) && adm.getSenha().equals(this.senha)) {
+			return true;
+		}
+
+		return false;
+
+	}
+
 	public String getLogin() {
 		return login;
 	}

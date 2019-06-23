@@ -76,7 +76,7 @@ public class TelaAdministradorEntregador extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaAdministradorEntregador() {
-		
+
 		setTitle("To com fome - O aplicativo de comida mais proximo de voce");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 310);

@@ -1,6 +1,9 @@
 package negocio;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
@@ -33,40 +36,122 @@ class TesteFachada {
 
 	@Test
 	final void testInserirAdmnistrador() {
+
+		Administrador admActual = null, admExpected = null;
 		try {
-			Fachada.getInstance().inserirAdmnistrador(new Administrador("nome", "123", 354));
+			admExpected = new Administrador("nome", "123", 354);
+			Fachada.getInstance().inserirAdmnistrador(admExpected);
 		} catch (AdministradorVazioException | AdministradorJaCadastradoException e) {
 			e.printStackTrace();
 		}
-		Administrador adm = null;
+
 		try {
-			adm = Fachada.getInstance().buscarAdmnistrador(354);
+			admActual = Fachada.getInstance().buscarAdmnistrador(354);
 		} catch (AdministradorNaoEncotradoException e) {
 			e.printStackTrace();
 		}
-		assertEquals(new Administrador("nome", "123", 354), adm);
 
-		fail("Not yet implemented"); // TODO
+		assertEquals(admExpected, admActual);
 	}
 
 	@Test
 	final void testRemoverAdmnistrador() {
-		fail("Not yet implemented"); // TODO
+
+		Administrador admActual = null, admInserido = null;
+
+		try {
+			admInserido = new Administrador("nome", "123", 354);
+			Fachada.getInstance().inserirAdmnistrador(admInserido);
+			Fachada.getInstance().inserirAdmnistrador(new Administrador("teste1", "teste1", 1));
+			Fachada.getInstance().inserirAdmnistrador(new Administrador("teste2", "teste2", 2));
+
+			Fachada.getInstance().removerAdmnistrador(354);
+
+			admActual = Fachada.getInstance().buscarAdmnistrador(354);
+		} catch (AdministradorVazioException | AdministradorJaCadastradoException
+				| AdministradorNaoEncotradoException e) {
+			// e.printStackTrace();
+		}
+
+		if (admActual == null) {
+			System.out.println("teste");
+		}
+
+		assertNull(admActual);
+
 	}
 
 	@Test
 	final void testBuscarAdmnistrador() {
-		fail("Not yet implemented"); // TODO
+		Administrador admActual = null, admExpected = null;
+		try {
+			Fachada.getInstance().inserirAdmnistrador(new Administrador("nome123", "123", 123));
+
+			admExpected = new Administrador("nome", "123", 354);
+			Fachada.getInstance().inserirAdmnistrador(admExpected);
+
+			Fachada.getInstance().inserirAdmnistrador(new Administrador("nome321", "321", 321));
+		} catch (AdministradorVazioException | AdministradorJaCadastradoException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			admActual = Fachada.getInstance().buscarAdmnistrador(354);
+		} catch (AdministradorNaoEncotradoException e) {
+			e.printStackTrace();
+		}
+
+		assertEquals(admExpected, admActual);
+
 	}
 
 	@Test
 	final void testAlterarAdministrador() {
-		fail("Not yet implemented"); // TODO
+
+		Administrador admActual = null, admExpected = null;
+		try {
+			Fachada.getInstance().inserirAdmnistrador(new Administrador("nome123", "123", 123));
+			Fachada.getInstance().inserirAdmnistrador(new Administrador("nome321", "321", 321));
+
+			admExpected = new Administrador("novoNome", "0123", 321);
+
+			Fachada.getInstance().alterarAdministrador(admExpected);
+
+			admActual = Fachada.getInstance().buscarAdmnistrador(321);
+
+		} catch (AdministradorVazioException | AdministradorJaCadastradoException
+				| AdministradorNaoEncotradoException e) {
+			// e.printStackTrace();
+		}
+
+		assertEquals(admExpected, admActual);
+
 	}
 
 	@Test
 	final void testListarAdiministrador() {
-		fail("Not yet implemented"); // TODO
+
+		Administrador[] listaInserida = new Administrador[100];
+		Administrador[] lista = null;
+		try {
+			Fachada.getInstance().inserirAdmnistrador(new Administrador("nome1", "1", 1));
+			Fachada.getInstance().inserirAdmnistrador(new Administrador("nome2", "2", 2));
+			Fachada.getInstance().inserirAdmnistrador(new Administrador("nome3", "3", 3));
+
+			listaInserida[1] = new Administrador("nome1", "1", 1);
+			listaInserida[2] = new Administrador("nome2", "2", 2);
+			listaInserida[3] = new Administrador("nome3", "3", 3);
+
+			lista = Fachada.getInstance().listarAdiministrador();
+
+		} catch (AdministradorVazioException | AdministradorJaCadastradoException e) {
+			// e.printStackTrace();
+		}
+
+		for (int i = 0; i < 3; i++) {
+			assertEquals(lista[i], listaInserida[i]);
+		}
+
 	}
 
 	@Test

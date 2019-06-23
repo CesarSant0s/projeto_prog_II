@@ -17,6 +17,18 @@ public class Prato implements Serializable {
 		setQuantiadeDisponivel(quantiadeDisponivel);
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		Prato prato = (Prato) obj;
+		if (prato.getNome().equals(this.nome) && (prato.getPeso() == this.peso)
+				&& (prato.getQuantiadeDisponivel() == this.getQuantiadeDisponivel())
+				&& (prato.getValorDoPrato() == this.valorDoPrato)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public String getNome() {
 		return nome;
 	}

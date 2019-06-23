@@ -78,7 +78,7 @@ public class ModeloTabelaPratos extends AbstractTableModel {
 		case 2:
 			return p.getQuantiadeDisponivel();
 		case 3:
-			return dataList.indexOf(p) + 1;
+			return (1 + dataList.indexOf(p));
 		default:
 			return null;
 		}

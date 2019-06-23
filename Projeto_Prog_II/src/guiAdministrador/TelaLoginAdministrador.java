@@ -77,23 +77,13 @@ public class TelaLoginAdministrador extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblId = new JLabel("ID:");
-		lblId.setFont(new Font("Dialog", Font.BOLD, 14));
-		lblId.setBounds(102, 84, 23, 23);
-		lblId.setForeground(Color.WHITE);
-		contentPane.add(lblId);
+		JLabel lblLogin = new JLabel("Login:");
+		lblLogin.setFont(new Font("Dialog", Font.BOLD, 14));
+		lblLogin.setBounds(75, 84, 50, 23);
+		lblLogin.setForeground(Color.WHITE);
+		contentPane.add(lblLogin);
 
 		textFieldLogin = new JTextField();
-		textFieldLogin.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				char c = e.getKeyChar();
-
-				if (!(Character.isDigit(c))) {
-					e.consume();
-				}
-			}
-		});
 		textFieldLogin.setBounds(127, 83, 160, 25);
 		contentPane.add(textFieldLogin);
 		textFieldLogin.setColumns(10);
@@ -113,8 +103,9 @@ public class TelaLoginAdministrador extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				try {
-					Fachada.getInstance().loginAdministrador(Integer.parseInt(textFieldLogin.getText()),
+					Fachada.getInstance().loginAdministrador(textFieldLogin.getText(),
 							new String(passwordFieldSenha.getPassword()));
+					
 					TelaAdministrador tela = new TelaAdministrador();
 					tela.setVisible(true);
 					dispose();

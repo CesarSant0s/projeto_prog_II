@@ -13,6 +13,18 @@ public class Entregador extends Usuario implements Serializable {
 		setEmail(email);
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		Entregador entregador = (Entregador) obj;
+		if (entregador.getCpf().equals(this.getCpf()) && entregador.getplacaVeiculo().equals(this.placaVeiculo)
+				&& entregador.getNome().equals(this.getNome()) && entregador.getEmail().equals(this.email)
+				&& entregador.getTelefone().equals(this.getTelefone())) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public String getplacaVeiculo() {
 		return placaVeiculo;
 	}

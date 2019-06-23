@@ -75,7 +75,7 @@ public class ModeloTabelaLojas extends AbstractTableModel {
 		case 1:
 			return p.getEndereco();
 		case 2:
-			return dataList.indexOf(p)+1;
+			return (1 + dataList.indexOf(p));
 		default:
 			return null;
 		}

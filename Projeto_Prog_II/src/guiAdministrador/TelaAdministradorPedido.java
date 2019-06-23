@@ -19,12 +19,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import excepitonRepositorioArray.PedidoNaoCadastrado;
 import excepitonRepositorioArray.UsuarioAnteriormenteCadastradoException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import excepitonRepositorioArray.UsuarioVazioException;
 import negocio.Fachada;
 import negocioClassesBasicas.Cliente;
 import negocioClassesBasicas.Entregador;
+import negocioClassesBasicas.Pedido;
 import negocioClassesBasicas.Usuario;
 
 import javax.swing.JLabel;
@@ -35,21 +37,17 @@ public class TelaAdministradorPedido extends JFrame {
 	private static TelaAdministradorPedido instance;
 
 	private JPanel contentPane;
-	private JTextField textNomeCompleto;
-	private JTextField textTelefone;
-	private JTextField textCpf;
-	private JTextField textNomeLogin;
+	private JTextField textNomeCliente;
+	private JTextField textNomeLoja;
+	private JTextField textcodigo;
+	private JTextField textValorTotal;
 	private JButton btnVoltar;
-	private JButton btnAtualizar;
 	private JButton btnLimpar;
-	private JButton btnRemover;
-	private JTextField textSenha;
-	private JTextField textFieldCpfBusca;
+	private JTextField textCodigoParaBusca;
 	private JButton buttonBuscar;
 	private JLabel labelCpfBusca;
-	private JLabel lblAdministrarCliente;
+	private JLabel lblAdministrarPedido;
 	private JPanel panelListar;
-	private JTextField textEndereco;
 
 	public static TelaAdministradorPedido getInstance() {
 		if (TelaAdministradorPedido.instance == null) {
@@ -87,49 +85,49 @@ public class TelaAdministradorPedido extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblNomeCompleto = new JLabel("Nome Completo:");
-		lblNomeCompleto.setFont(new Font("Dialog", Font.BOLD, 13));
-		lblNomeCompleto.setForeground(new Color(255, 255, 255));
-		lblNomeCompleto.setBounds(15, 44, 123, 15);
-		getContentPane().add(lblNomeCompleto);
+		JLabel lblNomeCliente = new JLabel("Nome Cliente:");
+		lblNomeCliente.setFont(new Font("Dialog", Font.BOLD, 13));
+		lblNomeCliente.setForeground(new Color(255, 255, 255));
+		lblNomeCliente.setBounds(15, 44, 123, 15);
+		getContentPane().add(lblNomeCliente);
 
-		textNomeCompleto = new JTextField();
-		textNomeCompleto.setBounds(144, 39, 160, 25);
-		getContentPane().add(textNomeCompleto);
-		textNomeCompleto.setColumns(10);
+		textNomeCliente = new JTextField();
+		textNomeCliente.setBounds(144, 39, 160, 25);
+		getContentPane().add(textNomeCliente);
+		textNomeCliente.setColumns(10);
 
-		JLabel lblTelefone = new JLabel("Telefone:");
+		JLabel lblTelefone = new JLabel("Nome Loja:");
 		lblTelefone.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblTelefone.setForeground(new Color(255, 255, 255));
-		lblTelefone.setBounds(69, 81, 69, 15);
+		lblTelefone.setBounds(37, 81, 101, 15);
 		getContentPane().add(lblTelefone);
 
-		textTelefone = new JTextField();
-		textTelefone.setBounds(144, 76, 160, 25);
-		getContentPane().add(textTelefone);
-		textTelefone.setColumns(10);
+		textNomeLoja = new JTextField();
+		textNomeLoja.setBounds(144, 76, 160, 25);
+		getContentPane().add(textNomeLoja);
+		textNomeLoja.setColumns(10);
 
-		JLabel lblNewLabel = new JLabel("Cpf:");
+		JLabel lblNewLabel = new JLabel("Codigo:");
 		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setBounds(108, 118, 30, 15);
+		lblNewLabel.setBounds(69, 118, 69, 15);
 		getContentPane().add(lblNewLabel);
 
-		JLabel lblNomeLogin = new JLabel("Nome de Login:");
+		JLabel lblNomeLogin = new JLabel("Valor Total:");
 		lblNomeLogin.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblNomeLogin.setForeground(new Color(255, 255, 255));
-		lblNomeLogin.setBounds(21, 155, 117, 15);
+		lblNomeLogin.setBounds(37, 155, 101, 15);
 		getContentPane().add(lblNomeLogin);
 
-		textCpf = new JTextField();
-		textCpf.setBounds(144, 113, 160, 25);
-		getContentPane().add(textCpf);
-		textCpf.setColumns(10);
+		textcodigo = new JTextField();
+		textcodigo.setBounds(144, 113, 160, 25);
+		getContentPane().add(textcodigo);
+		textcodigo.setColumns(10);
 
-		textNomeLogin = new JTextField();
-		textNomeLogin.setBounds(144, 150, 160, 25);
-		getContentPane().add(textNomeLogin);
-		textNomeLogin.setColumns(10);
+		textValorTotal = new JTextField();
+		textValorTotal.setBounds(144, 150, 160, 25);
+		getContentPane().add(textValorTotal);
+		textValorTotal.setColumns(10);
 
 		btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
@@ -144,145 +142,60 @@ public class TelaAdministradorPedido extends JFrame {
 		btnVoltar.setBounds(12, 275, 101, 25);
 		contentPane.add(btnVoltar);
 
-		btnAtualizar = new JButton("Atualizar");
-		btnAtualizar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				String cpf = textCpf.getText();
-				String nomeUsuario = textNomeLogin.getText();
-				String nome = textNomeCompleto.getText();
-				String telefone = textTelefone.getText();
-				String senha = textSenha.getText();
-				String endereco = textEndereco.getText();
-
-				try {
-					Fachada.getInstance().atualizarUsuarioCliente(nomeUsuario, senha, nome, telefone, cpf, endereco);
-					JOptionPane.showMessageDialog(contentPane, "Cliente atualizado com sucesso!!", "",
-							JOptionPane.INFORMATION_MESSAGE);
-				} catch (UsuarioVazioException | UsuarioNaoCadastradoException e1) {
-					JOptionPane.showMessageDialog(contentPane, e1.getMessage(), "", JOptionPane.ERROR_MESSAGE);
-				}
-
-			}
-		});
-		btnAtualizar.setForeground(new Color(128, 0, 0));
-		btnAtualizar.setBackground(Color.WHITE);
-		btnAtualizar.setBounds(358, 148, 101, 25);
-		contentPane.add(btnAtualizar);
-
 		btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				textCpf.setText("");
-				textNomeLogin.setText("");
-				textNomeCompleto.setText("");
-				textTelefone.setText("");
-				textSenha.setText("");
-				textEndereco.setText("");
+				textcodigo.setText("");
+				textValorTotal.setText("");
+				textNomeCliente.setText("");
+				textNomeLoja.setText("");
 
 			}
 		});
 		btnLimpar.setForeground(new Color(128, 0, 0));
 		btnLimpar.setBackground(Color.WHITE);
-		btnLimpar.setBounds(358, 182, 101, 25);
+		btnLimpar.setBounds(358, 76, 101, 25);
 		contentPane.add(btnLimpar);
 
-		JButton btnCadastrar = new JButton("Cadastrar");
-		btnCadastrar.setBackground(Color.WHITE);
-		btnCadastrar.setForeground(new Color(128, 0, 0));
-		btnCadastrar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				String cpf = textCpf.getText();
-				String nomeUsuario = textNomeLogin.getText();
-				String nome = textNomeCompleto.getText();
-				String telefone = textTelefone.getText();
-				String senha = textSenha.getText();
-				String endereco = textEndereco.getText();
-
-				try {
-					Fachada.getInstance().inserirUsuarioCliente(nomeUsuario, senha, nome, telefone, cpf, endereco);
-					JOptionPane.showMessageDialog(contentPane, "Entregador cadastrado com sucesso!!", "",
-							JOptionPane.INFORMATION_MESSAGE);
-				} catch (UsuarioVazioException | UsuarioAnteriormenteCadastradoException
-						| UsuarioNaoCadastradoException e1) {
-					JOptionPane.showMessageDialog(contentPane, e1.getMessage(), "", JOptionPane.ERROR_MESSAGE);
-				}
-
-			}
-		});
-		btnCadastrar.setBounds(358, 71, 101, 25);
-		contentPane.add(btnCadastrar);
-
-		btnRemover = new JButton("Remover");
-		btnRemover.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-
-				try {
-					Fachada.getInstance().removerUsuario(textFieldCpfBusca.getText());
-					JOptionPane.showMessageDialog(contentPane, "Cliente removido com sucesso!!", "",
-							JOptionPane.INFORMATION_MESSAGE);
-				} catch (UsuarioNaoCadastradoException e) {
-					JOptionPane.showMessageDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
-					// e.printStackTrace();
-				}
-			}
-		});
-		btnRemover.setForeground(new Color(128, 0, 0));
-		btnRemover.setBackground(Color.WHITE);
-		btnRemover.setBounds(358, 108, 101, 25);
-		contentPane.add(btnRemover);
-
-		textSenha = new JTextField();
-		textSenha.setColumns(10);
-		textSenha.setBounds(144, 190, 160, 25);
-		contentPane.add(textSenha);
-
-		JLabel labelEmail = new JLabel("Senha:");
-		labelEmail.setForeground(Color.WHITE);
-		labelEmail.setFont(new Font("Dialog", Font.BOLD, 13));
-		labelEmail.setBounds(88, 192, 50, 15);
-		contentPane.add(labelEmail);
-
-		textFieldCpfBusca = new JTextField();
-		textFieldCpfBusca.setColumns(10);
-		textFieldCpfBusca.setBounds(299, 275, 160, 25);
-		contentPane.add(textFieldCpfBusca);
+		textCodigoParaBusca = new JTextField();
+		textCodigoParaBusca.setColumns(10);
+		textCodigoParaBusca.setBounds(299, 275, 160, 25);
+		contentPane.add(textCodigoParaBusca);
 
 		buttonBuscar = new JButton("Buscar");
 		buttonBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
 				try {
-					Cliente cliente = (Cliente) Fachada.getInstance().buscarUsuario(textFieldCpfBusca.getText());
-					textCpf.setText(cliente.getCpf());
-					textNomeLogin.setText(cliente.getNomeUsuario());
-					textNomeCompleto.setText(cliente.getNome());
-					textTelefone.setText(cliente.getTelefone());
-					textSenha.setText(cliente.getSenha());
-					textEndereco.setText(cliente.getEndereco());
+					Pedido p = Fachada.getInstance().buscarPedido(Integer.parseInt(textCodigoParaBusca.getText()));
+					textcodigo.setText("" + p.getCodigo());
+					textValorTotal.setText("" + p.getValorTotal());
+					textNomeCliente.setText(p.getCliente().getNome());
+					textNomeLoja.setText(p.getLoja().getNome());
 
-				} catch (UsuarioNaoCadastradoException e) {
-					JOptionPane.showMessageDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+				} catch (NumberFormatException | PedidoNaoCadastrado e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
+
 			}
 		});
 
 		buttonBuscar.setForeground(new Color(128, 0, 0));
 		buttonBuscar.setBackground(Color.WHITE);
-		buttonBuscar.setBounds(358, 219, 101, 25);
+		buttonBuscar.setBounds(358, 113, 101, 25);
 		contentPane.add(buttonBuscar);
 
-		labelCpfBusca = new JLabel("Cpf para busca:");
+		labelCpfBusca = new JLabel("Codigo para busca:");
 		labelCpfBusca.setForeground(Color.WHITE);
 		labelCpfBusca.setFont(new Font("Dialog", Font.BOLD, 13));
-		labelCpfBusca.setBounds(182, 280, 117, 15);
+		labelCpfBusca.setBounds(158, 280, 141, 15);
 		contentPane.add(labelCpfBusca);
 
-		lblAdministrarCliente = new JLabel("Administrar Cliente");
-		lblAdministrarCliente.setForeground(Color.WHITE);
-		lblAdministrarCliente.setBounds(148, 12, 192, 15);
-		contentPane.add(lblAdministrarCliente);
+		lblAdministrarPedido = new JLabel("Administrar Pedido");
+		lblAdministrarPedido.setForeground(Color.WHITE);
+		lblAdministrarPedido.setBounds(148, 12, 192, 15);
+		contentPane.add(lblAdministrarPedido);
 
 		panelListar = new JPanel();
 		panelListar.setLayout(new BoxLayout(panelListar, BoxLayout.PAGE_AXIS));
@@ -303,26 +216,28 @@ public class TelaAdministradorPedido extends JFrame {
 				panelListar.removeAll(); // Remove todos os elementos para nao ficarem duplicados
 				cabecalhoListagem();
 
-				ArrayList<Usuario> arrayEntregador = new ArrayList<Usuario>();
+				Pedido[] arrayPedido = Fachada.getInstance().listarPedido();
 
-				arrayEntregador = (ArrayList<Usuario>) Fachada.getInstance().listarUsuario();
+				ArrayList<Pedido> list = new ArrayList<Pedido>();
 
-				for (Usuario usuario : arrayEntregador) { /* Insere os elementos que estao no repositorio */
+				for (int i = 0; i < arrayPedido.length; i++) {
+					list.add(arrayPedido[i]);
+				}
 
-					if (usuario instanceof Cliente) {
-						panelListar.revalidate(); // Tem que revalidar a tela quando adicionar fora do construtor
-						JPanel linha = new JPanel();
-						linha.setLayout(new GridLayout(1, 2));
-						JLabel nome = new JLabel(usuario.getNome());
-						JLabel cpf = new JLabel(usuario.getCpf());
-						nome.setHorizontalAlignment(JLabel.CENTER);
-						cpf.setHorizontalAlignment(JLabel.CENTER);
-						linha.add(nome);
-						linha.add(cpf);
-						panelListar.add(linha);
-						panelListar.add(Box.createRigidArea(new Dimension(0, 5)));
-						panelListar.repaint(); // Repintar por garantia
-					}
+				for (Pedido p : list) { /* Insere os elementos que estao no repositorio */
+
+					panelListar.revalidate(); // Tem que revalidar a tela quando adicionar fora do construtor
+					JPanel linha = new JPanel();
+					linha.setLayout(new GridLayout(1, 2));
+					JLabel codigo = new JLabel("" + p.getCodigo());
+					JLabel nome = new JLabel(p.getCliente().getNome());
+					codigo.setHorizontalAlignment(JLabel.CENTER);
+					nome.setHorizontalAlignment(JLabel.CENTER);
+					linha.add(codigo);
+					linha.add(nome);
+					panelListar.add(linha);
+					panelListar.add(Box.createRigidArea(new Dimension(0, 5)));
+					panelListar.repaint(); // Repintar por garantia
 
 				}
 
@@ -330,17 +245,6 @@ public class TelaAdministradorPedido extends JFrame {
 		});
 		btnListarCardapio.setBounds(358, 39, 101, 25);
 		contentPane.add(btnListarCardapio);
-
-		textEndereco = new JTextField();
-		textEndereco.setColumns(10);
-		textEndereco.setBounds(144, 227, 160, 25);
-		contentPane.add(textEndereco);
-
-		JLabel lblEndereco = new JLabel("Endereco:");
-		lblEndereco.setForeground(Color.WHITE);
-		lblEndereco.setFont(new Font("Dialog", Font.BOLD, 13));
-		lblEndereco.setBounds(69, 229, 73, 15);
-		contentPane.add(lblEndereco);
 
 	}
 
@@ -358,14 +262,14 @@ public class TelaAdministradorPedido extends JFrame {
 			}
 		};
 		titulo.setLayout(new GridLayout(1, 2));
-		JLabel nome = new JLabel("NOME");
-		JLabel CPF = new JLabel("CPF");
-		nome.setVerticalAlignment(JLabel.TOP);
-		nome.setHorizontalAlignment(JLabel.CENTER);
-		CPF.setVerticalAlignment(JLabel.TOP);
-		CPF.setHorizontalAlignment(JLabel.CENTER);
-		titulo.add(nome);
-		titulo.add(CPF);
+		JLabel codigo = new JLabel("CODIGO");
+		JLabel CLIENTE = new JLabel("CLIENTE");
+		codigo.setVerticalAlignment(JLabel.TOP);
+		codigo.setHorizontalAlignment(JLabel.CENTER);
+		CLIENTE.setVerticalAlignment(JLabel.TOP);
+		CLIENTE.setHorizontalAlignment(JLabel.CENTER);
+		titulo.add(codigo);
+		titulo.add(CLIENTE);
 		panelListar.add(titulo);
 		panelListar.repaint();
 

@@ -31,14 +31,14 @@ public class Fachada {
 	private ControleUsuario usuarios;
 	private ControleLoja lojas;
 	private ControlePedidos pedidos;
-	private ControleLogin login;
+	private ControleLogin loginControle;
 	private ControleAdiministrador adiministrador;
 
 	public Fachada() {
 		usuarios = new ControleUsuario();
 		lojas = new ControleLoja();
 		pedidos = new ControlePedidos();
-		login = new ControleLogin();
+		loginControle = new ControleLogin();
 		adiministrador = new ControleAdiministrador();
 	}
 
@@ -52,11 +52,11 @@ public class Fachada {
 	// ControleLogin
 
 	public String loginCliente(String cpf, String senha) throws UsuarioNaoCadastradoException {
-		return login.getInstance().loginCliente(cpf, senha);
+		return loginControle.loginCliente(cpf, senha);
 	}
 
-	public int loginAdministrador(int id, String senha) throws AdministradorNaoEncotradoException {
-		return login.getInstance().loginAdministrador(id, senha);
+	public int loginAdministrador(String login, String senha) throws AdministradorNaoEncotradoException {
+		return loginControle.loginAdministrador(login, senha);
 	}
 
 	// ControleAdministrador

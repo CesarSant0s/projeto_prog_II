@@ -52,7 +52,7 @@ public class TelaCompraClienteLojas extends JFrame {
 	 */
 	public TelaCompraClienteLojas(String cpfCliente) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 458, 300);
+		setBounds(100, 100, 458, 307);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(128, 0, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -93,10 +93,10 @@ public class TelaCompraClienteLojas extends JFrame {
 		btnNewButton.setForeground(new Color(128, 0, 0));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				ArrayList<Loja> lista = new ArrayList<Loja>();
 				lista = (ArrayList<Loja>) Fachada.getInstance().listarLoja();
-				String cnpj = lista.get(Integer.parseInt(textIndice.getText())).getCnpj();
+				String cnpj = lista.get(Integer.parseInt(textIndice.getText()) - 1).getCnpj();
 
 				TelaCompraClienteLojaPratos tela = new TelaCompraClienteLojaPratos(cnpj, cpfCliente);
 				tela.setVisible(true);
@@ -111,14 +111,15 @@ public class TelaCompraClienteLojas extends JFrame {
 		textIndice.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				char c = e.getKeyChar();
-				
-				if (!(Character.isDigit(c))) {
-					
+				String caracteres = "0987654321";
+
+				if (!caracteres.contains(e.getKeyChar() + "")) {
+					e.consume();
 				}
+
 			}
 		});
-		textIndice.setBounds(215, 248, 76, 19);
+		textIndice.setBounds(215, 245, 76, 25);
 		contentPane.add(textIndice);
 		textIndice.setColumns(10);
 

@@ -81,6 +81,17 @@ public class TelaCadastrarCliente extends JFrame {
 		getContentPane().add(lblNomeCompleto);
 
 		textNomeCompleto = new JTextField();
+		textNomeCompleto.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				String caracteres = "0987654321";
+
+				if (caracteres.contains(e.getKeyChar() + "")) {
+					e.consume();
+				}
+
+			}
+		});
 		textNomeCompleto.setBounds(144, 40, 160, 25);
 		getContentPane().add(textNomeCompleto);
 		textNomeCompleto.setColumns(10);
@@ -92,6 +103,17 @@ public class TelaCadastrarCliente extends JFrame {
 		getContentPane().add(lblTelefone);
 
 		textTelefone = new JTextField();
+		textTelefone.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				String caracteres = "0987654321";
+
+				if (!caracteres.contains(e.getKeyChar() + "")) {
+					e.consume();
+				}
+
+			}
+		});
 		textTelefone.setBounds(144, 75, 160, 25);
 		getContentPane().add(textTelefone);
 		textTelefone.setColumns(10);

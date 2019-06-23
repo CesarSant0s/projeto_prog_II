@@ -30,6 +30,8 @@ import negocioClassesBasicas.Prato;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class TelaAdministradorLojaCardapio extends JFrame {
 
@@ -128,16 +130,47 @@ public class TelaAdministradorLojaCardapio extends JFrame {
 		textNomePrato.setColumns(10);
 
 		textValor = new JTextField();
+		textValor.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+
+				String caracteres = "0987654321.";
+
+				if (!caracteres.contains(e.getKeyChar() + "")) {
+					e.consume();
+				}
+			}
+		});
 		textValor.setBounds(170, 76, 160, 25);
 		getContentPane().add(textValor);
 		textValor.setColumns(10);
 
 		textPeso = new JTextField();
+		textPeso.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				String caracteres = "0987654321.";
+
+				if (!caracteres.contains(e.getKeyChar() + "")) {
+					e.consume();
+				}
+			}
+		});
 		textPeso.setBounds(170, 113, 160, 25);
 		getContentPane().add(textPeso);
 		textPeso.setColumns(10);
 
 		textNumeroStock = new JTextField();
+		textNumeroStock.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				String caracteres = "0987654321.";
+
+				if (!caracteres.contains(e.getKeyChar() + "")) {
+					e.consume();
+				}
+			}
+		});
 		textNumeroStock.setBounds(170, 150, 160, 25);
 		getContentPane().add(textNumeroStock);
 		textNumeroStock.setColumns(10);
@@ -243,7 +276,7 @@ public class TelaAdministradorLojaCardapio extends JFrame {
 					textNumeroStock.setText(Integer.toString(pratoBuscado.getQuantiadeDisponivel()));
 					textNomePrato.setText(pratoBuscado.getNome());
 					textValor.setText(Float.toString(pratoBuscado.getValorDoPrato()));
-					
+
 				} catch (PratoNaoEncontradoException | LojaNaoCadastradaException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

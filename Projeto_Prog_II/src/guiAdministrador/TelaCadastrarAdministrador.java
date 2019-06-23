@@ -80,11 +80,11 @@ public class TelaCadastrarAdministrador extends JFrame {
 		getContentPane().add(textNomeDeLogin);
 		textNomeDeLogin.setColumns(10);
 
-		JLabel lblNome = new JLabel("Nome:");
-		lblNome.setFont(new Font("Dialog", Font.BOLD, 13));
-		lblNome.setForeground(new Color(255, 255, 255));
-		lblNome.setBounds(146, 97, 50, 15);
-		getContentPane().add(lblNome);
+		JLabel lblNomeLogin = new JLabel("Nome de Login:");
+		lblNomeLogin.setFont(new Font("Dialog", Font.BOLD, 13));
+		lblNomeLogin.setForeground(new Color(255, 255, 255));
+		lblNomeLogin.setBounds(78, 97, 118, 15);
+		getContentPane().add(lblNomeLogin);
 
 		JLabel lblSenha = new JLabel("Senha:");
 		lblSenha.setHorizontalAlignment(SwingConstants.CENTER);
@@ -140,7 +140,7 @@ public class TelaCadastrarAdministrador extends JFrame {
 				try {
 					Fachada.getInstance().inserirAdmnistrador(new Administrador(login, senha, id));
 					JOptionPane.showMessageDialog(contentPane, "Administrador cadastrado com sucesso!!", "",
-							JOptionPane.ERROR_MESSAGE);
+							JOptionPane.INFORMATION_MESSAGE);
 					TelaLoginAdministrador tela = new TelaLoginAdministrador();
 					tela.setVisible(true);
 					dispose();

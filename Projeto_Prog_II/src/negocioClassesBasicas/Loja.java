@@ -27,6 +27,16 @@ public class Loja implements RepositorioPratos, Serializable {
 		cardapio = new RepositorioPratosArray();
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		Loja loja = (Loja) obj;
+		if (loja.getCnpj().equals(this.cnpj) && loja.getEndereco().equals(this.cnpj) && loja.getNome().equals(this.nome)
+				&& loja.getTelefone().equals(this.telefone)) {
+			return true;
+		}
+		return false;
+	}
+
 	public String getCnpj() {
 		return cnpj;
 	}

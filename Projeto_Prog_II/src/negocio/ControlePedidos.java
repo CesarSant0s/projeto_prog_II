@@ -29,6 +29,8 @@ public class ControlePedidos {
 	public void finalizarPedido(Pedido pedido)
 			throws LojaNaoCadastradaException, PratoNaoEncontradoException, PratoVazioException {
 
+		JavaMailApp.enviarEmailParraEntregador(pedido);
+
 		for (Prato p : pedido.getPratosEscolhidos().listar()) {
 			p.setQuantiadeDisponivel(p.getQuantiadeDisponivel() - 1);
 			Fachada.getInstance().buscarLoja(pedido.getLoja().getCnpj()).alterar(p);
@@ -52,7 +54,9 @@ public class ControlePedidos {
 
 		for (Prato p : pratosEscolhidos) {
 			try {
-				novoPedido.getPratosEscolhidos().inserir(p);
+				if (p != null) {
+					novoPedido.getPratosEscolhidos().inserir(p);
+				}
 			} catch (PratoVazioException | PratoJaInseridoException e) {
 			}
 		}

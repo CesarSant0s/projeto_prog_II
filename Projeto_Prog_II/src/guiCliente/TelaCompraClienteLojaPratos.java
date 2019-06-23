@@ -2,6 +2,8 @@ package guiCliente;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Panel;
+import java.awt.RenderingHints.Key;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,11 +12,16 @@ import javax.swing.border.EmptyBorder;
 import excepitonRepositorioArray.LojaNaoCadastradaException;
 import excepitonRepositorioArray.PedidoJaInseridoException;
 import excepitonRepositorioArray.PedidoVazioException;
+import excepitonRepositorioArray.PratoJaInseridoException;
+import excepitonRepositorioArray.PratoNaoEncontradoException;
+import excepitonRepositorioArray.PratoVazioException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import negocioClassesBasicas.Cliente;
 import negocioClassesBasicas.Loja;
 import negocioClassesBasicas.Pedido;
 import negocioClassesBasicas.Prato;
+import repositorio.RepositorioPratos;
+import repositorioArray.RepositorioPratosArray;
 import negocio.Fachada;
 
 import javax.swing.JScrollPane;
@@ -28,6 +35,9 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class TelaCompraClienteLojaPratos extends JFrame {
 
@@ -43,7 +53,8 @@ public class TelaCompraClienteLojaPratos extends JFrame {
 	private JTable tabelaPrato;
 	private Pedido pedidoAtual;
 
-	private ArrayList<Prato> pratosEscolhidos;
+	private RepositorioPratos pratosEscolhidos;
+	private JTextField textFieldValorTotal;
 
 	/**
 	 * Launch the application.
@@ -71,7 +82,7 @@ public class TelaCompraClienteLojaPratos extends JFrame {
 
 		pedidoAtual = Fachada.getInstance().novoPedido();
 
-		pratosEscolhidos = new ArrayList<Prato>();
+		pratosEscolhidos = new RepositorioPratosArray();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 706, 450);
@@ -97,7 +108,9 @@ public class TelaCompraClienteLojaPratos extends JFrame {
 		btnVoltar.setBackground(Color.WHITE);
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
+				TelaCompraClienteLojas tela = new TelaCompraClienteLojas(cpf);
+				tela.setVisible(true);
+				dispose();
 			}
 		});
 		btnVoltar.setBounds(450, 173, 134, 25);
@@ -109,13 +122,20 @@ public class TelaCompraClienteLojaPratos extends JFrame {
 
 				try {
 					Prato pratoNovo = Fachada.getInstance().buscarLoja(cnpj).listar()
-							.get(Integer.parseInt(textIndice.getText()));
-					pratosEscolhidos.add(pratoNovo);
-				} catch (NumberFormatException | LojaNaoCadastradaException e) {
+							.get(Integer.parseInt(textIndice.getText()) - 1);
+					pratosEscolhidos.inserir(pratoNovo);
 
-					// e.printStackTrace();
+				} catch (NumberFormatException | LojaNaoCadastradaException | PratoVazioException
+						| PratoJaInseridoException e) {
+					JOptionPane.showMessageDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+				}
+				float valorTotal = 0;
+
+				for (Prato p : pratosEscolhidos.listar()) {
+					valorTotal += p.getValorDoPrato();
 				}
 
+				textFieldValorTotal.setText("ValorTotal:" + valorTotal);
 				exibirPratosEscolhidos();
 
 			}
@@ -155,17 +175,44 @@ public class TelaCompraClienteLojaPratos extends JFrame {
 		lblInidice.setBounds(615, 246, 50, 15);
 		contentPane.add(lblInidice);
 
+		JLabel lblCardapio = new JLabel("Cardapio:");
+		lblCardapio.setForeground(Color.WHITE);
+		lblCardapio.setBounds(12, 6, 66, 15);
+		contentPane.add(lblCardapio);
+
+		JLabel lblNewLabel = new JLabel("Pratos Escolhidos:");
+		lblNewLabel.setForeground(Color.WHITE);
+		lblNewLabel.setBackground(Color.WHITE);
+		lblNewLabel.setBounds(12, 218, 124, 15);
+		contentPane.add(lblNewLabel);
+
 		textIndice = new JTextField();
-		textIndice.setBounds(615, 281, 75, 19);
+		textIndice.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				String caracteres = "987654321";
+
+				if (!caracteres.contains(e.getKeyChar() + "")) {
+					e.consume();
+				}
+
+			}
+		});
+		textIndice.setBounds(615, 281, 75, 25);
 		contentPane.add(textIndice);
 		textIndice.setColumns(10);
 
 		button = new JButton("Remover prato");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
-				pratosEscolhidos.remove(Integer.parseInt(textIndice.getText()));
-
+				try {
+					pratosEscolhidos
+							.remover(pratosEscolhidos.listar().get(Integer.parseInt(textIndice.getText())).getNome());
+				} catch (NumberFormatException | PratoNaoEncontradoException e) {
+					// TODO Auto-generated catch block
+					// e.printStackTrace();
+				}
 				exibirPratosEscolhidos();
 
 			}
@@ -185,22 +232,12 @@ public class TelaCompraClienteLojaPratos extends JFrame {
 				Loja lojaPedido = null;
 				try {
 					clientePedido = (Cliente) Fachada.getInstance().buscarUsuario(cpf);
-				} catch (UsuarioNaoCadastradoException e) {
-					// e.printStackTrace();
-				}
-
-				try {
 					lojaPedido = Fachada.getInstance().buscarLoja(cnpj);
-				} catch (LojaNaoCadastradaException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+					Fachada.getInstance().fazerPedido(clientePedido, lojaPedido, pratosEscolhidos.listar());
 
-				try {
-					Fachada.getInstance().fazerPedido(clientePedido, lojaPedido, pratosEscolhidos);
-				} catch (PedidoJaInseridoException | PedidoVazioException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} catch (UsuarioNaoCadastradoException | LojaNaoCadastradaException | PedidoJaInseridoException
+						| PedidoVazioException e) {
+					// e.printStackTrace();
 				}
 
 			}
@@ -214,22 +251,15 @@ public class TelaCompraClienteLojaPratos extends JFrame {
 		tabelaPrato.setBounds(68, 163, 100, 30);
 		tabelaPrato.setPreferredScrollableViewportSize(new Dimension(500, 100));
 		tabelaPrato.setFillsViewportHeight(true);
-		;
 
 		JScrollPane scrollPane = new JScrollPane(tabelaPrato);
 		scrollPane.setBounds(12, 245, 426, 165);
 		contentPane.add(scrollPane);
 
-		JLabel lblCardapio = new JLabel("Cardapio:");
-		lblCardapio.setForeground(Color.WHITE);
-		lblCardapio.setBounds(12, 6, 66, 15);
-		contentPane.add(lblCardapio);
-
-		JLabel lblNewLabel = new JLabel("Pratos Escolhidos:");
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setBackground(Color.WHITE);
-		lblNewLabel.setBounds(12, 218, 124, 15);
-		contentPane.add(lblNewLabel);
+		textFieldValorTotal = new JTextField();
+		textFieldValorTotal.setBounds(450, 320, 147, 25);
+		contentPane.add(textFieldValorTotal);
+		textFieldValorTotal.setColumns(10);
 
 	}
 
@@ -238,6 +268,6 @@ public class TelaCompraClienteLojaPratos extends JFrame {
 		while (modeloPratoPratoEscolhido.getRowCount() > 0) {
 			modeloPratoPratoEscolhido.removePratoAt(0);
 		}
-		modeloPratoPratoEscolhido.addPratoList(pratosEscolhidos);
+		modeloPratoPratoEscolhido.addPratoList(pratosEscolhidos.listar());
 	}
 }

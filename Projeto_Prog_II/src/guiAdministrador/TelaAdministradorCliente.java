@@ -29,6 +29,8 @@ import negocioClassesBasicas.Usuario;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class TelaAdministradorCliente extends JFrame {
 
@@ -122,6 +124,11 @@ public class TelaAdministradorCliente extends JFrame {
 		getContentPane().add(lblNomeLogin);
 
 		textCpf = new JTextField();
+		textCpf.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+		});
 		textCpf.setBounds(144, 113, 160, 25);
 		getContentPane().add(textCpf);
 		textCpf.setColumns(10);
@@ -202,7 +209,7 @@ public class TelaAdministradorCliente extends JFrame {
 
 				try {
 					Fachada.getInstance().inserirUsuarioCliente(nomeUsuario, senha, nome, telefone, cpf, endereco);
-					JOptionPane.showMessageDialog(contentPane, "Entregador cadastrado com sucesso!!", "",
+					JOptionPane.showMessageDialog(contentPane, "Cliente cadastrado com sucesso!!", "",
 							JOptionPane.INFORMATION_MESSAGE);
 				} catch (UsuarioVazioException | UsuarioAnteriormenteCadastradoException
 						| UsuarioNaoCadastradoException e1) {
