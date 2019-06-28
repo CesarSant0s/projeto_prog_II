@@ -90,9 +90,9 @@ public class Fachada {
 		pedidos.finalizarPedido(pedido);
 	}
 
-	public void fazerPedido(Cliente cliente, Loja loja, ArrayList<Prato> pratosEscolhidos)
+	public int fazerPedido(Cliente cliente, Loja loja, ArrayList<Prato> pratosEscolhidos)
 			throws PedidoJaInseridoException, PedidoVazioException {
-		pedidos.fazerPedido(cliente, loja, pratosEscolhidos);
+		return pedidos.fazerPedido(cliente, loja, pratosEscolhidos);
 	}
 
 	public Pedido novoPedido() {
@@ -145,9 +145,9 @@ public class Fachada {
 
 	// Controle Usuario
 	public void inserirUsuarioCliente(String nomeUsuario, String senha, String nome, String telefone, String cpf,
-			String endereco)
+			String endereco, String email)
 			throws UsuarioVazioException, UsuarioAnteriormenteCadastradoException, UsuarioNaoCadastradoException {
-		usuarios.inserir(new Cliente(nomeUsuario, senha, nome, telefone, cpf, endereco));
+		usuarios.inserir(new Cliente(nome, telefone, cpf, email, endereco, nomeUsuario, senha));
 	}
 
 	public void inserirUsuarioEntregador(String nome, String telefone, String cpf, String placaVeiculo, String email)
@@ -170,8 +170,8 @@ public class Fachada {
 	}
 
 	public void atualizarUsuarioCliente(String nomeUsuario, String senha, String nome, String telefone, String cpf,
-			String endereco) throws UsuarioVazioException, UsuarioNaoCadastradoException {
-		usuarios.atualizar(new Cliente(nomeUsuario, senha, nome, telefone, cpf, endereco));
+			String endereco, String email) throws UsuarioVazioException, UsuarioNaoCadastradoException {
+		usuarios.atualizar(new Cliente(nome, telefone, cpf, email, endereco, nomeUsuario, senha));
 	}
 
 	public ArrayList<Usuario> listarUsuario() {

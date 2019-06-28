@@ -149,7 +149,7 @@ class TesteFachada {
 		}
 
 		for (int i = 0; i < 3; i++) {
-			assertEquals(lista[i], listaInserida[i]);
+			assertEquals(lista[i].getId(), listaInserida[i].getId());
 		}
 
 	}

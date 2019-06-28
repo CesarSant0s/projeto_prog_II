@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 import excepitonRepositorioArray.PedidoJaInseridoException;
 import excepitonRepositorioArray.PedidoNaoCadastrado;
@@ -13,7 +14,7 @@ import excepitonRepositorioArray.PedidoVazioException;
 import negocioClassesBasicas.Pedido;
 import repositorio.RepositorioPedido;
 
-public class RepositorioPedidoArray implements RepositorioPedido {
+public class RepositorioPedidoArray implements RepositorioPedido, Serializable {
 
 	private Pedido[] array;
 	private int indice;
@@ -127,7 +128,7 @@ public class RepositorioPedidoArray implements RepositorioPedido {
 
 		if (indice > 0) {
 			for (int i = 0, j = indice; i < j; i++) {
-				if (codigo == array[i].getCodigo()) {
+				if ((array[i] != null) && codigo == array[i].getCodigo()) {
 					resultadoBusca = array[i];
 				}
 			}

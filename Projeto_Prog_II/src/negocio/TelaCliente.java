@@ -148,18 +148,20 @@ public class TelaCliente extends JFrame {
 		btnAtualizar = new JButton("Atualizar");
 		btnAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				try {
-					Fachada.getInstance().atualizarUsuarioCliente(textNomeDeLogin.getText(),
-							new String(pwdSenha.getPassword()), textNomeCompleto.getText(), textTelefone.getText(),
-							textCpf.getText(), textEndereco.getText());
-				} catch (UsuarioVazioException | UsuarioNaoCadastradoException e1) {
-
-					JOptionPane.showMessageDialog(contentPane, e1.getMessage(), "", JOptionPane.ERROR_MESSAGE);
-					// TODO Auto-generated catch block
-					// e1.printStackTrace();
-				}
+				/*
+				 * try {
+				 * Fachada.getInstance().atualizarUsuarioCliente(textNomeDeLogin.getText(), new
+				 * String(pwdSenha.getPassword()), textNomeCompleto.getText(),
+				 * textTelefone.getText(), textCpf.getText(), textEndereco.getText(), text); }
+				 * catch (UsuarioVazioException | UsuarioNaoCadastradoException e1) {
+				 * 
+				 * JOptionPane.showMessageDialog(contentPane, e1.getMessage(), "",
+				 * JOptionPane.ERROR_MESSAGE); // TODO Auto-generated catch block //
+				 * e1.printStackTrace(); }
+				 * 
+				 */
 			}
+
 		});
 		btnAtualizar.setForeground(new Color(128, 0, 0));
 		btnAtualizar.setBackground(Color.WHITE);

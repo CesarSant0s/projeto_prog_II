@@ -2,8 +2,6 @@ package guiCliente;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.Panel;
-import java.awt.RenderingHints.Key;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -18,7 +16,6 @@ import excepitonRepositorioArray.PratoVazioException;
 import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import negocioClassesBasicas.Cliente;
 import negocioClassesBasicas.Loja;
-import negocioClassesBasicas.Pedido;
 import negocioClassesBasicas.Prato;
 import repositorio.RepositorioPratos;
 import repositorioArray.RepositorioPratosArray;
@@ -35,7 +32,6 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -51,7 +47,6 @@ public class TelaCompraClienteLojaPratos extends JFrame {
 	private JTextField textIndice;
 	private JButton button;
 	private JTable tabelaPrato;
-	private Pedido pedidoAtual;
 
 	private RepositorioPratos pratosEscolhidos;
 	private JTextField textFieldValorTotal;
@@ -79,8 +74,6 @@ public class TelaCompraClienteLojaPratos extends JFrame {
 	 */
 
 	public TelaCompraClienteLojaPratos(String cnpj, String cpf) {
-
-		pedidoAtual = Fachada.getInstance().novoPedido();
 
 		pratosEscolhidos = new RepositorioPratosArray();
 
@@ -113,7 +106,7 @@ public class TelaCompraClienteLojaPratos extends JFrame {
 				dispose();
 			}
 		});
-		btnVoltar.setBounds(450, 173, 134, 25);
+		btnVoltar.setBounds(450, 173, 147, 25);
 		contentPane.add(btnVoltar);
 
 		buttonIndice = new JButton("Adicionar prato");
@@ -166,7 +159,7 @@ public class TelaCompraClienteLojaPratos extends JFrame {
 		});
 		btnExibir.setForeground(new Color(128, 0, 0));
 		btnExibir.setBackground(Color.WHITE);
-		btnExibir.setBounds(450, 33, 134, 25);
+		btnExibir.setBounds(450, 33, 147, 25);
 		contentPane.add(btnExibir);
 
 		lblInidice = new JLabel("Inidice:");
@@ -190,7 +183,6 @@ public class TelaCompraClienteLojaPratos extends JFrame {
 		textIndice.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				char c = e.getKeyChar();
 				String caracteres = "987654321";
 
 				if (!caracteres.contains(e.getKeyChar() + "")) {
@@ -222,7 +214,7 @@ public class TelaCompraClienteLojaPratos extends JFrame {
 		button.setBounds(450, 281, 147, 25);
 		contentPane.add(button);
 
-		JButton btnFinalizarPedido = new JButton("Finalizar Pedido");
+		JButton btnFinalizarPedido = new JButton("Fazer Pedido");
 		btnFinalizarPedido.setForeground(new Color(128, 0, 0));
 		btnFinalizarPedido.setBackground(Color.WHITE);
 		btnFinalizarPedido.addActionListener(new ActionListener() {
@@ -233,10 +225,15 @@ public class TelaCompraClienteLojaPratos extends JFrame {
 				try {
 					clientePedido = (Cliente) Fachada.getInstance().buscarUsuario(cpf);
 					lojaPedido = Fachada.getInstance().buscarLoja(cnpj);
-					Fachada.getInstance().fazerPedido(clientePedido, lojaPedido, pratosEscolhidos.listar());
+					int codigo = Fachada.getInstance().fazerPedido(clientePedido, lojaPedido,
+							pratosEscolhidos.listar());
 
+					TelaCompraClienteFinalização tela = new TelaCompraClienteFinalização(codigo);
+					tela.setVisible(true);
+					dispose();
 				} catch (UsuarioNaoCadastradoException | LojaNaoCadastradaException | PedidoJaInseridoException
 						| PedidoVazioException e) {
+					JOptionPane.showMessageDialog(contentPane, e.getMessage());
 					// e.printStackTrace();
 				}
 

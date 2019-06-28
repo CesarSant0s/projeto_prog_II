@@ -8,6 +8,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import javax.swing.JOptionPane;
+
 import excepitonRepositorioArray.AdministradorJaCadastradoException;
 import excepitonRepositorioArray.AdministradorNaoEncotradoException;
 import excepitonRepositorioArray.AdministradorVazioException;
@@ -35,7 +37,7 @@ public class RepositorioAdministradorArray implements RepositorioAdministrador, 
 	public static RepositorioAdministradorArray lerDoArquivo() {
 		RepositorioAdministradorArray instanciaLocal = null;
 		// Criando um arquivo e passando o nome dele
-		File in = new File("Adiministrador.dat");// criando um arquivo .dat na pasta do projeto
+		File in = new File("Administrador.dat");// criando um arquivo .dat na pasta do projeto
 
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
@@ -68,7 +70,8 @@ public class RepositorioAdministradorArray implements RepositorioAdministrador, 
 				oos = new ObjectOutputStream(fos);
 				oos.writeObject(instance);
 			} catch (Exception e) {
-				e.printStackTrace();
+				 e.printStackTrace();
+				
 			} finally {
 				if (oos != null) {
 					try {

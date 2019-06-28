@@ -8,7 +8,7 @@ public class Entregador extends Usuario implements Serializable {
 	private String email;
 
 	public Entregador(String nome, String telefone, String cpf, String placaVeiculo, String email) {
-		super(nome, telefone, cpf);
+		super(nome, telefone, cpf, email);
 		setplacaVeiculo(placaVeiculo);
 		setEmail(email);
 	}

@@ -1,8 +1,11 @@
 package negocioClassesBasicas;
 
-import repositorio.RepositorioPratos;
+import java.io.Serializable;
 
-public class Pedido {
+import repositorio.RepositorioPratos;
+import repositorioArray.RepositorioPratosArray;
+
+public class Pedido implements Serializable {
 
 	private int codigo;
 
@@ -28,7 +31,14 @@ public class Pedido {
 	}
 
 	public Pedido(int codigo) {
+		super();
 		this.codigo = codigo;
+		this.cliente = null;
+		this.loja = null;
+		this.entregador = null;
+		this.status = true;
+		this.pratosEscolhidos = new RepositorioPratosArray();
+		this.valorTotal = 0;
 	}
 
 	public Pedido(Cliente cliente, Loja loja) {

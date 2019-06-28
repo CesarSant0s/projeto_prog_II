@@ -24,7 +24,6 @@ import excepitonRepositorioArray.UsuarioNaoCadastradoException;
 import excepitonRepositorioArray.UsuarioVazioException;
 import negocio.Fachada;
 import negocioClassesBasicas.Cliente;
-import negocioClassesBasicas.Entregador;
 import negocioClassesBasicas.Usuario;
 
 import javax.swing.JLabel;
@@ -52,6 +51,8 @@ public class TelaAdministradorCliente extends JFrame {
 	private JLabel lblAdministrarCliente;
 	private JPanel panelListar;
 	private JTextField textEndereco;
+	private JTextField textEmail;
+	private JLabel Email;
 
 	public static TelaAdministradorCliente getInstance() {
 		if (TelaAdministradorCliente.instance == null) {
@@ -82,7 +83,7 @@ public class TelaAdministradorCliente extends JFrame {
 	public TelaAdministradorCliente() {
 		setTitle("To com fome - O aplicativo de comida mais proximo de voce");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 340);
+		setBounds(100, 100, 800, 388);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(128, 0, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -148,7 +149,7 @@ public class TelaAdministradorCliente extends JFrame {
 		});
 		btnVoltar.setBackground(new Color(255, 255, 255));
 		btnVoltar.setForeground(new Color(128, 0, 0));
-		btnVoltar.setBounds(12, 275, 101, 25);
+		btnVoltar.setBounds(15, 323, 101, 25);
 		contentPane.add(btnVoltar);
 
 		btnAtualizar = new JButton("Atualizar");
@@ -161,9 +162,11 @@ public class TelaAdministradorCliente extends JFrame {
 				String telefone = textTelefone.getText();
 				String senha = textSenha.getText();
 				String endereco = textEndereco.getText();
+				String email = textEmail.getText();
 
 				try {
-					Fachada.getInstance().atualizarUsuarioCliente(nomeUsuario, senha, nome, telefone, cpf, endereco);
+					Fachada.getInstance().atualizarUsuarioCliente(nomeUsuario, senha, nome, telefone, cpf, endereco,
+							email);
 					JOptionPane.showMessageDialog(contentPane, "Cliente atualizado com sucesso!!", "",
 							JOptionPane.INFORMATION_MESSAGE);
 				} catch (UsuarioVazioException | UsuarioNaoCadastradoException e1) {
@@ -186,6 +189,7 @@ public class TelaAdministradorCliente extends JFrame {
 				textTelefone.setText("");
 				textSenha.setText("");
 				textEndereco.setText("");
+				textEmail.setText("");
 
 			}
 		});
@@ -206,9 +210,11 @@ public class TelaAdministradorCliente extends JFrame {
 				String telefone = textTelefone.getText();
 				String senha = textSenha.getText();
 				String endereco = textEndereco.getText();
+				String email = textEmail.getText();
 
 				try {
-					Fachada.getInstance().inserirUsuarioCliente(nomeUsuario, senha, nome, telefone, cpf, endereco);
+					Fachada.getInstance().inserirUsuarioCliente(nomeUsuario, senha, nome, telefone, cpf, endereco,
+							email);
 					JOptionPane.showMessageDialog(contentPane, "Cliente cadastrado com sucesso!!", "",
 							JOptionPane.INFORMATION_MESSAGE);
 				} catch (UsuarioVazioException | UsuarioAnteriormenteCadastradoException
@@ -253,7 +259,7 @@ public class TelaAdministradorCliente extends JFrame {
 
 		textFieldCpfBusca = new JTextField();
 		textFieldCpfBusca.setColumns(10);
-		textFieldCpfBusca.setBounds(299, 275, 160, 25);
+		textFieldCpfBusca.setBounds(302, 323, 160, 25);
 		contentPane.add(textFieldCpfBusca);
 
 		buttonBuscar = new JButton("Buscar");
@@ -268,6 +274,7 @@ public class TelaAdministradorCliente extends JFrame {
 					textTelefone.setText(cliente.getTelefone());
 					textSenha.setText(cliente.getSenha());
 					textEndereco.setText(cliente.getEndereco());
+					textEmail.setText(cliente.getEmail());
 
 				} catch (UsuarioNaoCadastradoException e) {
 					JOptionPane.showMessageDialog(contentPane, e.getMessage(), "", JOptionPane.ERROR_MESSAGE);
@@ -283,7 +290,7 @@ public class TelaAdministradorCliente extends JFrame {
 		labelCpfBusca = new JLabel("Cpf para busca:");
 		labelCpfBusca.setForeground(Color.WHITE);
 		labelCpfBusca.setFont(new Font("Dialog", Font.BOLD, 13));
-		labelCpfBusca.setBounds(182, 280, 117, 15);
+		labelCpfBusca.setBounds(185, 328, 117, 15);
 		contentPane.add(labelCpfBusca);
 
 		lblAdministrarCliente = new JLabel("Administrar Cliente");
@@ -348,6 +355,17 @@ public class TelaAdministradorCliente extends JFrame {
 		lblEndereco.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblEndereco.setBounds(69, 229, 73, 15);
 		contentPane.add(lblEndereco);
+
+		textEmail = new JTextField();
+		textEmail.setColumns(10);
+		textEmail.setBounds(144, 264, 160, 25);
+		contentPane.add(textEmail);
+
+		Email = new JLabel("Email:");
+		Email.setForeground(Color.WHITE);
+		Email.setFont(new Font("Dialog", Font.BOLD, 13));
+		Email.setBounds(93, 269, 45, 15);
+		contentPane.add(Email);
 
 	}
 

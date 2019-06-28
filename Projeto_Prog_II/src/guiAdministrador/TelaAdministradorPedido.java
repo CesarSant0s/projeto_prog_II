@@ -174,8 +174,10 @@ public class TelaAdministradorPedido extends JFrame {
 					textNomeLoja.setText(p.getLoja().getNome());
 
 				} catch (NumberFormatException | PedidoNaoCadastrado e) {
+
+					JOptionPane.showMessageDialog(contentPane, "Pedido nao encotrado", "", JOptionPane.ERROR_MESSAGE);
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					// e.printStackTrace();
 				}
 
 			}
@@ -216,28 +218,36 @@ public class TelaAdministradorPedido extends JFrame {
 				panelListar.removeAll(); // Remove todos os elementos para nao ficarem duplicados
 				cabecalhoListagem();
 
-				Pedido[] arrayPedido = Fachada.getInstance().listarPedido();
+				Pedido[] arrayPedido = null;
+				try {
+					arrayPedido = Fachada.getInstance().listarPedido();
 
-				ArrayList<Pedido> list = new ArrayList<Pedido>();
+					ArrayList<Pedido> list = new ArrayList<Pedido>();
 
-				for (int i = 0; i < arrayPedido.length; i++) {
-					list.add(arrayPedido[i]);
-				}
+					for (int i = 0; i < arrayPedido.length; i++) {
+						list.add(arrayPedido[i]);
+					}
 
-				for (Pedido p : list) { /* Insere os elementos que estao no repositorio */
+					for (Pedido p : list) { /* Insere os elementos que estao no repositorio */
 
-					panelListar.revalidate(); // Tem que revalidar a tela quando adicionar fora do construtor
-					JPanel linha = new JPanel();
-					linha.setLayout(new GridLayout(1, 2));
-					JLabel codigo = new JLabel("" + p.getCodigo());
-					JLabel nome = new JLabel(p.getCliente().getNome());
-					codigo.setHorizontalAlignment(JLabel.CENTER);
-					nome.setHorizontalAlignment(JLabel.CENTER);
-					linha.add(codigo);
-					linha.add(nome);
-					panelListar.add(linha);
-					panelListar.add(Box.createRigidArea(new Dimension(0, 5)));
-					panelListar.repaint(); // Repintar por garantia
+						panelListar.revalidate(); // Tem que revalidar a tela quando adicionar fora do construtor
+						JPanel linha = new JPanel();
+						linha.setLayout(new GridLayout(1, 2));
+						JLabel codigo = new JLabel("" + p.getCodigo());
+						JLabel nome = new JLabel(p.getCliente().getNome());
+						codigo.setHorizontalAlignment(JLabel.CENTER);
+						nome.setHorizontalAlignment(JLabel.CENTER);
+						linha.add(codigo);
+						linha.add(nome);
+						panelListar.add(linha);
+						panelListar.add(Box.createRigidArea(new Dimension(0, 5)));
+						panelListar.repaint(); // Repintar por garantia
+
+					}
+
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(contentPane, "Não existem pedidos cadastrados", "error",
+							JOptionPane.ERROR_MESSAGE);
 
 				}
 
@@ -245,6 +255,27 @@ public class TelaAdministradorPedido extends JFrame {
 		});
 		btnListarCardapio.setBounds(358, 39, 101, 25);
 		contentPane.add(btnListarCardapio);
+
+		JButton btnVerPratos = new JButton("Ver Pratos");
+		btnVerPratos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				try {
+					TelaAdministradorPedidoPrato tela = new TelaAdministradorPedidoPrato(
+							Integer.parseInt(textCodigoParaBusca.getText()));
+					tela.setVisible(true);
+					dispose();
+
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(contentPane, "Pedido nao encontrado", "", JOptionPane.ERROR_MESSAGE);
+				}
+
+			}
+		});
+		btnVerPratos.setForeground(new Color(128, 0, 0));
+		btnVerPratos.setBackground(Color.WHITE);
+		btnVerPratos.setBounds(144, 195, 160, 25);
+		contentPane.add(btnVerPratos);
 
 	}
 

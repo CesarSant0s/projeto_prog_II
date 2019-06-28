@@ -37,6 +37,7 @@ public class TelaCadastrarCliente extends JFrame {
 	private JLabel lblCadastrarCliente;
 	private JLabel label;
 	private JTextField textEndereco;
+	private JTextField textFieldEmail;
 
 	public static TelaCadastrarCliente getInstance() {
 		if (TelaCadastrarCliente.instance == null) {
@@ -67,7 +68,7 @@ public class TelaCadastrarCliente extends JFrame {
 	public TelaCadastrarCliente() {
 		setTitle("To com fome - O aplicativo de comida mais proximo de voce");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 477, 286);
+		setBounds(100, 100, 477, 325);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(128, 0, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -173,6 +174,7 @@ public class TelaCadastrarCliente extends JFrame {
 				textTelefone.setText("");
 				textSenha.setText("");
 				textEndereco.setText("");
+				textFieldEmail.setText("");
 
 			}
 		});
@@ -193,9 +195,11 @@ public class TelaCadastrarCliente extends JFrame {
 				String telefone = textTelefone.getText();
 				String senha = textSenha.getText();
 				String endereco = textEndereco.getText();
+				String email = textFieldEmail.getText();
 
 				try {
-					Fachada.getInstance().inserirUsuarioCliente(nomeUsuario, senha, nome, telefone, cpf, endereco);
+					Fachada.getInstance().inserirUsuarioCliente(nomeUsuario, senha, nome, telefone, cpf, endereco,
+							email);
 					JOptionPane.showMessageDialog(contentPane, "Cliente cadastrado com sucesso!!", "",
 							JOptionPane.INFORMATION_MESSAGE);
 					TelaCompraClienteLojas tela = new TelaCompraClienteLojas(cpf);
@@ -237,6 +241,17 @@ public class TelaCadastrarCliente extends JFrame {
 		textEndereco.setColumns(10);
 		textEndereco.setBounds(144, 215, 160, 25);
 		contentPane.add(textEndereco);
+
+		textFieldEmail = new JTextField();
+		textFieldEmail.setColumns(10);
+		textFieldEmail.setBounds(144, 248, 160, 25);
+		contentPane.add(textFieldEmail);
+
+		JLabel email = new JLabel("Email:");
+		email.setForeground(Color.WHITE);
+		email.setFont(new Font("Dialog", Font.BOLD, 13));
+		email.setBounds(93, 253, 45, 15);
+		contentPane.add(email);
 
 	}
 }

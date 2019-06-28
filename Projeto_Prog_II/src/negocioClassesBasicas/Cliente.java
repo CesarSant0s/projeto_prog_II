@@ -8,11 +8,12 @@ public class Cliente extends Usuario implements Serializable {
 	private String nomeUsuario;
 	private String senha;
 
-	public Cliente(String nomeUsuario, String senha, String nome, String telefone, String cpf, String endereco) {
-		super(nome, telefone, cpf);
-		setEndereco(endereco);
-		setNomeUsuario(nomeUsuario);
-		setSenha(senha);
+	public Cliente(String nome, String telefone, String cpf, String email, String endereco, String nomeUsuario,
+			String senha) {
+		super(nome, telefone, cpf, email);
+		this.endereco = endereco;
+		this.nomeUsuario = nomeUsuario;
+		this.senha = senha;
 	}
 
 	@Override

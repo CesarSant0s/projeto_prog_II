@@ -133,21 +133,25 @@ public class TelaCadastrarAdministrador extends JFrame {
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				String login = textNomeDeLogin.getText();
-				String senha = new String(pwdSenha.getPassword());
-				int id = Integer.parseInt(textId.getText());
-
 				try {
+					String login = textNomeDeLogin.getText();
+					String senha = new String(pwdSenha.getPassword());
+					int id = Integer.parseInt(textId.getText());
+
 					Fachada.getInstance().inserirAdmnistrador(new Administrador(login, senha, id));
 					JOptionPane.showMessageDialog(contentPane, "Administrador cadastrado com sucesso!!", "",
 							JOptionPane.INFORMATION_MESSAGE);
 					TelaLoginAdministrador tela = new TelaLoginAdministrador();
 					tela.setVisible(true);
 					dispose();
+
 				} catch (AdministradorVazioException e1) {
 					JOptionPane.showMessageDialog(contentPane, e1.getMessage(), "", JOptionPane.ERROR_MESSAGE);
 				} catch (AdministradorJaCadastradoException e1) {
 					JOptionPane.showMessageDialog(contentPane, e1.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(contentPane, "Insira um numero maior que zero", "erro",
+							JOptionPane.ERROR_MESSAGE);
 				}
 
 			}

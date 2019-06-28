@@ -29,19 +29,21 @@ public class ControlePedidos {
 	public void finalizarPedido(Pedido pedido)
 			throws LojaNaoCadastradaException, PratoNaoEncontradoException, PratoVazioException {
 
-		JavaMailApp.enviarEmailParraEntregador(pedido);
+		//JavaMailApp.enviarEmailParaEntregador(pedido);
+		//JavaMailApp.enviarEmailParaCliente(pedido);
 
 		for (Prato p : pedido.getPratosEscolhidos().listar()) {
 			p.setQuantiadeDisponivel(p.getQuantiadeDisponivel() - 1);
+
 			Fachada.getInstance().buscarLoja(pedido.getLoja().getCnpj()).alterar(p);
 		}
-
+		
 	}
 
-	public void fazerPedido(Cliente cliente, Loja loja, ArrayList<Prato> pratosEscolhidos)
+	public int fazerPedido(Cliente cliente, Loja loja, ArrayList<Prato> pratosEscolhidos)
 			throws PedidoJaInseridoException, PedidoVazioException {
 
-		Pedido novoPedido = novoPedido();
+		Pedido novoPedido = new Pedido(gerarCodigo());
 
 		Entregador entregadorPedido = null;
 
@@ -68,6 +70,7 @@ public class ControlePedidos {
 		pedidos.inserir(novoPedido);
 		RepositorioPedidoArray.salvarArquivo();
 
+		return novoPedido.getCodigo();
 	}
 
 	public int gerarCodigo() {

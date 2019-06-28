@@ -7,11 +7,13 @@ public abstract class Usuario implements Serializable {
 	private String nome;
 	private String telefone;
 	private String cpf;
+	private String email;
 
-	public Usuario(String nome, String telefone, String cpf) {
-		setNome(nome);
-		setTelefone(telefone);
-		setCpf(cpf);
+	public Usuario(String nome, String telefone, String cpf, String email) {
+		this.nome = nome;
+		this.telefone = telefone;
+		this.cpf = cpf;
+		this.email = email;
 	}
 
 	public String getNome() {
@@ -36,6 +38,14 @@ public abstract class Usuario implements Serializable {
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }
