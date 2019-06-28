@@ -228,7 +228,7 @@ public class TelaCompraClienteLojaPratos extends JFrame {
 					int codigo = Fachada.getInstance().fazerPedido(clientePedido, lojaPedido,
 							pratosEscolhidos.listar());
 
-					TelaCompraClienteFinalização tela = new TelaCompraClienteFinalização(codigo);
+					TelaCompraClienteFinalizacao tela = new TelaCompraClienteFinalizacao(codigo);
 					tela.setVisible(true);
 					dispose();
 				} catch (UsuarioNaoCadastradoException | LojaNaoCadastradaException | PedidoJaInseridoException

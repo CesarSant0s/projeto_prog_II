@@ -27,7 +27,7 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-public class TelaCompraClienteFinalização extends JFrame {
+public class TelaCompraClienteFinalizacao extends JFrame {
 
 	private JPanel contentPane;
 	private ModeloTabelaPratos modeloPratoCardapio;
@@ -44,7 +44,7 @@ public class TelaCompraClienteFinalização extends JFrame {
 			public void run() {
 				try {
 
-					TelaCompraClienteFinalização frame = new TelaCompraClienteFinalização(0);
+					TelaCompraClienteFinalizacao frame = new TelaCompraClienteFinalizacao(0);
 					frame.setVisible(true);
 
 				} catch (Exception e) {
@@ -58,7 +58,7 @@ public class TelaCompraClienteFinalização extends JFrame {
 	 * Create the frame.
 	 */
 
-	public TelaCompraClienteFinalização(int codigo) {
+	public TelaCompraClienteFinalizacao(int codigo) {
 
 		pratosEscolhidos = new RepositorioPratosArray();
 

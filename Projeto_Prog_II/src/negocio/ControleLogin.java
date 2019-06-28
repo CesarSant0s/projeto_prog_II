@@ -50,9 +50,8 @@ public class ControleLogin implements Serializable {
 
 		int result = 0;
 
-		
-		
 		for (int i = 0; i < adms.length; i++) {
+
 			if (adms[i] != null && adms[i].getLogin().equals(login) && adms[i].getSenha().equals(senha)) {
 				result = adms[i].getId();
 			}
